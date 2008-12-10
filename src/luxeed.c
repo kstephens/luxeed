@@ -16,7 +16,7 @@ static int usb_debug_level = 9;
 
 
 #if 1
-#define RCALL(X) do { result = X; if ( result != 0 && dev->debug ) { fprintf(stderr, "  %s => %d\n", #X, (int) result); } } while ( 0 )
+#define RCALL(X) do { result = X; if ( result < 0 || dev->debug ) { fprintf(stderr, "  %s => %d\n", #X, (int) result); } } while ( 0 )
 #else
 #define RCALL(X) result = X
 #endif
@@ -24,7 +24,7 @@ static int usb_debug_level = 9;
 
 /* Parsed from ep01.txt as initialization, minues the leading 0x02.
    Chunks are sent 65 bytes long.
-   Checksum appears at 0x14f.
+   Checksum appears at 0x14e.
 */
 static unsigned char msg_00[] = {
   /* 0000: */       0x02, 0x01, 0x80, 0x00, 0x01, 0x01, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 
@@ -216,12 +216,12 @@ int luxeed_open(luxeed_device *dev)
     
     // RCALL(usb_detach_kernel_driver_np(dev->u_dh, LUXEED_USB_INTERFACE));
     // RCALL(usb_detach_kernel_driver_np(dev->u_dh, 0));
-    RCALL(usb_detach_kernel_driver_np(dev->u_dh, 1));
+    // RCALL(usb_detach_kernel_driver_np(dev->u_dh, 1));
     RCALL(usb_detach_kernel_driver_np(dev->u_dh, 2));
     
     // RCALL(usb_claim_interface(dev->u_dh, LUXEED_USB_INTERFACE));
     // RCALL(usb_claim_interface(dev->u_dh, 0));
-    RCALL(usb_claim_interface(dev->u_dh, 1));
+    // RCALL(usb_claim_interface(dev->u_dh, 1));
     RCALL(usb_claim_interface(dev->u_dh, 2));
     usleep(100000);
 
@@ -265,6 +265,7 @@ int luxeed_destroy(luxeed_device *dev)
   return 0;
 }
 
+
 static int dump_buf(unsigned char *bytes, int size)
 {
   int i;
@@ -285,8 +286,60 @@ static int dump_buf(unsigned char *bytes, int size)
 }
 
 
+#define LUXEED_BLOCK_SIZE 64
 
-int luxeed_send(luxeed_device *dev, int ep, unsigned char *bytes, int size)
+// #define luxeed_send luxeed_send_buffered
+#define luxeed_send luxeed_send_chunked
+
+
+int luxeed_send_buffered (luxeed_device *dev, int ep, unsigned char *bytes, int size)
+{
+  int result = 0;
+  int timeout = 1000;
+
+  unsigned char *buf = alloca(sizeof(buf) * ((size / LUXEED_BLOCK_SIZE) * (LUXEED_BLOCK_SIZE + 1)));
+  unsigned char *s = buf;
+  int buf_size;
+
+  if ( luxeed_open(dev) ) {
+    return -1;
+  }
+
+  luxeed_msg_checksum(dev, bytes, size);
+
+  {
+    int i = 0;
+    while ( i < size ) {
+      *(s ++) = 0x02;
+      memcpy(s, bytes + i, LUXEED_BLOCK_SIZE);
+      s += LUXEED_BLOCK_SIZE;
+      i += LUXEED_BLOCK_SIZE;
+    }
+
+    buf_size = s - buf;
+  }
+
+  fprintf(stderr, "size %d => %d\n", (int) size, (int) buf_size);
+  dump_buf(buf, buf_size);
+
+  RCALL(usb_interrupt_write(dev->u_dh, ep, buf, buf_size, timeout));
+  usleep(750);
+
+  /* Try again later? */
+  if ( result < 0 ) {
+    luxeed_close(dev);
+    return 0;
+  }
+
+  if ( result >= 0 ) {
+    result = 0;
+  }
+
+  return result;
+}
+
+
+int luxeed_send_chunked (luxeed_device *dev, int ep, unsigned char *bytes, int size)
 {
   int result = -1;
   int timeout = 1000;
@@ -296,8 +349,6 @@ int luxeed_send(luxeed_device *dev, int ep, unsigned char *bytes, int size)
   if ( luxeed_open(dev) ) {
     return -1;
   }
-
-  dh = dev->u_dh;
 
   luxeed_msg_checksum(dev, bytes, size);
 
@@ -310,9 +361,10 @@ int luxeed_send(luxeed_device *dev, int ep, unsigned char *bytes, int size)
   {
     unsigned char *buf = bytes;
     int left = size;
-    int blksize = 64;
+    int blksize = LUXEED_BLOCK_SIZE;
 
     while ( left > 0 ) {
+      /* Chunk of 0x02 + 64 bytes */
       unsigned char xbuf[1 + blksize];
 
       xbuf[0] = 0x02;
@@ -325,8 +377,15 @@ int luxeed_send(luxeed_device *dev, int ep, unsigned char *bytes, int size)
 	dump_buf(xbuf, wsize);
       }
 
-      RCALL(usb_interrupt_write(dh, ep, xbuf, wsize, timeout));
-      // usleep(10000);
+      RCALL(usb_interrupt_write(dev->u_dh, ep, xbuf, wsize, timeout));
+      // RCALL(usb_bulk_write(dh, ep, xbuf, wsize, timeout));
+      usleep(750);
+
+      /* Try again next time. */
+      if ( result < 0 ) {
+	luxeed_close(dev);
+	return 0;
+      }
 
       if ( result != wsize ) {
 	result = -1;
@@ -406,21 +465,25 @@ int luxeed_init(luxeed_device *dev)
   int result = -1;
 
   do {
-    int slp = 50000;
+    int slp = 100000;
     int i;
-    int n = 5;
+    int n = 2;
 
     usleep(slp);
     for ( i = 0; i < n; ++ i ) {
 
-      RCALL(luxeed_send(dev, LUXEED_USB_ENDPOINT_DATA, msg_00, sizeof(msg_00)));
+      RCALL(luxeed_send (dev, LUXEED_USB_ENDPOINT_DATA, msg_00, sizeof(msg_00)));
       if ( result ) return result;
       usleep(slp);
       
-      RCALL(luxeed_send(dev, LUXEED_USB_ENDPOINT_DATA, msg_ff, sizeof(msg_ff)));
+      RCALL(luxeed_send (dev, LUXEED_USB_ENDPOINT_DATA, msg_ff, sizeof(msg_ff)));
       if ( result ) return result;
       usleep(slp);
     }
+
+    RCALL(luxeed_update(dev));
+    if ( result ) return result;
+    usleep(slp);
 
   } while ( 0 );
 
@@ -452,13 +515,7 @@ int luxeed_update(luxeed_device *dev)
     memcpy(dev->msg + 0x37, dev->key_data, sizeof(dev->key_data));
 
     /* Compute checksum and send in chunks. */
-    result = luxeed_send(dev, LUXEED_USB_ENDPOINT_DATA, dev->msg, dev->msg_size);
-    if ( result ) break;
-
-    if ( 0 ) {
-      unsigned char msg_ctrl[] = { 0x01, 0x79 };
-      result = luxeed_send(dev, LUXEED_USB_ENDPOINT_CONTROL, msg_ctrl, sizeof(msg_ctrl));
-    }
+    result = luxeed_send (dev, LUXEED_USB_ENDPOINT_DATA, dev->msg, dev->msg_size);
     if ( result ) break;
 
   } while ( 0 );

@@ -24,12 +24,10 @@ int main (int argc, char **argv)
   // dev->debug ++;
 
   {
-    int msg_id = -1;
-
+    int i = -1;
     srand(getpid() ^ time(0));
-
+    
     while ( 1 ) {
-      int i = (++ msg_id) % LUXEED_NUM_OF_KEYS;
       int j;
       float scale, scale_dir;
       int r, g, b;
@@ -53,6 +51,7 @@ int main (int argc, char **argv)
       // fprintf(stderr, "%02x %02x %02x\n", r, g, b);
 
       for ( scale = 0, scale_dir = 0.1; ! (scale <= 0 && scale_dir < 0); ) {
+	int j;
 	int r1, g1, b1;
 	r1 = r * scale;
 	g1 = g * scale;
@@ -60,6 +59,8 @@ int main (int argc, char **argv)
 	// fprintf(stderr, "%02x %02x %02x\n", r1, g1, b1);
 
 	memset(dev->key_data, 0, sizeof(dev->key_data));
+
+	i = (i + 1) % LUXEED_NUM_OF_KEYS;
 
 	for ( j = 0; j < 10; ++ j ) {
 	  int k = (i + j) % LUXEED_NUM_OF_KEYS;
@@ -71,7 +72,7 @@ int main (int argc, char **argv)
 
 	result = luxeed_update(dev);
 	if ( result ) goto done;
-	usleep(50000);
+	usleep(100000);
 
 	scale += scale_dir;
 	if ( scale > 1.0 ) {
@@ -79,8 +80,10 @@ int main (int argc, char **argv)
 	  scale += scale_dir;
 	}
 
-	fprintf(stderr, scale_dir < 0 ? "<" : ">");
-	fflush(stderr);
+	if ( 0 ) {
+	  fprintf(stderr, scale_dir < 0 ? "<" : ">");
+	  fflush(stderr);
+	}
       }
     }
   }
