@@ -1,0 +1,3515 @@
+1	in down	n/a	0.000	GET_DESCRIPTOR_FROM_DEVICE		
+URB Header (length: 80)
+SequenceNumber: 1
+Function: 000b (GET_DESCRIPTOR_FROM_DEVICE)
+1	in up	n/a	0.000	GET_DESCRIPTOR_FROM_DEVICE		0x00000000
+URB Header (length: 80)
+SequenceNumber: 1
+Function: 000b (GET_DESCRIPTOR_FROM_DEVICE)
+2	in down	n/a	0.000	GET_DESCRIPTOR_FROM_DEVICE		
+URB Header (length: 80)
+SequenceNumber: 2
+Function: 000b (GET_DESCRIPTOR_FROM_DEVICE)
+2	in up	n/a	0.000	GET_DESCRIPTOR_FROM_DEVICE		0x00000000
+URB Header (length: 80)
+SequenceNumber: 2
+Function: 000b (GET_DESCRIPTOR_FROM_DEVICE)
+3	in down	n/a	0.000	GET_DESCRIPTOR_FROM_DEVICE		
+URB Header (length: 80)
+SequenceNumber: 3
+Function: 000b (GET_DESCRIPTOR_FROM_DEVICE)
+3	in up	n/a	0.000	GET_DESCRIPTOR_FROM_DEVICE		0x00000000
+URB Header (length: 80)
+SequenceNumber: 3
+Function: 000b (GET_DESCRIPTOR_FROM_DEVICE)
+4	??? down	n/a	0.000	SELECT_CONFIGURATION		
+URB Header (length: 60)
+SequenceNumber: 4
+Function: 0000 (SELECT_CONFIGURATION)
+Configuration Descriptor:
+bLength: 9 (0x09)
+bDescriptorType: 2 (0x02)
+wTotalLength: 34 (0x0022)
+bNumInterfaces: 1 (0x01)
+bConfigurationValue: 1 (0x01)
+iConfiguration: 0 (0x00)
+bmAttributes: 160 (0xa0)
+  0x80: Bus Powered
+  0x20: Remote Wakeup
+MaxPower: 250 (0xfa)
+  (in 2 mA units, therefore 500 mA power consumption)
+
+Number of interfaces: 1
+Interface[0]:
+  Length: 0x0024
+  InterfaceNumber: 0x01
+  AlternateSetting: 0x00
+  Class             = 0x00
+  SubClass          = 0x00
+  Protocol          = 0x00
+  InterfaceHandle   = 0x00000000
+  NumberOfPipes     = 0x00000001
+  Pipe[0]:
+    MaximumPacketSize = 0x0000
+    EndpointAddress   = 0x00
+    Interval          = 0x00
+    PipeType          = 0x00
+      UsbdPipeTypeControl
+    PipeHandle        = 0x00000000
+    MaxTransferSize   = 0x00001000
+    PipeFlags         = 0x00
+4	??? up	n/a	0.000	SELECT_CONFIGURATION		0x00000000
+URB Header (length: 60)
+SequenceNumber: 4
+Function: 0000 (SELECT_CONFIGURATION)
+Configuration Descriptor:
+bLength: 9 (0x09)
+bDescriptorType: 2 (0x02)
+wTotalLength: 34 (0x0022)
+bNumInterfaces: 1 (0x01)
+bConfigurationValue: 1 (0x01)
+iConfiguration: 0 (0x00)
+bmAttributes: 160 (0xa0)
+  0x80: Bus Powered
+  0x20: Remote Wakeup
+MaxPower: 250 (0xfa)
+  (in 2 mA units, therefore 500 mA power consumption)
+
+Number of interfaces: 1
+Interface[0]:
+  Length: 0x0024
+  InterfaceNumber: 0x01
+  AlternateSetting: 0x00
+  Class             = 0x03
+  SubClass          = 0x00
+  Protocol          = 0x00
+  InterfaceHandle   = 0x85c06298
+  NumberOfPipes     = 0x00000001
+  Pipe[0]:
+    MaximumPacketSize = 0x0040
+    EndpointAddress   = 0x02
+    Interval          = 0x01
+    PipeType          = 0x03
+      UsbdPipeTypeInterrupt
+    PipeHandle        = 0x85c062b4
+    MaxTransferSize   = 0x00001000
+    PipeFlags         = 0x00
+5	out down	n/a	0.000	CLASS_INTERFACE	-	
+URB Header (length: 80)
+SequenceNumber: 5
+Function: 001b (CLASS_INTERFACE)
+PipeHandle: 00000000
+
+SetupPacket:
+0000: 22 0a 00 00 01 00 00 00 
+bmRequestType: 22
+  DIR: Host-To-Device
+  TYPE: Class
+  RECIPIENT: Endpoint
+bRequest: 0a  
+
+
+No TransferBuffer
+
+5	out up	n/a	0.010	CONTROL_TRANSFER	-	0x00000000
+URB Header (length: 80)
+SequenceNumber: 5
+Function: 0008 (CONTROL_TRANSFER)
+PipeHandle: 860372c0
+
+SetupPacket:
+0000: 21 0a 00 00 01 00 00 00 
+bmRequestType: 21
+  DIR: Host-To-Device
+  TYPE: Class
+  RECIPIENT: Interface
+bRequest: 0a  
+
+
+No TransferBuffer
+
+6	in down	n/a	0.010	GET_DESCRIPTOR_FROM_INTERFACE		
+URB Header (length: 80)
+SequenceNumber: 6
+Function: 0028 (GET_DESCRIPTOR_FROM_INTERFACE)
+6	in up	n/a	0.050	CONTROL_TRANSFER	06 a0 ff 09 a5 a1 01 09	0x00000000
+URB Header (length: 80)
+SequenceNumber: 6
+Function: 0008 (CONTROL_TRANSFER)
+PipeHandle: 860372c0
+
+SetupPacket:
+0000: 81 06 00 22 01 00 66 00 
+bmRequestType: 81
+  DIR: Device-To-Host
+  TYPE: Standard
+  RECIPIENT: Interface
+bRequest: 06  
+  GET_DESCRIPTOR
+Descriptor Type: 0x0022
+  unknown
+
+
+TransferBuffer: 0x00000026 (38) length
+0000: 06 a0 ff 09 a5 a1 01 09 a6 09 a7 15 80 85 01 25 
+0010: 7f 75 08 95 08 81 02 09 a9 15 80 25 7f 85 02 75 
+0020: 08 95 40 91 02 c0 
+7	??? down	n/a	22.541	BULK_OR_INTERRUPT_TRANSFER	02 02 01 80 00 01 01 00	
+URB Header (length: 72)
+SequenceNumber: 7
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 02 01 80 00 01 01 00 01 02 03 04 05 06 07 08 
+0010: 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+7	??? up	n/a	22.545	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 7
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+8	??? down	n/a	22.551	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 8
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+8	??? up	n/a	22.559	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 8
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+9	??? down	n/a	22.561	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 9
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+9	??? up	n/a	22.572	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 9
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+10	??? down	n/a	22.581	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 10
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+10	??? up	n/a	22.586	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 10
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+11	??? down	n/a	22.591	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 11
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+11	??? up	n/a	22.598	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 11
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+12	??? down	n/a	22.601	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 12
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 b0 
+0010: 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+12	??? up	n/a	22.611	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 12
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+13	??? down	n/a	47.370	BULK_OR_INTERRUPT_TRANSFER	02 02 01 80 00 00 16 00	
+URB Header (length: 72)
+SequenceNumber: 13
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 02 01 80 00 00 16 00 01 02 03 04 05 06 07 08 
+0010: 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 ff ff ff ff ff ff ff ff 
+0040: ff 
+13	??? up	n/a	47.374	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 13
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+14	??? down	n/a	47.387	BULK_OR_INTERRUPT_TRANSFER	02 ff ff ff ff ff ff ff	
+URB Header (length: 72)
+SequenceNumber: 14
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0010: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0020: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0030: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0040: ff 
+14	??? up	n/a	47.390	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 14
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+15	??? down	n/a	47.407	BULK_OR_INTERRUPT_TRANSFER	02 ff ff ff ff ff ff ff	
+URB Header (length: 72)
+SequenceNumber: 15
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0010: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0020: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0030: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0040: ff 
+15	??? up	n/a	47.410	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 15
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+16	??? down	n/a	47.427	BULK_OR_INTERRUPT_TRANSFER	02 ff ff ff ff ff ff ff	
+URB Header (length: 72)
+SequenceNumber: 16
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0010: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0020: ff ff ff 00 00 00 ff ff ff 00 00 00 ff ff ff ff 
+0030: ff ff ff ff ff 00 00 00 ff ff ff 00 00 00 00 00 
+0040: 00 
+16	??? up	n/a	47.430	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 16
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+17	??? down	n/a	47.447	BULK_OR_INTERRUPT_TRANSFER	02 ff ff ff ff ff ff ff	
+URB Header (length: 72)
+SequenceNumber: 17
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0010: ff ff ff ff ff ff ff ff ff ff ff ff 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+17	??? up	n/a	47.450	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 17
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+18	??? down	n/a	47.467	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 ff ff	
+URB Header (length: 72)
+SequenceNumber: 18
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 ff ff ff ff ff ff ff ff ff e6 
+0010: 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+18	??? up	n/a	47.471	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 18
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+19	??? down	n/a	57.600	BULK_OR_INTERRUPT_TRANSFER	02 02 01 80 00 00 16 00	
+URB Header (length: 72)
+SequenceNumber: 19
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 02 01 80 00 00 16 00 01 02 03 04 05 06 07 08 
+0010: 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 ff 00 00 ff 00 00 
+0040: ff 
+19	??? up	n/a	57.605	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 19
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+20	??? down	n/a	57.622	BULK_OR_INTERRUPT_TRANSFER	02 00 00 ff 00 00 ff 00	
+URB Header (length: 72)
+SequenceNumber: 20
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0010: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0020: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0030: ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0040: 00 
+20	??? up	n/a	57.625	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 20
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+21	??? down	n/a	57.642	BULK_OR_INTERRUPT_TRANSFER	02 00 ff 00 00 ff 00 00	
+URB Header (length: 72)
+SequenceNumber: 21
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0010: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0020: ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0030: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0040: 00 
+21	??? up	n/a	57.645	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 21
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+22	??? down	n/a	57.662	BULK_OR_INTERRUPT_TRANSFER	02 ff 00 00 ff 00 00 ff	
+URB Header (length: 72)
+SequenceNumber: 22
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0010: ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0020: 00 00 ff 00 00 00 00 00 ff 00 00 00 00 00 ff 00 
+0030: 00 ff 00 00 ff 00 00 00 00 00 ff 00 00 00 00 00 
+0040: 00 
+22	??? up	n/a	57.665	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 22
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+23	??? down	n/a	57.682	BULK_OR_INTERRUPT_TRANSFER	02 00 00 ff 00 00 ff 00	
+URB Header (length: 72)
+SequenceNumber: 23
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0010: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+23	??? up	n/a	57.685	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 23
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+24	??? down	n/a	57.702	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 24
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 ff 00 00 ff 00 00 ff 7a 
+0010: 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+24	??? up	n/a	57.705	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 24
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+25	??? down	n/a	63.021	BULK_OR_INTERRUPT_TRANSFER	02 02 01 80 00 00 16 00	
+URB Header (length: 72)
+SequenceNumber: 25
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 02 01 80 00 00 16 00 01 02 03 04 05 06 07 08 
+0010: 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 ff 00 00 ff 00 00 ff 00 
+0040: 00 
+25	??? up	n/a	63.025	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 25
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+26	??? down	n/a	63.039	BULK_OR_INTERRUPT_TRANSFER	02 ff 00 00 ff 00 00 ff	
+URB Header (length: 72)
+SequenceNumber: 26
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0010: ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0020: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0030: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0040: ff 
+26	??? up	n/a	63.042	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 26
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+27	??? down	n/a	63.059	BULK_OR_INTERRUPT_TRANSFER	02 00 00 ff 00 00 ff 00	
+URB Header (length: 72)
+SequenceNumber: 27
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0010: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0020: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0030: ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0040: 00 
+27	??? up	n/a	63.062	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 27
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+28	??? down	n/a	63.079	BULK_OR_INTERRUPT_TRANSFER	02 00 ff 00 00 ff 00 00	
+URB Header (length: 72)
+SequenceNumber: 28
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0010: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0020: ff 00 00 00 00 00 ff 00 00 00 00 00 ff 00 00 ff 
+0030: 00 00 ff 00 00 00 00 00 ff 00 00 00 00 00 00 00 
+0040: 00 
+28	??? up	n/a	63.082	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 28
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+29	??? down	n/a	63.099	BULK_OR_INTERRUPT_TRANSFER	02 ff 00 00 ff 00 00 ff	
+URB Header (length: 72)
+SequenceNumber: 29
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0010: ff 00 00 ff 00 00 ff 00 00 ff 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+29	??? up	n/a	63.103	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 29
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+30	??? down	n/a	63.119	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 ff 00	
+URB Header (length: 72)
+SequenceNumber: 30
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 ff 00 00 ff 00 00 ff 00 00 7a 
+0010: 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+30	??? up	n/a	63.122	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 30
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+31	??? down	n/a	68.239	BULK_OR_INTERRUPT_TRANSFER	02 02 01 80 00 00 16 00	
+URB Header (length: 72)
+SequenceNumber: 31
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 02 01 80 00 00 16 00 01 02 03 04 05 06 07 08 
+0010: 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 ff 00 00 ff 00 00 ff 
+0040: 00 
+31	??? up	n/a	68.243	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 31
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+32	??? down	n/a	68.257	BULK_OR_INTERRUPT_TRANSFER	02 00 ff 00 00 ff 00 00	
+URB Header (length: 72)
+SequenceNumber: 32
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0010: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0020: ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0030: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0040: 00 
+32	??? up	n/a	68.260	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 32
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+33	??? down	n/a	68.277	BULK_OR_INTERRUPT_TRANSFER	02 ff 00 00 ff 00 00 ff	
+URB Header (length: 72)
+SequenceNumber: 33
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0010: ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0020: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0030: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0040: ff 
+33	??? up	n/a	68.280	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 33
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+34	??? down	n/a	68.297	BULK_OR_INTERRUPT_TRANSFER	02 00 00 ff 00 00 ff 00	
+URB Header (length: 72)
+SequenceNumber: 34
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0010: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0020: 00 ff 00 00 00 00 00 ff 00 00 00 00 00 ff 00 00 
+0030: ff 00 00 ff 00 00 00 00 00 ff 00 00 00 00 00 00 
+0040: 00 
+34	??? up	n/a	68.300	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 34
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+35	??? down	n/a	68.317	BULK_OR_INTERRUPT_TRANSFER	02 00 ff 00 00 ff 00 00	
+URB Header (length: 72)
+SequenceNumber: 35
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0010: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+35	??? up	n/a	68.320	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 35
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+36	??? down	n/a	68.337	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 ff	
+URB Header (length: 72)
+SequenceNumber: 36
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 ff 00 00 ff 00 00 ff 00 7a 
+0010: 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+36	??? up	n/a	68.340	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 36
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+37	??? down	n/a	80.540	BULK_OR_INTERRUPT_TRANSFER	02 02 01 80 00 00 16 00	
+URB Header (length: 72)
+SequenceNumber: 37
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 02 01 80 00 00 16 00 01 02 03 04 05 06 07 08 
+0010: 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 ff ff ff 00 ff 00 00 ff 
+0040: 00 
+37	??? up	n/a	80.543	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 37
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+38	??? down	n/a	80.555	BULK_OR_INTERRUPT_TRANSFER	02 00 ff 00 00 ff 00 00	
+URB Header (length: 72)
+SequenceNumber: 38
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0010: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0020: ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0030: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0040: 00 
+38	??? up	n/a	80.558	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 38
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+39	??? down	n/a	80.575	BULK_OR_INTERRUPT_TRANSFER	02 ff 00 00 ff 00 00 ff	
+URB Header (length: 72)
+SequenceNumber: 39
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0010: ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0020: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0030: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0040: ff 
+39	??? up	n/a	80.578	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 39
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+40	??? down	n/a	80.595	BULK_OR_INTERRUPT_TRANSFER	02 00 00 ff 00 00 ff 00	
+URB Header (length: 72)
+SequenceNumber: 40
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0010: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0020: 00 ff 00 00 00 00 00 ff 00 00 00 00 00 ff 00 00 
+0030: ff 00 00 ff 00 00 00 00 00 ff 00 00 00 00 00 00 
+0040: 00 
+40	??? up	n/a	80.598	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 40
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+41	??? down	n/a	80.614	BULK_OR_INTERRUPT_TRANSFER	02 00 ff 00 00 ff 00 00	
+URB Header (length: 72)
+SequenceNumber: 41
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0010: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+41	??? up	n/a	80.617	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 41
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+42	??? down	n/a	80.634	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 ff	
+URB Header (length: 72)
+SequenceNumber: 42
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 ff 00 00 ff 00 00 ff 00 78 
+0010: 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+42	??? up	n/a	80.637	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 42
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+43	??? down	n/a	84.449	BULK_OR_INTERRUPT_TRANSFER	02 02 01 80 00 00 16 00	
+URB Header (length: 72)
+SequenceNumber: 43
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 02 01 80 00 00 16 00 01 02 03 04 05 06 07 08 
+0010: 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 ff ff ff ff ff ff 00 ff 
+0040: 00 
+43	??? up	n/a	84.453	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 43
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+44	??? down	n/a	84.471	BULK_OR_INTERRUPT_TRANSFER	02 00 ff 00 00 ff 00 00	
+URB Header (length: 72)
+SequenceNumber: 44
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0010: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0020: ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0030: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0040: 00 
+44	??? up	n/a	84.474	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 44
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+45	??? down	n/a	84.491	BULK_OR_INTERRUPT_TRANSFER	02 ff 00 00 ff 00 00 ff	
+URB Header (length: 72)
+SequenceNumber: 45
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0010: ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0020: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0030: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0040: ff 
+45	??? up	n/a	84.494	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 45
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+46	??? down	n/a	84.511	BULK_OR_INTERRUPT_TRANSFER	02 00 00 ff 00 00 ff 00	
+URB Header (length: 72)
+SequenceNumber: 46
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0010: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0020: 00 ff 00 00 00 00 00 ff 00 00 00 00 00 ff 00 00 
+0030: ff 00 00 ff 00 00 00 00 00 ff 00 00 00 00 00 00 
+0040: 00 
+46	??? up	n/a	84.514	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 46
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+47	??? down	n/a	84.531	BULK_OR_INTERRUPT_TRANSFER	02 00 ff 00 00 ff 00 00	
+URB Header (length: 72)
+SequenceNumber: 47
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0010: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+47	??? up	n/a	84.534	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 47
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+48	??? down	n/a	84.551	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 ff	
+URB Header (length: 72)
+SequenceNumber: 48
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 ff 00 00 ff 00 00 ff 00 76 
+0010: 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+48	??? up	n/a	84.556	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 48
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+49	??? down	n/a	88.468	BULK_OR_INTERRUPT_TRANSFER	02 02 01 80 00 00 16 00	
+URB Header (length: 72)
+SequenceNumber: 49
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 02 01 80 00 00 16 00 01 02 03 04 05 06 07 08 
+0010: 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 ff ff ff ff ff ff 00 ff 
+0040: 00 
+49	??? up	n/a	88.471	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 49
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+50	??? down	n/a	88.486	BULK_OR_INTERRUPT_TRANSFER	02 00 ff 00 00 ff 00 00	
+URB Header (length: 72)
+SequenceNumber: 50
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0010: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0020: ff 00 ff ff ff 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0030: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0040: 00 
+50	??? up	n/a	88.489	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 50
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+51	??? down	n/a	88.506	BULK_OR_INTERRUPT_TRANSFER	02 ff 00 00 ff 00 00 ff	
+URB Header (length: 72)
+SequenceNumber: 51
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0010: ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0020: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0030: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0040: ff 
+51	??? up	n/a	88.509	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 51
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+52	??? down	n/a	88.526	BULK_OR_INTERRUPT_TRANSFER	02 00 00 ff 00 00 ff 00	
+URB Header (length: 72)
+SequenceNumber: 52
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0010: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0020: 00 ff 00 00 00 00 00 ff 00 00 00 00 00 ff 00 00 
+0030: ff 00 00 ff 00 00 00 00 00 ff 00 00 00 00 00 00 
+0040: 00 
+52	??? up	n/a	88.529	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 52
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+53	??? down	n/a	88.547	BULK_OR_INTERRUPT_TRANSFER	02 00 ff 00 00 ff 00 00	
+URB Header (length: 72)
+SequenceNumber: 53
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0010: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+53	??? up	n/a	88.552	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 53
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+54	??? down	n/a	88.567	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 ff	
+URB Header (length: 72)
+SequenceNumber: 54
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 ff 00 00 ff 00 00 ff 00 74 
+0010: 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+54	??? up	n/a	88.570	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 54
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+55	??? down	n/a	91.099	BULK_OR_INTERRUPT_TRANSFER	02 02 01 80 00 00 16 00	
+URB Header (length: 72)
+SequenceNumber: 55
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 02 01 80 00 00 16 00 01 02 03 04 05 06 07 08 
+0010: 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 ff ff ff ff ff ff 00 ff 
+0040: 00 
+55	??? up	n/a	91.103	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 55
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+56	??? down	n/a	91.120	BULK_OR_INTERRUPT_TRANSFER	02 00 ff 00 00 ff 00 00	
+URB Header (length: 72)
+SequenceNumber: 56
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0010: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0020: ff 00 ff ff ff ff ff ff 00 ff 00 00 ff 00 00 ff 
+0030: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0040: 00 
+56	??? up	n/a	91.123	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 56
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+57	??? down	n/a	91.140	BULK_OR_INTERRUPT_TRANSFER	02 ff 00 00 ff 00 00 ff	
+URB Header (length: 72)
+SequenceNumber: 57
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0010: ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0020: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0030: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0040: ff 
+57	??? up	n/a	91.143	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 57
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+58	??? down	n/a	91.160	BULK_OR_INTERRUPT_TRANSFER	02 00 00 ff 00 00 ff 00	
+URB Header (length: 72)
+SequenceNumber: 58
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0010: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0020: 00 ff 00 00 00 00 00 ff 00 00 00 00 00 ff 00 00 
+0030: ff 00 00 ff 00 00 00 00 00 ff 00 00 00 00 00 00 
+0040: 00 
+58	??? up	n/a	91.163	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 58
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+59	??? down	n/a	91.180	BULK_OR_INTERRUPT_TRANSFER	02 00 ff 00 00 ff 00 00	
+URB Header (length: 72)
+SequenceNumber: 59
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0010: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+59	??? up	n/a	91.183	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 59
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+60	??? down	n/a	91.200	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 ff	
+URB Header (length: 72)
+SequenceNumber: 60
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 ff 00 00 ff 00 00 ff 00 72 
+0010: 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+60	??? up	n/a	91.203	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 60
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+61	??? down	n/a	94.108	BULK_OR_INTERRUPT_TRANSFER	02 02 01 80 00 00 16 00	
+URB Header (length: 72)
+SequenceNumber: 61
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 02 01 80 00 00 16 00 01 02 03 04 05 06 07 08 
+0010: 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 ff ff ff ff ff ff 00 ff 
+0040: 00 
+61	??? up	n/a	94.111	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 61
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+62	??? down	n/a	94.124	BULK_OR_INTERRUPT_TRANSFER	02 00 ff 00 00 ff 00 00	
+URB Header (length: 72)
+SequenceNumber: 62
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0010: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0020: ff 00 ff ff ff ff ff ff 00 ff 00 00 ff 00 00 ff 
+0030: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0040: 00 
+62	??? up	n/a	94.127	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 62
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+63	??? down	n/a	94.144	BULK_OR_INTERRUPT_TRANSFER	02 ff 00 00 ff 00 00 ff	
+URB Header (length: 72)
+SequenceNumber: 63
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 ff 00 00 ff 00 00 ff 00 00 ff 00 ff ff ff 00 
+0010: ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0020: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0030: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0040: ff 
+63	??? up	n/a	94.147	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 63
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+64	??? down	n/a	94.164	BULK_OR_INTERRUPT_TRANSFER	02 00 00 ff 00 00 ff 00	
+URB Header (length: 72)
+SequenceNumber: 64
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0010: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0020: 00 ff 00 00 00 00 00 ff 00 00 00 00 00 ff 00 00 
+0030: ff 00 00 ff 00 00 00 00 00 ff 00 00 00 00 00 00 
+0040: 00 
+64	??? up	n/a	94.167	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 64
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+65	??? down	n/a	94.185	BULK_OR_INTERRUPT_TRANSFER	02 00 ff 00 00 ff 00 00	
+URB Header (length: 72)
+SequenceNumber: 65
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0010: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+65	??? up	n/a	94.188	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 65
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+66	??? down	n/a	94.205	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 ff	
+URB Header (length: 72)
+SequenceNumber: 66
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 ff 00 00 ff 00 00 ff 00 70 
+0010: 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+66	??? up	n/a	94.208	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 66
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+67	??? down	n/a	96.808	BULK_OR_INTERRUPT_TRANSFER	02 02 01 80 00 00 16 00	
+URB Header (length: 72)
+SequenceNumber: 67
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 02 01 80 00 00 16 00 01 02 03 04 05 06 07 08 
+0010: 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 ff ff ff ff ff ff 00 ff 
+0040: 00 
+67	??? up	n/a	96.812	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 67
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+68	??? down	n/a	96.828	BULK_OR_INTERRUPT_TRANSFER	02 00 ff 00 00 ff 00 00	
+URB Header (length: 72)
+SequenceNumber: 68
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0010: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0020: ff 00 ff ff ff ff ff ff 00 ff 00 00 ff 00 00 ff 
+0030: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0040: 00 
+68	??? up	n/a	96.831	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 68
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+69	??? down	n/a	96.848	BULK_OR_INTERRUPT_TRANSFER	02 ff 00 00 ff 00 00 ff	
+URB Header (length: 72)
+SequenceNumber: 69
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 ff 00 00 ff 00 00 ff 00 00 ff 00 ff ff ff ff 
+0010: ff ff 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0020: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0030: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0040: ff 
+69	??? up	n/a	96.851	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 69
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+70	??? down	n/a	96.868	BULK_OR_INTERRUPT_TRANSFER	02 00 00 ff 00 00 ff 00	
+URB Header (length: 72)
+SequenceNumber: 70
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0010: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0020: 00 ff 00 00 00 00 00 ff 00 00 00 00 00 ff 00 00 
+0030: ff 00 00 ff 00 00 00 00 00 ff 00 00 00 00 00 00 
+0040: 00 
+70	??? up	n/a	96.871	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 70
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+71	??? down	n/a	96.888	BULK_OR_INTERRUPT_TRANSFER	02 00 ff 00 00 ff 00 00	
+URB Header (length: 72)
+SequenceNumber: 71
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0010: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+71	??? up	n/a	96.891	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 71
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+72	??? down	n/a	96.908	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 ff	
+URB Header (length: 72)
+SequenceNumber: 72
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 ff 00 00 ff 00 00 ff 00 6e 
+0010: 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+72	??? up	n/a	96.911	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 72
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+73	??? down	n/a	99.830	BULK_OR_INTERRUPT_TRANSFER	02 02 01 80 00 00 16 00	
+URB Header (length: 72)
+SequenceNumber: 73
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 02 01 80 00 00 16 00 01 02 03 04 05 06 07 08 
+0010: 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 ff ff ff ff ff ff 00 ff 
+0040: 00 
+73	??? up	n/a	99.833	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 73
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+74	??? down	n/a	99.853	BULK_OR_INTERRUPT_TRANSFER	02 00 ff 00 00 ff 00 00	
+URB Header (length: 72)
+SequenceNumber: 74
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0010: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0020: ff 00 ff ff ff ff ff ff 00 ff 00 00 ff 00 00 ff 
+0030: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0040: 00 
+74	??? up	n/a	99.856	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 74
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+75	??? down	n/a	99.873	BULK_OR_INTERRUPT_TRANSFER	02 ff 00 00 ff 00 00 ff	
+URB Header (length: 72)
+SequenceNumber: 75
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 ff 00 00 ff 00 00 ff 00 00 ff 00 ff ff ff ff 
+0010: ff ff 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0020: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0030: 00 ff 00 ff ff ff 00 ff 00 00 ff 00 00 ff 00 00 
+0040: ff 
+75	??? up	n/a	99.876	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 75
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+76	??? down	n/a	99.893	BULK_OR_INTERRUPT_TRANSFER	02 00 00 ff 00 00 ff 00	
+URB Header (length: 72)
+SequenceNumber: 76
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0010: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0020: 00 ff 00 00 00 00 00 ff 00 00 00 00 00 ff 00 00 
+0030: ff 00 00 ff 00 00 00 00 00 ff 00 00 00 00 00 00 
+0040: 00 
+76	??? up	n/a	99.896	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 76
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+77	??? down	n/a	99.913	BULK_OR_INTERRUPT_TRANSFER	02 00 ff 00 00 ff 00 00	
+URB Header (length: 72)
+SequenceNumber: 77
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0010: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+77	??? up	n/a	99.917	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 77
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+78	??? down	n/a	99.933	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 ff	
+URB Header (length: 72)
+SequenceNumber: 78
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 ff 00 00 ff 00 00 ff 00 6c 
+0010: 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+78	??? up	n/a	99.936	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 78
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+79	??? down	n/a	102.450	BULK_OR_INTERRUPT_TRANSFER	02 02 01 80 00 00 16 00	
+URB Header (length: 72)
+SequenceNumber: 79
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 02 01 80 00 00 16 00 01 02 03 04 05 06 07 08 
+0010: 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 ff ff ff ff ff ff 00 ff 
+0040: 00 
+79	??? up	n/a	102.454	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 79
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+80	??? down	n/a	102.466	BULK_OR_INTERRUPT_TRANSFER	02 00 ff 00 00 ff 00 00	
+URB Header (length: 72)
+SequenceNumber: 80
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0010: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0020: ff 00 ff ff ff ff ff ff 00 ff 00 00 ff 00 00 ff 
+0030: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0040: 00 
+80	??? up	n/a	102.469	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 80
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+81	??? down	n/a	102.487	BULK_OR_INTERRUPT_TRANSFER	02 ff 00 00 ff 00 00 ff	
+URB Header (length: 72)
+SequenceNumber: 81
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 ff 00 00 ff 00 00 ff 00 00 ff 00 ff ff ff ff 
+0010: ff ff 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0020: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0030: 00 ff 00 ff ff ff ff ff ff 00 ff 00 00 ff 00 00 
+0040: ff 
+81	??? up	n/a	102.490	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 81
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+82	??? down	n/a	102.506	BULK_OR_INTERRUPT_TRANSFER	02 00 00 ff 00 00 ff 00	
+URB Header (length: 72)
+SequenceNumber: 82
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0010: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0020: 00 ff 00 00 00 00 00 ff 00 00 00 00 00 ff 00 00 
+0030: ff 00 00 ff 00 00 00 00 00 ff 00 00 00 00 00 00 
+0040: 00 
+82	??? up	n/a	102.509	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 82
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+83	??? down	n/a	102.526	BULK_OR_INTERRUPT_TRANSFER	02 00 ff 00 00 ff 00 00	
+URB Header (length: 72)
+SequenceNumber: 83
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0010: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+83	??? up	n/a	102.529	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 83
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+84	??? down	n/a	102.546	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 ff	
+URB Header (length: 72)
+SequenceNumber: 84
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 ff 00 00 ff 00 00 ff 00 6a 
+0010: 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+84	??? up	n/a	102.549	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 84
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+85	??? down	n/a	105.378	BULK_OR_INTERRUPT_TRANSFER	02 02 01 80 00 00 16 00	
+URB Header (length: 72)
+SequenceNumber: 85
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 02 01 80 00 00 16 00 01 02 03 04 05 06 07 08 
+0010: 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 ff ff ff ff ff ff 00 ff 
+0040: 00 
+85	??? up	n/a	105.382	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 85
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+86	??? down	n/a	105.400	BULK_OR_INTERRUPT_TRANSFER	02 00 ff 00 00 ff 00 00	
+URB Header (length: 72)
+SequenceNumber: 86
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0010: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0020: ff 00 ff ff ff ff ff ff 00 ff 00 00 ff 00 00 ff 
+0030: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0040: 00 
+86	??? up	n/a	105.404	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 86
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+87	??? down	n/a	105.420	BULK_OR_INTERRUPT_TRANSFER	02 ff 00 00 ff 00 00 ff	
+URB Header (length: 72)
+SequenceNumber: 87
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 ff 00 00 ff 00 00 ff 00 00 ff 00 ff ff ff ff 
+0010: ff ff 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0020: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0030: 00 ff 00 ff ff ff ff ff ff 00 ff 00 00 ff 00 00 
+0040: ff 
+87	??? up	n/a	105.423	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 87
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+88	??? down	n/a	105.440	BULK_OR_INTERRUPT_TRANSFER	02 00 00 ff 00 00 ff 00	
+URB Header (length: 72)
+SequenceNumber: 88
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0010: 00 00 ff 00 00 ff 00 ff ff ff 00 ff 00 00 ff 00 
+0020: 00 ff 00 00 00 00 00 ff 00 00 00 00 00 ff 00 00 
+0030: ff 00 00 ff 00 00 00 00 00 ff 00 00 00 00 00 00 
+0040: 00 
+88	??? up	n/a	105.443	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 88
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+89	??? down	n/a	105.460	BULK_OR_INTERRUPT_TRANSFER	02 00 ff 00 00 ff 00 00	
+URB Header (length: 72)
+SequenceNumber: 89
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0010: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+89	??? up	n/a	105.463	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 89
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+90	??? down	n/a	105.481	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 ff	
+URB Header (length: 72)
+SequenceNumber: 90
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 ff 00 00 ff 00 00 ff 00 68 
+0010: 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+90	??? up	n/a	105.484	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 90
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+91	??? down	n/a	107.619	BULK_OR_INTERRUPT_TRANSFER	02 02 01 80 00 00 16 00	
+URB Header (length: 72)
+SequenceNumber: 91
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 02 01 80 00 00 16 00 01 02 03 04 05 06 07 08 
+0010: 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 ff ff ff ff ff ff 00 ff 
+0040: 00 
+91	??? up	n/a	107.623	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 91
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+92	??? down	n/a	107.643	BULK_OR_INTERRUPT_TRANSFER	02 00 ff 00 00 ff 00 00	
+URB Header (length: 72)
+SequenceNumber: 92
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0010: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 
+0020: ff 00 ff ff ff ff ff ff 00 ff 00 00 ff 00 00 ff 
+0030: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0040: 00 
+92	??? up	n/a	107.647	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 92
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+93	??? down	n/a	107.664	BULK_OR_INTERRUPT_TRANSFER	02 ff 00 00 ff 00 00 ff	
+URB Header (length: 72)
+SequenceNumber: 93
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 ff 00 00 ff 00 00 ff 00 00 ff 00 ff ff ff ff 
+0010: ff ff 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0020: 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0030: 00 ff 00 ff ff ff ff ff ff 00 ff 00 00 ff 00 00 
+0040: ff 
+93	??? up	n/a	107.668	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 93
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+94	??? down	n/a	107.705	BULK_OR_INTERRUPT_TRANSFER	02 00 00 ff 00 00 ff 00	
+URB Header (length: 72)
+SequenceNumber: 94
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 
+0010: 00 00 ff 00 00 ff 00 ff ff ff ff ff ff 00 ff 00 
+0020: 00 ff 00 00 00 00 00 ff 00 00 00 00 00 ff 00 00 
+0030: ff 00 00 ff 00 00 00 00 00 ff 00 00 00 00 00 00 
+0040: 00 
+94	??? up	n/a	107.708	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 94
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+95	??? down	n/a	107.724	BULK_OR_INTERRUPT_TRANSFER	02 00 ff 00 00 ff 00 00	
+URB Header (length: 72)
+SequenceNumber: 95
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 ff 00 
+0010: 00 ff 00 00 ff 00 00 ff 00 00 ff 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+95	??? up	n/a	107.727	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 95
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+96	??? down	n/a	107.744	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 ff	
+URB Header (length: 72)
+SequenceNumber: 96
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 ff 00 00 ff 00 00 ff 00 66 
+0010: 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+96	??? up	n/a	107.747	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 96
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+97	??? down	n/a	117.856	BULK_OR_INTERRUPT_TRANSFER	02 02 01 80 00 00 16 00	
+URB Header (length: 72)
+SequenceNumber: 97
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 02 01 80 00 00 16 00 01 02 03 04 05 06 07 08 
+0010: 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 b4 b4 b4 b4 b4 b4 b4 b4 
+0040: b4 
+97	??? up	n/a	117.860	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 97
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+98	??? down	n/a	117.878	BULK_OR_INTERRUPT_TRANSFER	02 b4 b4 b4 b4 b4 b4 b4	
+URB Header (length: 72)
+SequenceNumber: 98
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 
+0010: b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 
+0020: b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 
+0030: b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 
+0040: b4 
+98	??? up	n/a	117.882	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 98
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+99	??? down	n/a	117.898	BULK_OR_INTERRUPT_TRANSFER	02 b4 b4 b4 b4 b4 b4 b4	
+URB Header (length: 72)
+SequenceNumber: 99
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 
+0010: b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 
+0020: b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 
+0030: b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 
+0040: b4 
+99	??? up	n/a	117.901	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 99
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+100	??? down	n/a	117.918	BULK_OR_INTERRUPT_TRANSFER	02 b4 b4 b4 b4 b4 b4 b4	
+URB Header (length: 72)
+SequenceNumber: 100
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 
+0010: b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 
+0020: b4 b4 b4 00 00 00 b4 b4 b4 00 00 00 b4 b4 b4 b4 
+0030: b4 b4 b4 b4 b4 00 00 00 b4 b4 b4 00 00 00 00 00 
+0040: 00 
+100	??? up	n/a	117.922	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 100
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+101	??? down	n/a	117.938	BULK_OR_INTERRUPT_TRANSFER	02 b4 b4 b4 b4 b4 b4 b4	
+URB Header (length: 72)
+SequenceNumber: 101
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 
+0010: b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 b4 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+101	??? up	n/a	117.941	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 101
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+102	??? down	n/a	117.958	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 b4 b4	
+URB Header (length: 72)
+SequenceNumber: 102
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 b4 b4 b4 b4 b4 b4 b4 b4 b4 dc 
+0010: 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+102	??? up	n/a	117.961	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 102
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+103	??? down	n/a	136.199	BULK_OR_INTERRUPT_TRANSFER	02 02 01 80 00 00 16 00	
+URB Header (length: 72)
+SequenceNumber: 103
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 02 01 80 00 00 16 00 01 02 03 04 05 06 07 08 
+0010: 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 53 38 b4 53 38 b4 53 38 
+0040: b4 
+103	??? up	n/a	136.203	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 103
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+104	??? down	n/a	136.215	BULK_OR_INTERRUPT_TRANSFER	02 53 38 b4 53 38 b4 53	
+URB Header (length: 72)
+SequenceNumber: 104
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 53 38 b4 53 38 b4 53 38 b4 53 38 b4 53 38 b4 
+0010: 53 38 b4 53 38 b4 53 38 b4 53 38 b4 53 38 b4 53 
+0020: 38 b4 53 38 b4 53 38 b4 53 38 b4 53 38 b4 53 38 
+0030: b4 53 38 b4 53 38 b4 53 38 b4 53 38 b4 53 38 b4 
+0040: 53 
+104	??? up	n/a	136.218	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 104
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+105	??? down	n/a	136.235	BULK_OR_INTERRUPT_TRANSFER	02 38 b4 53 38 b4 53 38	
+URB Header (length: 72)
+SequenceNumber: 105
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 38 b4 53 38 b4 53 38 b4 53 38 b4 53 38 b4 53 
+0010: 38 b4 53 38 b4 53 38 b4 53 38 b4 53 38 b4 53 38 
+0020: b4 53 38 b4 53 38 b4 53 38 b4 53 38 b4 53 38 b4 
+0030: 53 38 b4 53 38 b4 53 38 b4 53 38 b4 53 38 b4 53 
+0040: 38 
+105	??? up	n/a	136.238	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 105
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+106	??? down	n/a	136.255	BULK_OR_INTERRUPT_TRANSFER	02 b4 53 38 b4 53 38 b4	
+URB Header (length: 72)
+SequenceNumber: 106
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 b4 53 38 b4 53 38 b4 53 38 b4 53 38 b4 53 38 
+0010: b4 53 38 b4 53 38 b4 53 38 b4 53 38 b4 53 38 b4 
+0020: 53 38 b4 00 00 00 53 38 b4 00 00 00 53 38 b4 53 
+0030: 38 b4 53 38 b4 00 00 00 53 38 b4 00 00 00 00 00 
+0040: 00 
+106	??? up	n/a	136.258	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 106
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+107	??? down	n/a	136.275	BULK_OR_INTERRUPT_TRANSFER	02 53 38 b4 53 38 b4 53	
+URB Header (length: 72)
+SequenceNumber: 107
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 53 38 b4 53 38 b4 53 38 b4 53 38 b4 53 38 b4 
+0010: 53 38 b4 53 38 b4 53 38 b4 53 38 b4 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+107	??? up	n/a	136.278	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 107
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+108	??? down	n/a	136.295	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 53 38	
+URB Header (length: 72)
+SequenceNumber: 108
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 53 38 b4 53 38 b4 53 38 b4 fa 
+0010: 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+108	??? up	n/a	136.298	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 108
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+109	??? down	n/a	156.185	BULK_OR_INTERRUPT_TRANSFER	02 02 01 80 00 00 16 00	
+URB Header (length: 72)
+SequenceNumber: 109
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 02 01 80 00 00 16 00 01 02 03 04 05 06 07 08 
+0010: 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 b4 01 b4 b4 01 b4 b4 01 
+0040: b4 
+109	??? up	n/a	156.188	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 109
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+110	??? down	n/a	156.203	BULK_OR_INTERRUPT_TRANSFER	02 b4 01 b4 b4 01 b4 b4	
+URB Header (length: 72)
+SequenceNumber: 110
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 b4 01 b4 b4 01 b4 b4 01 b4 b4 01 b4 b4 01 b4 
+0010: b4 01 b4 b4 01 b4 b4 01 b4 b4 01 b4 b4 01 b4 b4 
+0020: 01 b4 b4 01 b4 b4 01 b4 b4 01 b4 b4 01 b4 b4 01 
+0030: b4 b4 01 b4 b4 01 b4 b4 01 b4 b4 01 b4 b4 01 b4 
+0040: b4 
+110	??? up	n/a	156.206	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 110
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+111	??? down	n/a	156.223	BULK_OR_INTERRUPT_TRANSFER	02 01 b4 b4 01 b4 b4 01	
+URB Header (length: 72)
+SequenceNumber: 111
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 01 b4 b4 01 b4 b4 01 b4 b4 01 b4 b4 01 b4 b4 
+0010: 01 b4 b4 01 b4 b4 01 b4 b4 01 b4 b4 01 b4 b4 01 
+0020: b4 b4 01 b4 b4 01 b4 b4 01 b4 b4 01 b4 b4 01 b4 
+0030: b4 01 b4 b4 01 b4 b4 01 b4 b4 01 b4 b4 01 b4 b4 
+0040: 01 
+111	??? up	n/a	156.226	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 111
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+112	??? down	n/a	156.243	BULK_OR_INTERRUPT_TRANSFER	02 b4 b4 01 b4 b4 01 b4	
+URB Header (length: 72)
+SequenceNumber: 112
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 b4 b4 01 b4 b4 01 b4 b4 01 b4 b4 01 b4 b4 01 
+0010: b4 b4 01 b4 b4 01 b4 b4 01 b4 b4 01 b4 b4 01 b4 
+0020: b4 01 b4 00 00 00 b4 01 b4 00 00 00 b4 01 b4 b4 
+0030: 01 b4 b4 01 b4 00 00 00 b4 01 b4 00 00 00 00 00 
+0040: 00 
+112	??? up	n/a	156.246	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 112
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+113	??? down	n/a	156.264	BULK_OR_INTERRUPT_TRANSFER	02 b4 01 b4 b4 01 b4 b4	
+URB Header (length: 72)
+SequenceNumber: 113
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 b4 01 b4 b4 01 b4 b4 01 b4 b4 01 b4 b4 01 b4 
+0010: b4 01 b4 b4 01 b4 b4 01 b4 b4 01 b4 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+113	??? up	n/a	156.267	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 113
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+114	??? down	n/a	156.284	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 b4 01	
+URB Header (length: 72)
+SequenceNumber: 114
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 b4 01 b4 b4 01 b4 b4 01 b4 1e 
+0010: 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+114	??? up	n/a	156.287	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 114
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+115	??? down	n/a	160.146	BULK_OR_INTERRUPT_TRANSFER	02 02 01 80 00 01 01 00	
+URB Header (length: 72)
+SequenceNumber: 115
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 02 01 80 00 01 01 00 01 02 03 04 05 06 07 08 
+0010: 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+115	??? up	n/a	160.150	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 115
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+116	??? down	n/a	160.159	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 116
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+116	??? up	n/a	160.164	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 116
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+117	??? down	n/a	160.169	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 117
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+117	??? up	n/a	160.177	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 117
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+118	??? down	n/a	160.179	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 118
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+118	??? up	n/a	160.191	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 118
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+119	??? down	n/a	160.199	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 119
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+119	??? up	n/a	160.204	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 119
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+120	??? down	n/a	160.209	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 120
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 b0 
+0010: 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+120	??? up	n/a	160.217	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 120
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+121	??? down	n/a	162.364	BULK_OR_INTERRUPT_TRANSFER	02 02 01 80 00 01 01 00	
+URB Header (length: 72)
+SequenceNumber: 121
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 02 01 80 00 01 01 00 01 02 03 04 05 06 07 08 
+0010: 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+121	??? up	n/a	162.367	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 121
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+122	??? down	n/a	162.372	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 122
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+122	??? up	n/a	162.381	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 122
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+123	??? down	n/a	162.382	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 123
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+123	??? up	n/a	162.394	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 123
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+124	??? down	n/a	162.402	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 124
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+124	??? up	n/a	162.408	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 124
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+125	??? down	n/a	162.412	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 125
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+125	??? up	n/a	162.421	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 125
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+126	??? down	n/a	162.422	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 126
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 b0 
+0010: 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+126	??? up	n/a	162.434	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 126
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+127	??? down	n/a	166.243	BULK_OR_INTERRUPT_TRANSFER	02 02 01 80 00 00 16 00	
+URB Header (length: 72)
+SequenceNumber: 127
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 02 01 80 00 00 16 00 01 02 03 04 05 06 07 08 
+0010: 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+127	??? up	n/a	166.246	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 127
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+128	??? down	n/a	166.257	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 128
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+128	??? up	n/a	166.260	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 128
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+129	??? down	n/a	166.277	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 129
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+129	??? up	n/a	166.280	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 129
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+130	??? down	n/a	166.298	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 130
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+130	??? up	n/a	166.301	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 130
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+131	??? down	n/a	166.318	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 131
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+131	??? up	n/a	166.321	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 131
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+132	??? down	n/a	166.338	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 132
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 c4 
+0010: 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+132	??? up	n/a	166.341	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 132
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+133	??? down	n/a	209.059	BULK_OR_INTERRUPT_TRANSFER	02 02 01 80 00 00 16 00	
+URB Header (length: 72)
+SequenceNumber: 133
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 02 01 80 00 00 16 00 01 02 03 04 05 06 07 08 
+0010: 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 01 01 fd 01 01 fd 01 01 
+0040: fd 
+133	??? up	n/a	209.063	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 133
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+134	??? down	n/a	209.079	BULK_OR_INTERRUPT_TRANSFER	02 01 01 fd 01 01 fd 01	
+URB Header (length: 72)
+SequenceNumber: 134
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 
+0010: 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 
+0020: 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 
+0030: fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 
+0040: 01 
+134	??? up	n/a	209.082	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 134
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+135	??? down	n/a	209.109	BULK_OR_INTERRUPT_TRANSFER	02 01 fd 01 01 fd 01 01	
+URB Header (length: 72)
+SequenceNumber: 135
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 
+0010: 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 
+0020: fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 
+0030: 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 
+0040: 01 
+135	??? up	n/a	209.112	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 135
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+136	??? down	n/a	209.129	BULK_OR_INTERRUPT_TRANSFER	02 fd 01 01 fd 01 01 fd	
+URB Header (length: 72)
+SequenceNumber: 136
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 
+0010: fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 
+0020: 01 01 fd 00 00 00 01 01 fd 00 00 00 01 01 fd 01 
+0030: 01 fd 01 01 fd 00 00 00 01 01 fd 00 00 00 00 00 
+0040: 00 
+136	??? up	n/a	209.132	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 136
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+137	??? down	n/a	209.149	BULK_OR_INTERRUPT_TRANSFER	02 01 01 fd 01 01 fd 01	
+URB Header (length: 72)
+SequenceNumber: 137
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 
+0010: 01 01 fd 01 01 fd 01 01 fd 01 01 fd 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+137	??? up	n/a	209.152	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 137
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+138	??? down	n/a	209.169	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 01 01	
+URB Header (length: 72)
+SequenceNumber: 138
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 01 01 fd 01 01 fd 01 01 fd 7a 
+0010: 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+138	??? up	n/a	209.172	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 138
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+139	??? down	n/a	215.732	BULK_OR_INTERRUPT_TRANSFER	02 02 01 80 00 00 16 00	
+URB Header (length: 72)
+SequenceNumber: 139
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 02 01 80 00 00 16 00 01 02 03 04 05 06 07 08 
+0010: 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 01 01 fd 01 01 fd 01 01 
+0040: fd 
+139	??? up	n/a	215.736	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 139
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+140	??? down	n/a	215.749	BULK_OR_INTERRUPT_TRANSFER	02 01 01 fd 01 01 fd 01	
+URB Header (length: 72)
+SequenceNumber: 140
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 
+0010: 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 
+0020: 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 
+0030: fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 
+0040: 01 
+140	??? up	n/a	215.752	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 140
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+141	??? down	n/a	215.769	BULK_OR_INTERRUPT_TRANSFER	02 01 fd 01 01 fd 01 01	
+URB Header (length: 72)
+SequenceNumber: 141
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 
+0010: 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 
+0020: fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 
+0030: 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 
+0040: 01 
+141	??? up	n/a	215.772	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 141
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+142	??? down	n/a	215.789	BULK_OR_INTERRUPT_TRANSFER	02 fd 01 01 fd 01 01 fd	
+URB Header (length: 72)
+SequenceNumber: 142
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 
+0010: fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 
+0020: 01 01 fd 00 00 00 01 01 fd 00 00 00 01 01 fd 01 
+0030: 01 fd 01 01 fd 00 00 00 01 01 fd 00 00 00 00 00 
+0040: 00 
+142	??? up	n/a	215.792	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 142
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+143	??? down	n/a	215.809	BULK_OR_INTERRUPT_TRANSFER	02 01 01 fd 01 01 fd 01	
+URB Header (length: 72)
+SequenceNumber: 143
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 
+0010: 01 01 fd 01 01 fd 01 01 fd 01 01 fd 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+143	??? up	n/a	215.812	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 143
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+144	??? down	n/a	215.830	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 01 01	
+URB Header (length: 72)
+SequenceNumber: 144
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 01 01 fd 01 01 fd 01 01 fd 7a 
+0010: 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+144	??? up	n/a	215.833	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 144
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+145	??? down	n/a	217.950	BULK_OR_INTERRUPT_TRANSFER	02 02 01 80 00 00 16 00	
+URB Header (length: 72)
+SequenceNumber: 145
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 02 01 80 00 00 16 00 01 02 03 04 05 06 07 08 
+0010: 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 01 01 fd 01 01 fd 01 01 
+0040: fd 
+145	??? up	n/a	217.954	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 145
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+146	??? down	n/a	217.972	BULK_OR_INTERRUPT_TRANSFER	02 01 01 fd 01 01 fd 01	
+URB Header (length: 72)
+SequenceNumber: 146
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 
+0010: 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 
+0020: 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 
+0030: fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 
+0040: 01 
+146	??? up	n/a	217.975	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 146
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+147	??? down	n/a	217.992	BULK_OR_INTERRUPT_TRANSFER	02 01 fd 01 01 fd 01 01	
+URB Header (length: 72)
+SequenceNumber: 147
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 
+0010: 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 
+0020: fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 
+0030: 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 
+0040: 01 
+147	??? up	n/a	217.996	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 147
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+148	??? down	n/a	218.013	BULK_OR_INTERRUPT_TRANSFER	02 fd 01 01 fd 01 01 fd	
+URB Header (length: 72)
+SequenceNumber: 148
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 
+0010: fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 
+0020: 01 01 fd 00 00 00 01 01 fd 00 00 00 01 01 fd 01 
+0030: 01 fd 01 01 fd 00 00 00 01 01 fd 00 00 00 00 00 
+0040: 00 
+148	??? up	n/a	218.016	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 148
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+149	??? down	n/a	218.033	BULK_OR_INTERRUPT_TRANSFER	02 01 01 fd 01 01 fd 01	
+URB Header (length: 72)
+SequenceNumber: 149
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 
+0010: 01 01 fd 01 01 fd 01 01 fd 01 01 fd 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+149	??? up	n/a	218.036	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 149
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+150	??? down	n/a	218.053	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 01 01	
+URB Header (length: 72)
+SequenceNumber: 150
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 01 01 fd 01 01 fd 01 01 fd 7a 
+0010: 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+150	??? up	n/a	218.056	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 150
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+151	??? down	n/a	220.292	BULK_OR_INTERRUPT_TRANSFER	02 02 01 80 00 00 16 00	
+URB Header (length: 72)
+SequenceNumber: 151
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 02 01 80 00 00 16 00 01 02 03 04 05 06 07 08 
+0010: 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 01 01 fd 01 01 fd 01 01 
+0040: fd 
+151	??? up	n/a	220.296	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 151
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+152	??? down	n/a	220.316	BULK_OR_INTERRUPT_TRANSFER	02 01 01 fd 01 01 fd 01	
+URB Header (length: 72)
+SequenceNumber: 152
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 
+0010: 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 
+0020: 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 
+0030: fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 
+0040: 01 
+152	??? up	n/a	220.320	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 152
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+153	??? down	n/a	220.336	BULK_OR_INTERRUPT_TRANSFER	02 01 fd 01 01 fd 01 01	
+URB Header (length: 72)
+SequenceNumber: 153
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 
+0010: 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 
+0020: fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 
+0030: 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 
+0040: 01 
+153	??? up	n/a	220.339	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 153
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+154	??? down	n/a	220.356	BULK_OR_INTERRUPT_TRANSFER	02 fd 01 01 fd 01 01 fd	
+URB Header (length: 72)
+SequenceNumber: 154
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 
+0010: fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 
+0020: 01 01 fd 00 00 00 01 01 fd 00 00 00 01 01 fd 01 
+0030: 01 fd 01 01 fd 00 00 00 01 01 fd 00 00 00 00 00 
+0040: 00 
+154	??? up	n/a	220.359	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 154
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+155	??? down	n/a	220.376	BULK_OR_INTERRUPT_TRANSFER	02 01 01 fd 01 01 fd 01	
+URB Header (length: 72)
+SequenceNumber: 155
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 
+0010: 01 01 fd 01 01 fd 01 01 fd 01 01 fd 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+155	??? up	n/a	220.380	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 155
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+156	??? down	n/a	220.396	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 01 01	
+URB Header (length: 72)
+SequenceNumber: 156
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 01 01 fd 01 01 fd 01 01 fd 7a 
+0010: 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+156	??? up	n/a	220.399	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 156
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+157	??? down	n/a	224.491	BULK_OR_INTERRUPT_TRANSFER	02 02 01 80 00 00 16 00	
+URB Header (length: 72)
+SequenceNumber: 157
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 02 01 80 00 00 16 00 01 02 03 04 05 06 07 08 
+0010: 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 01 01 fd 01 01 fd 01 01 
+0040: fd 
+157	??? up	n/a	224.495	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 157
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+158	??? down	n/a	224.511	BULK_OR_INTERRUPT_TRANSFER	02 01 01 fd 01 01 fd 01	
+URB Header (length: 72)
+SequenceNumber: 158
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 
+0010: 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 
+0020: 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 
+0030: fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 
+0040: 01 
+158	??? up	n/a	224.514	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 158
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+159	??? down	n/a	224.531	BULK_OR_INTERRUPT_TRANSFER	02 01 fd 01 01 fd 01 01	
+URB Header (length: 72)
+SequenceNumber: 159
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 
+0010: 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 
+0020: fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 
+0030: 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 
+0040: 01 
+159	??? up	n/a	224.534	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 159
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+160	??? down	n/a	224.551	BULK_OR_INTERRUPT_TRANSFER	02 fd 01 01 fd 01 01 fd	
+URB Header (length: 72)
+SequenceNumber: 160
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 
+0010: fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 
+0020: 01 01 fd 00 00 00 01 01 fd 00 00 00 01 01 fd 01 
+0030: 01 fd 01 01 fd 00 00 00 01 01 fd 00 00 00 00 00 
+0040: 00 
+160	??? up	n/a	224.555	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 160
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+161	??? down	n/a	224.571	BULK_OR_INTERRUPT_TRANSFER	02 01 01 fd 01 01 fd 01	
+URB Header (length: 72)
+SequenceNumber: 161
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 01 01 fd 01 01 fd 01 01 fd 01 01 fd 01 01 fd 
+0010: 01 01 fd 01 01 fd 01 01 fd 01 01 fd 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+161	??? up	n/a	224.574	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 161
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+162	??? down	n/a	224.591	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 01 01	
+URB Header (length: 72)
+SequenceNumber: 162
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 01 01 fd 01 01 fd 01 01 fd 7a 
+0010: 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+162	??? up	n/a	224.594	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 162
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+163	??? down	n/a	231.892	BULK_OR_INTERRUPT_TRANSFER	02 02 01 80 00 01 01 00	
+URB Header (length: 72)
+SequenceNumber: 163
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 02 01 80 00 01 01 00 01 02 03 04 05 06 07 08 
+0010: 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+163	??? up	n/a	231.897	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 163
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+164	??? down	n/a	231.902	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 164
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+164	??? up	n/a	231.910	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 164
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+165	??? down	n/a	231.912	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 165
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+165	??? up	n/a	231.924	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 165
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+166	??? down	n/a	231.932	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 166
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+166	??? up	n/a	231.937	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 166
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+167	??? down	n/a	231.942	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 167
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+167	??? up	n/a	231.950	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 167
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+168	??? down	n/a	231.952	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 168
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 b0 
+0010: 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+168	??? up	n/a	231.964	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 168
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+169	??? down	n/a	231.982	BULK_OR_INTERRUPT_TRANSFER	02 02 01 80 00 01 19 fd	
+URB Header (length: 72)
+SequenceNumber: 169
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 02 01 80 00 01 19 fd 01 02 03 04 05 06 07 08 
+0010: 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+169	??? up	n/a	231.986	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 169
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+170	??? down	n/a	231.992	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 170
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+170	??? up	n/a	232.000	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 170
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+171	??? down	n/a	232.002	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 171
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+171	??? up	n/a	232.013	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 171
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+172	??? down	n/a	232.022	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 172
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+172	??? up	n/a	232.026	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 172
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+173	??? down	n/a	232.042	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 173
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+173	??? up	n/a	232.045	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 173
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer
+
+174	??? down	n/a	232.052	BULK_OR_INTERRUPT_TRANSFER	02 00 00 00 00 00 00 00	
+URB Header (length: 72)
+SequenceNumber: 174
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+TransferBuffer: 0x00000041 (65) length
+0000: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 c5 
+0010: 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+0040: 00 
+174	??? up	n/a	232.059	BULK_OR_INTERRUPT_TRANSFER	-	0x00000000
+URB Header (length: 72)
+SequenceNumber: 174
+Function: 0009 (BULK_OR_INTERRUPT_TRANSFER)
+TransferFlags: 0x00000002
+
+No TransferBuffer

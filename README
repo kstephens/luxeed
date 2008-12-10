@@ -1,0 +1,10 @@
+Luxheed LED Keyboard driver.
+
+This is an attempt a creating a Linux driver for the 
+Luxheed LED Keyboard.
+
+Goal:
+* Decipher the USB protocol / messages
+* Create a simple driver.
+* Create a daemon that can recieve high-level events.
+
