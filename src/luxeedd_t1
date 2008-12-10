@@ -1,0 +1,89 @@
+#!/bin/sh
+set -e
+
+cat <<EOF | sudo ./luxeedd
+color ff ff ff
+
+set 0
+update
+wait 500000
+set 1
+update
+wait 500000
+set 2
+update
+wait 500000
+set 3
+update
+
+color 0 0 0 
+set 0
+update
+wait 500000
+set 1
+update
+wait 500000
+set 2
+update
+wait 500000
+set 3
+update
+
+color ff 00 00
+
+set 0
+update
+wait 500000
+set 1
+update
+wait 500000
+set 2
+update
+wait 500000
+set 3
+update
+
+color 00 ff 00
+
+set 0
+update
+wait 500000
+set 1
+update
+wait 500000
+set 2
+update
+wait 500000
+set 3
+update
+
+color 00 00 ff
+
+set 0
+update
+wait 500000
+set 1
+update
+wait 500000
+set 2
+update
+wait 500000
+set 3
+update
+
+color 0 0 0 
+set 0
+update
+wait 500000
+set 1
+update
+wait 500000
+set 2
+update
+wait 500000
+set 3
+update
+
+EOF
+
+exit 0
