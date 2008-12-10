@@ -22,3 +22,35 @@ make test            (requires sudo)
 
 Watch the pretty rainbow!
 
+luxeedd:
+
+cat <<EOF | sudo ./luxeedd
+color ff ff ff
+
+set 0
+update
+wait 500000
+set 1
+update
+wait 500000
+set 2
+update
+wait 500000
+set 3
+update
+
+color 0 0 0 
+set 0
+update
+wait 500000
+set 1
+update
+wait 500000
+set 2
+update
+wait 500000
+set 3
+update
+
+EOF 
+
