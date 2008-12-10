@@ -12,9 +12,14 @@ int main (int argc, char **argv)
 {
   int result = 0;
   luxeed_device *dev;
+  int verbose = 0;
 
   progname = argv[0];
   
+  if ( argc > 1 ) {
+    verbose = 1;
+  }
+
   dev = luxeed_find_device(0, 0);
 
   if ( ! dev ) {
@@ -25,10 +30,12 @@ int main (int argc, char **argv)
   do {
     result = luxeed_open(dev);
     if ( result ) break;
-		
-    fprintf(stdout, "READY\n");
+    
+    if ( verbose ) {
+      fprintf(stdout, "READY\n");
+    }
 
-    result = luxeed_read_commands(dev, stdin, stdout);
+    result = luxeed_read_commands(dev, stdin, stdout, verbose ? 1 : 0);
     if ( result ) break;
   } while ( 0 );
 
