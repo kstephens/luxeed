@@ -1,7 +1,7 @@
 
-luxheed: main.c
+luxeed: main.c luxeed.h
 	$(CC) -g -o $@ $< -l usb
 
-test: luxheed
-	sudo ./luxheed
+test: luxeed
+	sudo ./luxeed
 
