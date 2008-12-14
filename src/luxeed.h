@@ -54,3 +54,4 @@ int luxeed_set_key_color(luxeed_device *dev, luxeed_key *key, int r, int g, int 
 int luxeed_key_color(luxeed_device *dev, luxeed_key *key, int *r, int *g, int *b);
 
 #endif
+

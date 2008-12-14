@@ -1,9 +1,9 @@
-LIBS=-lusb
+LIBS=-lusb -levent
 
 all : products
 
 install-prereqs :
-	sudo apt-get install libusb-dev
+	sudo apt-get install libusb-dev libevent-dev
 
 products : luxeedd luxeed_test
 
@@ -12,6 +12,9 @@ luxeed_test: luxeed_test.c luxeed.c luxeed.h
 
 luxeedd: luxeedd.c luxeed.c luxeed.h
 	$(CC) -g -o $@ luxeedd.c luxeed.c $(LIBS)
+
+server: server.c
+	$(CC) -g -o $@ server.c $(LIBS)
 
 test: luxeed_test
 	sudo ./luxeed_test 

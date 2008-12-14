@@ -614,17 +614,22 @@ static char *parse_word(char **buf)
 }
 
 
-int luxeed_read_commands(luxeed_device *dev, FILE *in, FILE *out, int options)
+int luxeed_read_command(luxeed_client *cli)
 {
+  int result = 0;
   char buf[2048];
   size_t buf_size = sizeof(buf);
-  int color[3] = { 0xff, 0xff, 0xff };
   int key_id = 0;
   unsigned char *pixel = 0;
   char *error = 0;
 
-  while ( memset(buf, 0, buf_size), fgets(buf, buf_size - 1, in) ) {
+  memset(buf, 0, buf_size);
+  result = fgets(buf, buf_size - 1, cli->in);
+  if ( result == 0 ) {
+    return -1;
+  } else {
     char out_buf[1024];
+    size_t out_buf_size = sizeof(out_buf);
     char *s = buf;
     char *cmd = parse_word(&s);
     char *word = 0;
@@ -637,8 +642,9 @@ int luxeed_read_commands(luxeed_device *dev, FILE *in, FILE *out, int options)
       fprintf(stderr, "cmd = '%c'\n", cmd && cmd[0]);
     }
 
+    /* Blank line? */
     if ( ! cmd ) {
-      continue;
+      return 0;
     }
 
     switch ( cmd[0] ) {
@@ -648,40 +654,40 @@ int luxeed_read_commands(luxeed_device *dev, FILE *in, FILE *out, int options)
     case 'h':
       fprintf(out, "\
 help: \n\
-c <r g b>  : set color. \n\
-g <key-id> : get key's current color. \n\
-s <key-id> : set key to current color. \n\
-u          : update keyboard colors. \n\
-w <n>      : wait for n microseconds. \n\
+c <r g b>      : set current color. \n\
+g <key-id>     : get key's current color. \n\
+s <key-id> ... : set key(s) to current color. \n\
+u              : update keyboard colors. \n\
+w <n>          : wait for n microseconds. \n\
 \n\
 ");
       break;
 
     case 'c': // color r g b
-      sscanf(s, "%2x %2x %2x", &color[0], &color[1], &color[2]);
-      sprintf(out_buf, "%s %x %x %x", cmd, color[0], color[1], color[2]);
+      sscanf(s, "%2x %2x %2x", &cli->color[0], &cli->color[1], &cli->color[2]);
+      snprintf(out_buf, out_buf_size, "%s %x %x %x", cmd, cli->color[0], cli->color[1], cli->color[2]);
       break;
 
     case 'g': // get key_id
       sscanf(buf, "%d", &key_id);
       pixel = luxeed_pixel(dev, key_id);
       if ( pixel ) {
-	sprintf(out_buf, "%s %d %x %x %x", cmd, key_id, pixel[0], pixel[1], pixel[2]);
+	snprintf(out_buf, out_buf_size, "%s %d %x %x %x", cmd, key_id, pixel[0], pixel[1], pixel[2]);
       } else {
 	error = "BAD KEY";
       }
       break;
 
-    case 's': // s key_id
+    case 's': // set key_id ...
       while ( word = parse_word(&s) ) {
 	key_id = -1;
 	sscanf(word, "%d", &key_id);
 	pixel = luxeed_pixel(dev, key_id);
 	if ( pixel ) {
-	  pixel[0] = color[0];
-	  pixel[1] = color[1];
-	  pixel[2] = color[2];
-	  sprintf(out_buf, "%s %d %x %x %x", cmd, key_id, pixel[0], pixel[1], pixel[2]);
+	  pixel[0] = cli->color[0];
+	  pixel[1] = cli->color[1];
+	  pixel[2] = cli->color[2];
+	  snprintf(out_buf, out_buf_size, "%s %d %x %x %x", cmd, key_id, pixel[0], pixel[1], pixel[2]);
 	} else {
 	  error = "BAD KEY";
 	}
@@ -689,7 +695,7 @@ w <n>      : wait for n microseconds. \n\
       break;
 
     case 'u': // update
-      if ( luxeed_update(dev) ) {
+      if ( luxeed_update(cli->dev) ) {
 	error = "UPDATE FAILED";
       }
       break;
@@ -708,13 +714,13 @@ w <n>      : wait for n microseconds. \n\
     }
 
     if ( error ) {
-      fprintf(out, "ERROR %s %s\n", cmd, error);
+      fprintf(cli->out, "ERROR %s %s\n", cmd, error);
     } else {
-      if ( options & 0x01 ) {
+      if ( cli->options & 0x01 ) {
 	if ( out_buf[0] ) {
-	  fprintf(out, "ok %s\n", out_buf);
+	  fprintf(cli->out, "ok %s\n", out_buf);
 	} else {
-	  fprintf(out, "ok %s\n", cmd);
+	  fprintf(cli->out, "ok %s\n", cmd);
 	}
       }
     }
