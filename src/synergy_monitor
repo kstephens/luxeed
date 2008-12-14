@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# set -x 
+
+while true
+do
+  connections="$(netstat -nap 2>/dev/null | grep synergys | grep ESTABLISHED | wc -l)"
+  # echo "connections='$connections'" >&2
+  case $connections
+  in
+    0)
+      cat <<EOF
+c 0 0 0
+s 0 1 
+u
+EOF
+    ;;
+    1)
+      cat <<EOF
+c 0 0 0
+s 0 1 
+c 0 0 ff
+s 0
+u
+EOF
+    ;;
+    2)
+      cat <<EOF
+c 0 0 0
+s 0 1 
+c 0 0 ff
+s 0 1
+u
+EOF
+    ;;
+  esac 
+  sleep 10
+done | sudo ./luxeedd
