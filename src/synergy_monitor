@@ -10,29 +10,25 @@ do
   in
     0)
       cat <<EOF
-c 0 0 0
-s 0 1 
+s 00 00 00 0 1 
 u
 EOF
     ;;
     1)
       cat <<EOF
-c 0 0 0
-s 0 1 
-c 0 0 ff
-s 0
+s 00 00 00 0 1 
+s 00 00 ff 0
 u
 EOF
     ;;
     2)
       cat <<EOF
-c 0 0 0
-s 0 1 
-c 0 0 ff
-s 0 1
+s 00 00 00 0 1 
+s 00 00 ff 0 1
 u
 EOF
     ;;
-  esac 
+  esac > /tmp/luxeed
   sleep 10
-done | sudo ./luxeedd
+done 
+

@@ -1,91 +1,82 @@
 #!/bin/sh
 set -e
 
-cat <<EOF | sudo ./luxeedd
-color ff ff ff
+cat <<EOF > /tmp/luxeed
 
-set 0
+set ff ff ff 0
 update
 wait 500000
-set 1
+set ff ff ff 1
 update
 wait 500000
-set 2
+set ff ff ff 2
 update
 wait 500000
-set 3
-update
-wait 500000
-
-color 0 0 0 
-set 0
-update
-wait 500000
-set 1
-update
-wait 500000
-set 2
-update
-wait 500000
-set 3
+set ff ff ff 3
 update
 wait 500000
 
-color ff 00 00
-
-set 0
+set 0 0 0 0
 update
 wait 500000
-set 1
+set 0 0 0 1
 update
 wait 500000
-set 2
+set 0 0 0 2
 update
 wait 500000
-set 3
-update
-
-color 00 ff 00
-
-set 0
-update
-wait 500000
-set 1
-update
-wait 500000
-set 2
-update
-wait 500000
-set 3
+set 0 0 0 3
 update
 wait 500000
 
-color 00 00 ff
+set ff 00 00 0
+update
+wait 500000
+set ff 00 00 1
+update
+wait 500000
+set ff 00 00 2
+update
+wait 500000
+set ff 00 00 3
+update
 
-set 0
+set 00 ff 00 0
 update
 wait 500000
-set 1
+set 00 ff 00 1
 update
 wait 500000
-set 2
+set 00 ff 00 2
 update
 wait 500000
-set 3
+set 00 ff 00 3
 update
 wait 500000
 
-color 0 0 0 
-set 0
+set 00 00 ff 0
 update
 wait 500000
-set 1
+set 00 00 ff 1
 update
 wait 500000
-set 2
+set 00 00 ff 2
 update
 wait 500000
-set 3
+set 00 00 ff 3
+update
+wait 500000
+
+set 00 00 00 0
+update
+wait 500000
+set 00 00 00 1
+update
+wait 500000
+set 00 00 00 2
+update
+wait 500000
+set 00 00 00 3
 update
 wait 500000
 

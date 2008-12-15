@@ -1,56 +1,39 @@
 Luxeed LED Keyboard driver.
 
 This is an Linux driver for the 
-Luxeed deTA100 LED Keyboard.
+Luxeed deTA 100 LED Keyboard.
 
-It is written in C using libusb.  
+It is written in C using libusb.
+The driver currently needs root access, unless udev is
+configured to chown/chmod the device.
 
 It is probably also portable to other operating
 systems where libusb is ported.
 
-Goal:
+The daemon creates a FIFO on /tmp/luxeed.
+Clients can open and write commands to it.
+
+** License:
+
+See LICENSE in the source distribution.
+
+** Goal:
 
 * Decipher the USB protocol / messages.
 * Create a simple driver.
 * Create a daemon that can recieve high-level events.
 
-Testing:
+** Testing:
 
 cd src
-make install_prereqs (required sudo)
+make install-prereqs (required sudo)
 make test            (requires sudo)
 
 Watch the pretty rainbow!
 
-luxeedd:
+** luxeedd:
 
-cat <<EOF | sudo ./luxeedd
-color ff ff ff
-
-set 0
-update
-wait 500000
-set 1
-update
-wait 500000
-set 2
-update
-wait 500000
-set 3
-update
-
-color 0 0 0 
-set 0
-update
-wait 500000
-set 1
-update
-wait 500000
-set 2
-update
-wait 500000
-set 3
-update
-
-EOF 
+cd src
+sudo ./luxeedd &
+./luxeedd_t1
 
