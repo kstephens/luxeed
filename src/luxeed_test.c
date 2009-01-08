@@ -3,30 +3,37 @@
 #include <stdlib.h> /* memset(), memcpy() */
 #include <string.h>
 #include <assert.h>
-#include "luxeed.h"
+#include "luxeed_device.h"
 
 
 static char *progname;
+
 int main (int argc, char **argv)
 {
   int result = 0;
-  luxeed_device *dev;
+  luxeed_device *dev = 0;
 
   progname = argv[0];
   
-  dev = luxeed_find_device(0, 0);
-
-  if ( ! dev ) {
-    fprintf(stderr, "%s: luxeed keyboard not found\n", progname);
-    return 1;
-  }
-
   // dev->debug ++;
 
-  {
+  do {
     int i = -1;
     srand(getpid() ^ time(0));
     
+    dev = luxeed_device_create();
+    
+    if ( luxeed_device_find(dev, 0, 0) < 0 ) {
+      fprintf(stderr, "%s: luxeed keyboard not found\n", progname);
+      break;
+    }
+
+    if ( luxeed_device_open(dev) < 0 ) {
+      fprintf(stderr, "%s: luxeed keyboard cannot open\n", progname);
+      break;
+    }
+
+
     while ( 1 ) {
       int j;
       float scale, scale_dir;
@@ -64,13 +71,13 @@ int main (int argc, char **argv)
 
 	for ( j = 0; j < 10; ++ j ) {
 	  int k = (i + j) % LUXEED_NUM_OF_KEYS;
-	  unsigned char *pixel = luxeed_pixel(dev, k);
+	  unsigned char *pixel = luxeed_device_pixel(dev, k);
 	  pixel[0] = r1;
 	  pixel[1] = g1;
 	  pixel[2] = b1;
 	}
 
-	result = luxeed_update(dev);
+	result = luxeed_device_update(dev);
 	if ( result ) goto done;
 	usleep(100000);
 
@@ -86,13 +93,13 @@ int main (int argc, char **argv)
 	}
       }
     }
-  }
+  } while ( 0 );
 
  done:
   if ( result ) {
     fprintf(stderr, "error: %d\n", result);
   }
-  luxeed_destroy(dev);
+  luxeed_device_destroy(dev);
   
   return 0;
 }
