@@ -193,7 +193,7 @@ int luxeed_client_sleep(luxeed_client *cli, double sec)
   PDEBUG(cli, "(%p, %g)", cli, sec);
 
   if ( sec < 0 ) {
-    return;
+    return result;
   }
 
   /* Stop reading from client. */

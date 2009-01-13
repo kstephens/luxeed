@@ -1,6 +1,7 @@
 
 #include <stdio.h>
 #include <stdlib.h> /* memset(), memcpy() */
+#include <time.h> /* time() */
 #include <string.h>
 #include <assert.h>
 #include "luxeed_device.h"
@@ -35,7 +36,7 @@ int main (int argc, char **argv)
 
 
     while ( 1 ) {
-      int j;
+      /* int j; */
       float scale, scale_dir;
       int r, g, b;
       float max;

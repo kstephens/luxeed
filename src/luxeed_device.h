@@ -34,7 +34,7 @@ typedef struct luxeed_device {
 } luxeed_device;
 
 typedef struct luxeed_key {
-  int id;
+  int id; /* index into luxeed_device.key_data[* 3] */
   const char *name[3];
   int code[3];
   int shift;
@@ -59,7 +59,7 @@ luxeed_key *luxeed_device_key_ascii(luxeed_device *dev, int c);
 #define LUXEED_COLOR_MIN 0x00
 #define LUXEED_COLOR_MAX 0xff
 
-unsigned char *luxeed_device_pixel(luxeed_device *dev, int key);
+unsigned char *luxeed_device_pixel(luxeed_device *dev, int key_id);
 int luxeed_device_set_key_color(luxeed_device *dev, luxeed_key *key, int r, int g, int b);
 int luxeed_device_key_color(luxeed_device *dev, luxeed_key *key, int *r, int *g, int *b);
 
