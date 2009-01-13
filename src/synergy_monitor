@@ -1,5 +1,6 @@
 #!/bin/bash
-
+# Monitors for synergy connections.
+# Lights first two keys based on the number of synergy client connections.
 # set -x 
 
 while true
@@ -28,7 +29,7 @@ s 00 00 ff 0 1
 u
 EOF
     ;;
-  esac > /tmp/luxeed
+  esac 
   sleep 10
-done 
+done | netcat localhost 12345
 
