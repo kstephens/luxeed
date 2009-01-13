@@ -48,6 +48,12 @@ int luxeed_read_command(luxeed_client *cli)
 
   PDEBUG(cli, "(%p)", cli);
 
+
+  /* Force buffering only up till newline so that select() still
+  ** has other read(0) pending.
+  */
+  setlinebuf(cli->ep.in);
+
   memset(buf, 0, buf_size);
   if ( fgets(buf, buf_size - 1, cli->ep.in) == 0 ) {
     result = -1;
