@@ -151,9 +151,10 @@ w <n>          : wait for n microseconds. \n\
 
     case 'w': // wait
       {
-	int wait = 1000000;
-	sscanf(s, "%d", &wait);
-	usleep(wait);
+	double wait = 1.0;
+	sscanf(s, "%lg", &wait);
+	luxeed_client_sleep(cli, wait);
+	result = 1;  /* Prevent caller from enabling read event. */
       }
       break;
 
@@ -182,6 +183,47 @@ w <n>          : wait for n microseconds. \n\
   PDEBUG(cli, "(%p) => %d", cli, result);
 
   return result;
+}
+
+
+
+int luxeed_client_sleep(luxeed_client *cli, double sec)
+{
+  int result = 0;
+  PDEBUG(cli, "(%p, %g)", cli, sec);
+
+  if ( sec < 0 ) {
+    return;
+  }
+
+  /* Stop reading from client. */
+  event_del(&cli->ep.read_ev);
+
+  /* Add the timer. */
+  cli->ep.timer_timeval.tv_sec = (time_t) sec;
+  cli->ep.timer_timeval.tv_usec = (long) ((sec - (time_t) sec) * 1000000.0);
+  evtimer_add(&cli->ep.timer_ev, &cli->ep.timer_timeval);
+
+  PDEBUG(cli, "(%p, %g) => %d", cli, sec, result);
+
+  return result;
+}
+
+
+void luxeed_client_sleep_finished(int fd, short event, void *data)
+{
+  luxeed_client *cli = data;
+  int result = 0;
+
+  PDEBUG(cli, "(%d, %d, %p)", (int) fd, (int) event, data);
+
+  /* Remove the timer. */
+  evtimer_del(&cli->ep.timer_ev);
+
+  /* Continue reading from client. */
+  event_add(&cli->ep.read_ev, 0);
+
+  PDEBUG(cli, "(%d, %d, %p) => %d", (int) fd, (int) event, data, result);
 }
 
 
@@ -227,6 +269,10 @@ int luxeed_client_open(luxeed_client *cli, luxeed_server *srv, int in_fd, int ou
     /* Start reading on cli socket. */
     event_set(&cli->ep.read_ev, cli->ep.in_fd, EV_READ, &luxeed_client_read, cli); 
     event_add(&cli->ep.read_ev, 0);
+
+    /* Prepare a timer for "wait" commands. */
+    evtimer_set(&cli->ep.timer_ev, luxeed_client_sleep_finished, (void *) cli);
+  
   } while ( 0 );
 
   PDEBUG(cli, "(%p, %p, %d, %d) => %d", cli, srv, (int) in_fd, (int) out_fd, (int) result);
@@ -243,8 +289,13 @@ int luxeed_client_close(luxeed_client *cli)
 
   if ( ! cli ) return 0;
 
+  /* Remove timer event. */
+  evtimer_del(&cli->ep.timer_ev);
+
+  /* Stop read events. */
   event_del(&cli->ep.read_ev);
 
+  /* Close FDs and FILEs. */
   luxeed_endpoint_close(&cli->ep);
 
   PDEBUG(cli, "(%p) => %d", cli, result);

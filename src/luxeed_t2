@@ -5,80 +5,80 @@ netcat localhost 12345 <<EOF
 
 set ff ff ff 10
 update
-wait 500000
+wait 0.75
 set ff ff ff 11
 update
-wait 500000
+wait 0.75
 set ff ff ff 12
 update
-wait 500000
+wait 0.75
 set ff ff ff 13
 update
-wait 500000
+wait 0.75
 
 set 00 00 00 10
 update
-wait 500000
+wait 0.75
 set 00 00 00 11
 update
-wait 500000
+wait 0.75
 set 00 00 00 12
 update
-wait 500000
+wait 0.75
 set 00 00 00 13
 update
-wait 500000
+wait 0.75
 
 set ff 00 00 10
 update
-wait 500000
+wait 0.75
 set ff 00 00 11
 update
-wait 500000
+wait 0.75
 set ff 00 00 12
 update
-wait 500000
+wait 0.75
 set ff 00 00 13
 update
 
 set 00 ff 00 10
 update
-wait 500000
+wait 0.75
 set 00 ff 00 11
 update
-wait 500000
+wait 0.75
 set 00 ff 00 12
 update
-wait 500000
+wait 0.75
 set 00 ff 00 13
 update
-wait 500000
+wait 0.75
 
 set 00 00 ff 10
 update
-wait 500000
+wait 0.75
 set 00 00 ff 11
 update
-wait 500000
+wait 0.75
 set 00 00 ff 12
 update
-wait 500000
+wait 0.75
 set 00 00 ff 13
 update
-wait 500000
+wait 0.75
 
 set 00 00 00 10
 update
-wait 500000
+wait 0.75
 set 00 00 00 11
 update
-wait 500000
+wait 0.75
 set 00 00 00 12
 update
-wait 500000
+wait 0.75
 set 00 00 00 13
 update
-wait 500000
+wait 0.75
 
 EOF
 

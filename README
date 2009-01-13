@@ -31,9 +31,11 @@ make test            (requires sudo)
 
 Watch the pretty rainbow!
 
-** luxeedd:
+** luxeed:
 
 cd src
-sudo ./luxeedd &
-./luxeedd_t1
+# Start server.
+sudo ./luxeed --server &
+# Start two concurrent clients.
+(./luxeed_t1 &); ./luxeed_t2
 

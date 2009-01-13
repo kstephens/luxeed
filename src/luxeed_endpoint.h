@@ -31,6 +31,9 @@ typedef struct luxeed_endpoint {
 
   struct event accept_ev;
   struct event read_ev;
+
+  struct event timer_ev;
+  struct timeval timer_timeval;
 } luxeed_endpoint;
 
 int luxeed_endpoint_init(luxeed_endpoint *ep, int init);

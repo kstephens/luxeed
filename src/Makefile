@@ -15,7 +15,7 @@ all : products
 install-prereqs :
 	sudo apt-get install libusb-dev libevent-dev # libargp-dev
 
-PRODUCTS = libluxeed.a luxeed luxeedd luxeed_test
+PRODUCTS = libluxeed.a luxeed luxeed_test
 
 products : $(PRODUCTS)
 
@@ -27,9 +27,6 @@ $(LIBLUXEED_O) : *.h Makefile
 
 luxeed_test: luxeed_test.c libluxeed.a *.h 
 	$(CC) $(CFLAGS) -o $@ luxeed_test.c $(LIBS)
-
-luxeedd: luxeedd.c libluxeed.a *.h 
-	$(CC) $(CFLAGS) -o $@ luxeedd.c $(LIBS)
 
 luxeed: luxeed.c libluxeed.a  *.h
 	$(CC) $(CFLAGS) -o $@ luxeed.c $(LIBS)
@@ -44,9 +41,6 @@ debug-test: luxeed_test
 
 debug: luxeed
 	sudo gdb --eval-command='run' --args ./luxeed --server
-
-debug-luxeedd: luxeedd
-	sudo gdb --eval-command='run' --args ./luxeedd
 
 clean: 
 	rm -f $(PRODUCTS) *.o lib*.a

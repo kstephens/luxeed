@@ -37,6 +37,8 @@ typedef struct luxeed_client {
 
 int luxeed_client_open(luxeed_client *cli, luxeed_server *srv, int in_fd, int out_fd);
 int luxeed_client_close(luxeed_client *cli);
+int luxeed_client_sleep(luxeed_client *cli, double sec);
+void luxeed_client_sleep_finished(int fd, short event, void *data); /* callback */
 
 /* Returns -1 on EOF */
 int luxeed_read_command(luxeed_client *cli);
