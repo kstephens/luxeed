@@ -2,6 +2,7 @@
 #define LUXEED_DEVICE_H
 
 #include <usb.h>
+#include <time.h> /* struct timeval */
 
 #define LUXEED_USB_VENDOR   0x534B
 #define LUXEED_USB_PRODUCT  0x0600
@@ -20,16 +21,20 @@ typedef struct luxeed_device {
   short opened;
   short initing;
   short inited;
+  int init_count;
 
 #define LUXEED_NUM_OF_KEYS 76
   /* RGB order, 0x00 - 0xff scale. */
   unsigned char key_data[LUXEED_NUM_OF_KEYS * 3];
 
   /* Message buffer */
+  unsigned int msg_id;
   unsigned char *msg;
   int msg_len;
   int msg_size;
 
+  struct timeval update_last_send_time;
+  
   int debug;
 } luxeed_device;
 

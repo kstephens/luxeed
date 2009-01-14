@@ -406,15 +406,11 @@ int luxeed_send_chunked (luxeed_device *dev, int ep, unsigned char *bytes, int s
 
       RCALL(usb_interrupt_write(dev->u_dh, ep, (void*) xbuf, wsize, timeout));
       // RCALL(usb_bulk_write(dh, ep, xbuf, wsize, timeout));
+
+      /* Emperical throttling between chunks */
       usleep(750);
 
-      /* Try again next time. */
-      if ( result < 0 ) {
-	luxeed_device_close(dev);
-	return 0;
-      }
-
-      if ( result != wsize ) {
+      if ( result < 0 || result != wsize ) {
 	result = -1;
 	break;
       }
@@ -511,16 +507,18 @@ int luxeed_device_init(luxeed_device *dev)
     dev->initing = 1;
     dev->inited = 0;
 
-    usleep(slp);
-    for ( i = 0; i < n; ++ i ) {
-
-      RCALL(luxeed_send (dev, LUXEED_USB_ENDPOINT_DATA, msg_00, sizeof(msg_00)));
-      if ( result ) return result;
+    if ( dev->init_count == 0 ) {
       usleep(slp);
-      
-      RCALL(luxeed_send (dev, LUXEED_USB_ENDPOINT_DATA, msg_ff, sizeof(msg_ff)));
-      if ( result ) return result;
-      usleep(slp);
+      for ( i = 0; i < n; ++ i ) {
+	
+	RCALL(luxeed_send (dev, LUXEED_USB_ENDPOINT_DATA, msg_00, sizeof(msg_00)));
+	if ( result ) return result;
+	usleep(slp);
+	
+	RCALL(luxeed_send (dev, LUXEED_USB_ENDPOINT_DATA, msg_ff, sizeof(msg_ff)));
+	if ( result ) return result;
+	usleep(slp);
+      }
     }
 
     RCALL(luxeed_send (dev, LUXEED_USB_ENDPOINT_DATA, msg_00, sizeof(msg_00)));
@@ -529,6 +527,7 @@ int luxeed_device_init(luxeed_device *dev)
       
     dev->initing = 0;
     dev->inited = 1;
+    ++ dev->init_count;
 
     fprintf(stderr, "dev: inited\n");
 
@@ -552,6 +551,9 @@ int luxeed_device_update(luxeed_device *dev)
   int result = 0;
 
   do {
+    struct timeval now;
+    double min_frame_interval = 0.015;
+
     if ( luxeed_device_open(dev) < 0 ) {
       result = -1;
       break;
@@ -571,11 +573,38 @@ int luxeed_device_update(luxeed_device *dev)
     /* Copy key pixel data into place. */
     memcpy(dev->msg + 0x37, dev->key_data, sizeof(dev->key_data));
 
+    /* throttle update frequency */
+    {
+       struct timeval then = dev->update_last_send_time;
+       gettimeofday(&now, 0);
+       if ( then.tv_sec ) {
+	double dt = (now.tv_sec - then.tv_sec);
+	dt += (now.tv_usec - then.tv_usec) / 1000000.0;
+	fprintf(stderr, "   dt = %lg secs\n", (double) dt);
+	if ( min_frame_interval > dt ) {
+	  double pause_time = min_frame_interval - dt;
+	  fprintf(stderr, "   sleeping for %lg secs\n", (double) pause_time);
+	  usleep(pause_time * 1000000.0);
+	}
+      }
+     }
+
     /* Compute checksum and send in chunks. */
     result = luxeed_send (dev, LUXEED_USB_ENDPOINT_DATA, dev->msg, dev->msg_size);
     if ( result ) break;
 
+    /* Store the time of completion. */
+    gettimeofday(&now, 0);
+    dev->update_last_send_time = now;
+
   } while ( 0 );
+
+
+  /* Try again next time. */
+  if ( result < 0 ) {
+    luxeed_device_close(dev);
+    return 0;
+  }
 
   return result;
 }
