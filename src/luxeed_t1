@@ -3,7 +3,7 @@ set -e
 
 netcat localhost 12345 <<EOF
 
-set ff ff ff 0
+set ff ff ff ~
 update
 wait 0.5
 set ff ff ff 1
@@ -16,7 +16,7 @@ set ff ff ff 3
 update
 wait 0.5
 
-set 0 0 0 0
+set 0 0 0 #0
 update
 wait 0.5
 set 0 0 0 1
@@ -25,11 +25,11 @@ wait 0.5
 set 0 0 0 2
 update
 wait 0.5
-set 0 0 0 3
+set 0 0 0 $
 update
 wait 0.5
 
-set ff 00 00 0
+set ff 00 00 ~
 update
 wait 0.5
 set ff 00 00 1
@@ -41,7 +41,7 @@ wait 0.5
 set ff 00 00 3
 update
 
-set 00 ff 00 0
+set 00 ff 00 ~
 update
 wait 0.5
 set 00 ff 00 1
@@ -54,7 +54,7 @@ set 00 ff 00 3
 update
 wait 0.5
 
-set 00 00 ff 0
+set 00 00 ff ~
 update
 wait 0.5
 set 00 00 ff 1

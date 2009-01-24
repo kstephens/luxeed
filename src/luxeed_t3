@@ -3,80 +3,80 @@ set -e
 
 netcat localhost 12345 <<EOF
 
-set ff ff ff 20
+set ff ff ff #20
 update
 wait 0.3
-set ff ff ff 21
+set ff ff ff #21
 update
 wait 0.3
-set ff ff ff 22
+set ff ff ff #22
 update
 wait 0.3
-set ff ff ff 23
-update
-wait 0.3
-
-set 00 00 00 20
-update
-wait 0.3
-set 00 00 00 21
-update
-wait 0.3
-set 00 00 00 22
-update
-wait 0.3
-set 00 00 00 23
+set ff ff ff #23
 update
 wait 0.3
 
-set ff 00 00 20
+set 00 00 00 #20
 update
 wait 0.3
-set ff 00 00 21
+set 00 00 00 #21
 update
 wait 0.3
-set ff 00 00 22
+set 00 00 00 #22
 update
 wait 0.3
-set ff 00 00 23
-update
-
-set 00 ff 00 20
-update
-wait 0.3
-set 00 ff 00 21
-update
-wait 0.3
-set 00 ff 00 22
-update
-wait 0.3
-set 00 ff 00 23
+set 00 00 00 #23
 update
 wait 0.3
 
-set 00 00 ff 20
+set ff 00 00 #20
 update
 wait 0.3
-set 00 00 ff 21
+set ff 00 00 #21
 update
 wait 0.3
-set 00 00 ff 22
+set ff 00 00 #22
 update
 wait 0.3
-set 00 00 ff 23
+set ff 00 00 #23
+update
+
+set 00 ff 00 #20
+update
+wait 0.3
+set 00 ff 00 #21
+update
+wait 0.3
+set 00 ff 00 #22
+update
+wait 0.3
+set 00 ff 00 #23
 update
 wait 0.3
 
-set 00 00 00 20
+set 00 00 ff #20
 update
 wait 0.3
-set 00 00 00 21
+set 00 00 ff #21
 update
 wait 0.3
-set 00 00 00 22
+set 00 00 ff #22
 update
 wait 0.3
-set 00 00 00 23
+set 00 00 ff #23
+update
+wait 0.3
+
+set 00 00 00 #20
+update
+wait 0.3
+set 00 00 00 #21
+update
+wait 0.3
+set 00 00 00 #22
+update
+wait 0.3
+set 00 00 00 #23
 update
 wait 0.3
 

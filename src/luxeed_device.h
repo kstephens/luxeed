@@ -58,9 +58,9 @@ int luxeed_device_update(luxeed_device *dev);
 
 int luxeed_device_msg_checksum(luxeed_device *dev, unsigned char *buf, int size);
 
-luxeed_key *luxeed_device_key_id(luxeed_device *dev, int i);
-luxeed_key *luxeed_device_key_name(luxeed_device *dev, const char *keyname);
-luxeed_key *luxeed_device_key_ascii(luxeed_device *dev, int c);
+luxeed_key *luxeed_device_key_by_id(luxeed_device *dev, int i);
+luxeed_key *luxeed_device_key_by_name(luxeed_device *dev, const char *keyname);
+luxeed_key *luxeed_device_key_by_ascii(luxeed_device *dev, int c);
 
 #define LUXEED_COLOR_MIN 0x00
 #define LUXEED_COLOR_MAX 0xff

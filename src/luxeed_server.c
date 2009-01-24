@@ -44,7 +44,8 @@ int luxeed_client_read_command(luxeed_client *cli)
   size_t buf_size = sizeof(buf);
   int key_id = 0;
   unsigned char *pixel = 0;
-  char *error = 0;
+  const char *error = 0;
+  const char *error2 = "";
 
   PDEBUG(cli, "(%p)", cli);
 
@@ -119,25 +120,34 @@ w <n>          : wait for n microseconds. \n\
       }
 
       while ( (word = parse_word(&s)) ) {
-	key_id = -1;
-	sscanf(word, "%d", &key_id);
-	if ( (pixel = cli->srv->dev ? luxeed_device_pixel(cli->srv->dev, key_id) : 0) ) {
+	luxeed_key *key = luxeed_device_key_by_name(cli->srv->dev, word);
+	if ( key && (pixel = cli->srv->dev ? luxeed_device_pixel(cli->srv->dev, key->id) : 0) ) {
+	  if ( cli->opts.debug > 1 ) {
+	    fprintf(stderr, "word %s => key->id = %d, key->name[0] = %s\n", word, key->id, key->name[0]);
+	  }
 	  pixel[0] = cli->color[0];
 	  pixel[1] = cli->color[1];
 	  pixel[2] = cli->color[2];
-	  snprintf(out_buf, out_buf_size, "%s %x %x %x %d", cmd, pixel[0], pixel[1], pixel[2], key_id);
+	  snprintf(out_buf, out_buf_size, "%s %x %x %x #%d", cmd, pixel[0], pixel[1], pixel[2], key->id);
 	} else {
 	  error = "BAD KEY";
+	  error2 = word;
 	}
       }
       break;
 
     case 'g': // get key_id
-      sscanf(buf, "%d", &key_id);
-      if ( (pixel = cli->srv->dev ? luxeed_device_pixel(cli->srv->dev, key_id) : 0) ) {
-	snprintf(out_buf, out_buf_size, "%s %x %x %x %d", cmd, pixel[0], pixel[1], pixel[2], key_id);
-      } else {
-	error = "BAD KEY";
+      while ( (word = parse_word(&s)) ) {
+	luxeed_key *key = luxeed_device_key_by_name(cli->srv->dev, word);
+	if ( key && (pixel = cli->srv->dev ? luxeed_device_pixel(cli->srv->dev, key->id) : 0) ) {
+	  if ( cli->opts.debug > 1 ) {
+	    fprintf(stderr, "word %s => key->id = %d, key->name[0] = %s\n", word, key->id, key->name[0]);
+	  }
+	  snprintf(out_buf, out_buf_size, "%s %x %x %x #%d", cmd, pixel[0], pixel[1], pixel[2], key->id);
+	} else {
+	  error = "BAD KEY";
+	  error2 = word;
+	}
       }
       break;
 
@@ -165,7 +175,7 @@ w <n>          : wait for n microseconds. \n\
 
     if ( cli->ep.out ) {
       if ( error ) {
-	fprintf(cli->ep.out, "ERROR %s %s\n", cmd, error);
+	fprintf(cli->ep.out, "ERROR %s %s %s\n", cmd, error, error2);
       } else {
 	if ( cli->opts.verbose ) {
 	  if ( out_buf[0] ) {

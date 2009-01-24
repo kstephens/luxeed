@@ -415,7 +415,7 @@ int luxeed_send_chunked (luxeed_device *dev, int ep, unsigned char *bytes, int s
 	dump_buf(xbuf, wsize);
       }
 
-      RCALL(write_result, usb_interrupt_write(dev->u_dh, ep, (void*) xbuf, wsize, timeout));
+      RCALL(write_result, usb_bulk_write(dev->u_dh, ep, (void*) xbuf, wsize, timeout));
       // RCALL(usb_bulk_write(dh, ep, xbuf, wsize, timeout));
 
       /* Emperical throttling between chunks */
@@ -441,7 +441,7 @@ int luxeed_send_chunked (luxeed_device *dev, int ep, unsigned char *bytes, int s
     // int buf_size = sizeof(buf);
     int read_size = 2;
     int read_result = 0;
-    RCALL(read_result, usb_interrupt_read(dh, ep, buf, read_size, timeout));
+    RCALL(read_result, usb_bulk_read(dh, ep + 0x80, buf, read_size, timeout));
     if ( read_result != read_size ) {
       fprintf(stderr, "read failed\n");
       // result = -1;
@@ -648,16 +648,24 @@ static struct {
 } _key_maps[] = {
   { 0 , "`123456789" },
   { 0 , "~!@#$%^&*(", 1 }, /* SHIFT */
-  { 10, "0-=\01BKSP\01TAB qwert" },
-  { 10, ")_+\01BKSP\01TAB QWERT", 1 },  /* SHIFT */
-  { 20, "yuiop[]\\\01CPLKa" },
-  { 20, "YUIOP{}|\01CPLKA", 1 },  /* SHIFT */
+  { 10, "0-=\01BACKSPACE \01TAB qwert" },
+  { 10, ")_+\01BACKSPACE \01TAB QWERT", 1 },  /* SHIFT */
+  { 20, "yuiop[]\\\01CAPS a" },
+  { 20, "YUIOP{}|\01CAPS A", 1 },  /* SHIFT */
   { 30, "sdfghjkl;" },
   { 30, "SDFGHJKL:", 1 },  /* SHIFT */
-  { 40, "\01ENTR\01LSFTzxcvbnm," },
-  { 40, "\01ENTR\01LSFTZXCVBNM<", 1 },  /* SHIFT */
-  { 50, "./\01RSFT\01LCTR\01RWIN\01LALT\02RALT\01LWIN\01MENU\01RCTR" },
+  { 40, "\01ENTER \01LSHIFT zxcvbnm," },
+  { 40, "\01ENTER \01LSHIFT ZXCVBNM<", 1 },  /* SHIFT */
   { 50, ">?", 1 }, /* SHIFT */
+  { 50, "./", 0 },
+  { 52, "\01RSHIFT ", 0 },
+  { 53, "\01LCTRL \01LSTART \01LALT ", 0 },
+  { 56, "\01RCTRL ", 0 },
+  { 58, "\01RALT ", 0 },
+  { 60, "\01RSTART \01MENU ", 0 },
+  { 67, "\01HOME \01PUP \01DEL ", 0 },
+  { 70, "\01END \01PDOWN ", 0 },
+  { 72, "\01UP \01LEFT \01DOWN \01RIGHT ", 0 },
   { -1, 0 }
 };
 
@@ -674,34 +682,57 @@ int luxeed_init_keys()
   
   initialized ++;
 
+  for ( i = 0; i < LUXEED_NUM_OF_KEYS; ++ i ) {
+    luxeed_key *key = &_keys[i];
+    key->id = i;
+  }
+
   for ( i = 0; (s = _key_maps[i].map); ++ i ) {
     int k = _key_maps[i].offset;
 
+    // fprintf(stderr, "  key map %d offset: %d\n", i, k);
+
     while ( *s ) {
       luxeed_key *key;
-      char name[5];
+      char name[16];
 
       memset(name, 0, sizeof(name));
 
-      /* "\01TAB " or "\01LSFT" */
+      /* "\01TAB " */
       if ( *s == '\01' ) {
+	const char *e;
+	e = ++ s;
+	while ( *e && *e != ' ' ) {
+	  ++ e;
+	}
+	memcpy(name, s, e - s);
+	/* Advance over space. */
+	if ( *e == ' ' ) {
+	  s = ++ e;
+	}
+      }
+      /* skip key code: key does not exist by that code. */
+      else if ( *s == '\02' ) {
 	++ s;
-	memcpy(name, s, 4);
-	if ( name[3] == ' ' ) 
-	  name[3] = '\0';
-	s += 4;
-      } else {
+	++ k;
+	continue;
+      } 
+      else {
 	name[0] = *(s ++);
       }
+
+      // fprintf(stderr, "  key: %d %s\n", k, name);
 
       key = &_keys[k];
       key->id = k;
       {
 	int j = 0;
-	while ( key->name[j] ) {
+	while ( key->name[j] && strcmp(key->name[j], name) ) {
 	  ++ j;
+	  assert(j < sizeof(key->name)/sizeof(key->name[0]));
 	}
 	key->name[j] = strdup(name);
+	key->code[j] = name[1] == '\0' ? name[0] : 0;
       }
 
       k ++;
@@ -712,7 +743,7 @@ int luxeed_init_keys()
 }
 
 
-luxeed_key *luxeed_device_key_id(luxeed_device *dev, int id)
+luxeed_key *luxeed_device_key_by_id(luxeed_device *dev, int id)
 {
   luxeed_key *key = 0;
   int key_i;
@@ -730,14 +761,14 @@ luxeed_key *luxeed_device_key_id(luxeed_device *dev, int id)
 }
 
 
-luxeed_key *luxeed_device_key_name(luxeed_device *dev, const char *keyname)
+luxeed_key *luxeed_device_key_by_name(luxeed_device *dev, const char *keyname)
 {
   luxeed_key *key = 0;
 
   luxeed_init_keys();
 
   if ( *keyname == '#' ) {
-    key = luxeed_device_key_id(dev, atoi(keyname + 1));
+    key = luxeed_device_key_by_id(dev, atoi(keyname + 1));
   } else {
     int key_i;
     for ( key_i = 0; key_i < LUXEED_NUM_OF_KEYS; ++ key_i ) {
@@ -757,7 +788,7 @@ luxeed_key *luxeed_device_key_name(luxeed_device *dev, const char *keyname)
 }
 
 
-luxeed_key *luxeed_device_key_ascii(luxeed_device *dev, int c)
+luxeed_key *luxeed_device_key_by_ascii(luxeed_device *dev, int c)
 {
   luxeed_key *key = 0;
   int key_i;

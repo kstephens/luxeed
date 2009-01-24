@@ -1,0 +1,30 @@
+#!/bin/sh
+set -e
+k=0
+while [ $k -lt 76 ]
+do
+  echo -n "key = $k: "
+
+netcat localhost 12345 <<EOF
+  set ff ff ff #${k}
+  update
+EOF
+
+  read new_key rest
+
+netcat localhost 12345 <<EOF
+  set 00 00 00 #${k}
+  update
+EOF
+
+  case "$new_key"
+  in
+    [0-9]*)
+      k="$new_key"
+    ;;
+    *)
+      k=`expr $k + 1`
+    ;;
+  esac
+done
+
