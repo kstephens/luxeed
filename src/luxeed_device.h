@@ -8,7 +8,7 @@
 #define LUXEED_USB_PRODUCT  0x0600
 #define LUXEED_USB_INTERFACE 1
 #define LUXEED_USB_ENDPOINT_DATA 0x02
-#define LUXEED_USB_ENDPOINT_CONTROL 0x02
+#define LUXEED_USB_ENDPOINT_CONTROL 0x82
 
 typedef struct luxeed_device {
   int id;

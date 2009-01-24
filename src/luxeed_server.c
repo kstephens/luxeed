@@ -37,7 +37,7 @@ static char *parse_word(char **buf)
 }
 
 
-int luxeed_read_command(luxeed_client *cli)
+int luxeed_client_read_command(luxeed_client *cli)
 {
   int result = 0;
   char buf[2048];
@@ -237,7 +237,7 @@ void luxeed_client_read(int fd, short event, void *data)
 
   PDEBUG(cli, "(%d, %d, %p)", (int) fd, (int) event, data);
 
-  result = luxeed_read_command(cli);
+  result = luxeed_client_read_command(cli);
 
   if ( result < 0 ) {
     luxeed_client_close(cli);
@@ -578,7 +578,7 @@ int luxeed_server_main(int argc, char **argv)
     memset(srv, 0, sizeof(*srv));
 
     srv->opts = luxeed_options;
-    srv->opts.debug = 1;
+    // srv->opts.debug = 0;
 
     if ( ! srv->opts.host ) {
       srv->opts.host = "127.0.0.1";
