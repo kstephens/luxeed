@@ -15,6 +15,18 @@ static int luxeed_dev_id = 0;
 static int usb_debug_level = 9;
 
 
+/* Performance tuning parameters */
+
+/* The time between full frames */
+static double min_frame_interval = 0.025;
+
+/* The delay between chunks. */
+/* Emperical throttling between chunks */
+/* 0.02 secs = 5 I/O frames == 0.1 images/sec */
+// double chunk_delay = 0.000750;
+double chunk_delay = 0.0;
+
+
 #if 1
 #define RCALL(V,X) do { V = X; if ( V < 0 || dev->opts.debug ) { fprintf(stderr, "  %s => %d\n", #X, (int) V); } } while ( 0 )
 #else
@@ -329,55 +341,11 @@ static int dump_buf(unsigned char *bytes, int size)
 }
 
 
+/* 5 blocks * ("0x02" header + 64 data bytes) */
 #define LUXEED_BLOCK_SIZE 64
 
 // #define luxeed_send luxeed_send_buffered
 #define luxeed_send luxeed_send_chunked
-
-
-int luxeed_send_buffered (luxeed_device *dev, int ep, unsigned char *bytes, int size)
-{
-  int result = 0;
-  int timeout = 1000;
-
-  unsigned char *buf = alloca(sizeof(buf) * ((size / LUXEED_BLOCK_SIZE) * (LUXEED_BLOCK_SIZE + 1)));
-  unsigned char *s = buf;
-  int buf_size;
-
-  luxeed_device_msg_checksum(dev, bytes, size);
-
-  {
-    int i = 0;
-    while ( i < size ) {
-      *(s ++) = 0x02;
-      memcpy(s, bytes + i, LUXEED_BLOCK_SIZE);
-      s += LUXEED_BLOCK_SIZE;
-      i += LUXEED_BLOCK_SIZE;
-    }
-
-    buf_size = s - buf;
-  }
-
-  if ( dev->opts.debug ) {
-    fprintf(stderr, "size %d => %d\n", (int) size, (int) buf_size);
-    dump_buf(buf, buf_size);
-  }
-
-  RCALL(result, usb_interrupt_write(dev->u_dh, ep, (void*) buf, buf_size, timeout));
-  usleep(750);
-
-  /* Try again later? */
-  if ( result < 0 ) {
-    luxeed_device_close(dev);
-    return 0;
-  }
-
-  if ( result >= 0 ) {
-    result = 0;
-  }
-
-  return result;
-}
 
 
 int luxeed_send_chunked (luxeed_device *dev, int ep, unsigned char *bytes, int size)
@@ -418,11 +386,8 @@ int luxeed_send_chunked (luxeed_device *dev, int ep, unsigned char *bytes, int s
       RCALL(write_result, usb_bulk_write(dev->u_dh, ep, (void*) xbuf, wsize, timeout));
       // RCALL(usb_bulk_write(dh, ep, xbuf, wsize, timeout));
 
-      /* Emperical throttling between chunks */
-      /* 0.02 secs = 5 I/O frames == 0.1 images/sec */
-      {
-	double frame_delay = 0.02;
-	usleep((int) frame_delay * 1000000);
+      if ( chunk_delay > 0 ) {
+	usleep((int) chunk_delay * 1000000);
       }
 
       if ( write_result < 0 || write_result != wsize ) {
@@ -579,7 +544,6 @@ int luxeed_device_update(luxeed_device *dev)
 
   do {
     struct timeval now;
-    double min_frame_interval = 0.12;
 
     if ( luxeed_device_open(dev) < 0 ) {
       result = -1;
@@ -608,7 +572,7 @@ int luxeed_device_update(luxeed_device *dev)
 	double dt = (now.tv_sec - then.tv_sec);
 	dt += (now.tv_usec - then.tv_usec) / 1000000.0;
 	if ( dev->opts.debug > 0 ) {
-	  fprintf(stderr, "   dt = %lg secs\n", (double) dt);
+	  fprintf(stderr, " t = %d.%06d  dt = %lg secs\n", (int) now.tv_sec, (int) now.tv_usec, (double) dt);
 	}
 	if ( min_frame_interval > dt ) {
 	  double pause_time = min_frame_interval - dt;
