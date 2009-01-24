@@ -64,6 +64,7 @@ int luxeed_client_read_command(luxeed_client *cli)
     char *s = buf;
     char *cmd = parse_word(&s);
     char *word = 0;
+    int force_output = 0;
     error = 0;
 
     if ( cli->opts.debug ) {
@@ -144,6 +145,7 @@ w <n>          : wait for n microseconds. \n\
 	    fprintf(stderr, "word %s => key->id = %d, key->name[0] = %s\n", word, key->id, key->name[0]);
 	  }
 	  snprintf(out_buf, out_buf_size, "%s %x %x %x #%d", cmd, pixel[0], pixel[1], pixel[2], key->id);
+	  force_output = 1;
 	} else {
 	  error = "BAD KEY";
 	  error2 = word;
@@ -177,7 +179,7 @@ w <n>          : wait for n microseconds. \n\
       if ( error ) {
 	fprintf(cli->ep.out, "ERROR %s %s %s\n", cmd, error, error2);
       } else {
-	if ( cli->opts.verbose ) {
+	if ( cli->opts.verbose || force_output ) {
 	  if ( out_buf[0] ) {
 	    fprintf(cli->ep.out, "OK %s\n", out_buf);
 	  } else {
