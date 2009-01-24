@@ -1,6 +1,8 @@
 #ifndef LUXEED_DEVICE_H
 #define LUXEED_DEVICE_H
 
+#include "luxeed.h" /* luxeed_options */
+
 #include <usb.h>
 #include <time.h> /* struct timeval */
 
@@ -12,6 +14,7 @@
 
 typedef struct luxeed_device {
   int id;
+  struct luxeed_options opts;
 
   struct usb_bus *u_bus;
   struct usb_device *u_dev;
@@ -34,8 +37,6 @@ typedef struct luxeed_device {
   int msg_size;
 
   struct timeval update_last_send_time;
-  
-  int debug;
 } luxeed_device;
 
 typedef struct luxeed_key {

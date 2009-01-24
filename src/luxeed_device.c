@@ -16,7 +16,7 @@ static int usb_debug_level = 9;
 
 
 #if 1
-#define RCALL(V,X) do { V = X; if ( V < 0 || dev->debug ) { fprintf(stderr, "  %s => %d\n", #X, (int) V); } } while ( 0 )
+#define RCALL(V,X) do { V = X; if ( V < 0 || dev->opts.debug ) { fprintf(stderr, "  %s => %d\n", #X, (int) V); } } while ( 0 )
 #else
 #define RCALL(V,X) V = X
 #endif
@@ -188,7 +188,7 @@ int luxeed_device_find(luxeed_device *dev, uint16_t vendor, uint16_t product)
   usb_find_devices();
   u_busses = usb_get_busses();
 
-  if ( dev->debug ) {
+  if ( dev->opts.debug ) {
     usb_set_debug(usb_debug_level);
   }
 
@@ -205,7 +205,7 @@ int luxeed_device_find(luxeed_device *dev, uint16_t vendor, uint16_t product)
 	dev->msg = malloc(sizeof(dev->msg[0]) * dev->msg_size);
 	memset(dev->msg, 0, sizeof(dev->msg[0]) * dev->msg_size);
 
-	if ( dev->debug ) {
+	if ( dev->opts.debug ) {
 	  fprintf(stderr, "  bus %s 0x%x\n", (char*) u_bus->dirname, (int) u_bus->location);
 	  fprintf(stderr, "  dev %s 0x%x\n", (char*) u_dev->filename, (int) u_dev->devnum);
 	}
@@ -235,7 +235,7 @@ int luxeed_device_open(luxeed_device *dev)
     dev->opening = 1;
     dev->opened = 0;
 
-    if ( dev->debug ) {
+    if ( dev->opts.debug ) {
       fprintf(stderr, "dev opening\n");
     }
 
@@ -269,7 +269,7 @@ int luxeed_device_open(luxeed_device *dev)
     dev->opening = 0;
     dev->opened = 1;
 
-    if ( dev->debug ) {
+    if ( dev->opts.debug ) {
       fprintf(stderr, "dev opened\n");
     }
 
@@ -358,7 +358,7 @@ int luxeed_send_buffered (luxeed_device *dev, int ep, unsigned char *bytes, int 
     buf_size = s - buf;
   }
 
-  if ( dev->debug ) {
+  if ( dev->opts.debug ) {
     fprintf(stderr, "size %d => %d\n", (int) size, (int) buf_size);
     dump_buf(buf, buf_size);
   }
@@ -389,7 +389,7 @@ int luxeed_send_chunked (luxeed_device *dev, int ep, unsigned char *bytes, int s
 
   luxeed_device_msg_checksum(dev, bytes, size);
 
-  if ( dev->debug > 1 ) {
+  if ( dev->opts.debug > 1 ) {
     fprintf(stderr, "send_bytes(%d, %d)...", (int) ep, (int) size);
     dump_buf(bytes, size);
   }
@@ -411,7 +411,7 @@ int luxeed_send_chunked (luxeed_device *dev, int ep, unsigned char *bytes, int s
       int wsize = blksize < left ? blksize : left;
       wsize += 1;
 
-      if ( dev->debug > 2 ) {
+      if ( dev->opts.debug > 2 ) {
 	dump_buf(xbuf, wsize);
       }
 
@@ -438,7 +438,7 @@ int luxeed_send_chunked (luxeed_device *dev, int ep, unsigned char *bytes, int s
   /* Read result */
   if ( 0 && result == 0 ) {
     char buf[1024];
-    int buf_size = sizeof(buf);
+    // int buf_size = sizeof(buf);
     int read_size = 2;
     int read_result = 0;
     RCALL(read_result, usb_interrupt_read(dh, ep, buf, read_size, timeout));
@@ -447,8 +447,8 @@ int luxeed_send_chunked (luxeed_device *dev, int ep, unsigned char *bytes, int s
       // result = -1;
     }
     if ( read_result > 0 ) {
-      if ( dev->debug ) {
-	fprintf(stderr, "read result:"); dump_buf(buf, read_result);
+      if ( dev->opts.debug ) {
+	fprintf(stderr, "read result:"); dump_buf((unsigned char *) buf, read_result);
       }
       if ( 0 ) {
 	assert(buf[0] == 0x01);
@@ -475,7 +475,7 @@ int luxeed_device_msg_checksum(luxeed_device *dev, unsigned char *buf, int size)
 
   // return 0;
 
-  if ( dev->debug ) {
+  if ( dev->opts.debug ) {
     if ( buf == msg_ff || buf == msg_00 ) {
       dump_buf(buf, size);
     }
@@ -525,7 +525,7 @@ int luxeed_device_init(luxeed_device *dev)
       break;
     }
 
-    if ( dev->debug > 0 ) {
+    if ( dev->opts.debug > 0 ) {
       fprintf(stderr, "dev initing\n");
     }
 
@@ -554,7 +554,7 @@ int luxeed_device_init(luxeed_device *dev)
     dev->inited = 1;
     ++ dev->init_count;
 
-    if ( dev->debug > 0 ) {
+    if ( dev->opts.debug > 0 ) {
       fprintf(stderr, "dev: inited\n");
     }
 
@@ -607,12 +607,12 @@ int luxeed_device_update(luxeed_device *dev)
        if ( then.tv_sec ) {
 	double dt = (now.tv_sec - then.tv_sec);
 	dt += (now.tv_usec - then.tv_usec) / 1000000.0;
-	if ( dev->debug > 0 ) {
+	if ( dev->opts.debug > 0 ) {
 	  fprintf(stderr, "   dt = %lg secs\n", (double) dt);
 	}
 	if ( min_frame_interval > dt ) {
 	  double pause_time = min_frame_interval - dt;
-	  if ( dev->debug > 0 ) {
+	  if ( dev->opts.debug > 0 ) {
 	    fprintf(stderr, "   sleeping for %lg secs\n", (double) pause_time);
 	  }
 	  usleep(pause_time * 1000000.0);

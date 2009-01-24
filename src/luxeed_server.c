@@ -477,6 +477,7 @@ int luxeed_server_open(luxeed_server *srv)
 
     if ( ! srv->dev ) {
       srv->dev = luxeed_device_create();
+      srv->dev->opts = srv->opts;
     }
 
     /* Find the luxeed device. */
