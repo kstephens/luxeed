@@ -42,13 +42,11 @@ int luxeed_client_read_command(luxeed_client *cli)
   int result = 0;
   char buf[2048];
   size_t buf_size = sizeof(buf);
-  int key_id = 0;
-  unsigned char *pixel = 0;
+  const unsigned char *pixel = 0;
   const char *error = 0;
   const char *error2 = "";
 
   PDEBUG(cli, "(%p)", cli);
-
 
   /* Force buffering only up till newline so that select() still
   ** has other read(0) pending.
@@ -122,13 +120,10 @@ w <n>          : wait for n microseconds. \n\
 
       while ( (word = parse_word(&s)) ) {
 	luxeed_key *key = luxeed_device_key_by_name(cli->srv->dev, word);
-	if ( key && (pixel = cli->srv->dev ? luxeed_device_pixel(cli->srv->dev, key->id) : 0) ) {
+	if ( key && (pixel = luxeed_device_set_key_color(cli->srv->dev, key, cli->color[0], cli->color[1], cli->color[2])) ) {
 	  if ( cli->opts.debug > 1 ) {
 	    fprintf(stderr, "word %s => key->id = %d, key->name[0] = %s\n", word, key->id, key->name[0]);
 	  }
-	  pixel[0] = cli->color[0];
-	  pixel[1] = cli->color[1];
-	  pixel[2] = cli->color[2];
 	  snprintf(out_buf, out_buf_size, "%s %x %x %x #%d", cmd, pixel[0], pixel[1], pixel[2], key->id);
 	} else {
 	  error = "BAD KEY";
@@ -155,7 +150,8 @@ w <n>          : wait for n microseconds. \n\
 
     case 'u': // update
       if ( cli->srv->dev ) {
-	if ( luxeed_device_update(cli->srv->dev) ) {
+	/* Do not force update. */
+	if ( luxeed_device_update(cli->srv->dev, 0) ) {
 	  error = "UPDATE FAILED";
 	}
       }
@@ -202,6 +198,7 @@ w <n>          : wait for n microseconds. \n\
 int luxeed_client_sleep(luxeed_client *cli, double sec)
 {
   int result = 0;
+
   PDEBUG(cli, "(%p, %g)", cli, sec);
 
   if ( sec < 0 ) {

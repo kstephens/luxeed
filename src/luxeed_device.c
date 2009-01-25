@@ -529,7 +529,7 @@ int luxeed_device_init(luxeed_device *dev)
 }
 
 
-unsigned char *luxeed_device_pixel(luxeed_device *dev, int key)
+const unsigned char *luxeed_device_pixel(luxeed_device *dev, int key)
 {
   if ( key < 0 || key >= LUXEED_NUM_OF_KEYS ) {
     return 0;
@@ -538,7 +538,44 @@ unsigned char *luxeed_device_pixel(luxeed_device *dev, int key)
 }
 
 
-int luxeed_device_update(luxeed_device *dev)
+const unsigned char * luxeed_device_set_key_color(luxeed_device *dev, luxeed_key *key, int r, int g, int b)
+{
+  unsigned char *p;
+
+  if ( ! key ) return 0;
+
+  p = (unsigned char *) luxeed_device_pixel(dev, key->id);
+  if ( ! p ) return 0;
+
+  p[0] = r;
+  p[1] = g;
+  p[2] = b;
+
+  dev->key_data_dirty = 1;
+
+  return p;
+}
+
+
+int luxeed_device_key_color(luxeed_device *dev, luxeed_key *key, int *r, int *g, int *b)
+{
+ 
+  const unsigned char *p;
+
+  if ( ! key ) return -1;
+
+  p = (const unsigned char *) luxeed_device_pixel(dev, key->id);
+  if ( ! p ) return -1;
+
+  *r = p[0];
+  *g = p[1];
+  *b = p[2];
+
+  return 0;
+}
+
+
+int luxeed_device_update(luxeed_device *dev, int force)
 {
   int result = 0;
 
@@ -552,6 +589,12 @@ int luxeed_device_update(luxeed_device *dev)
 
     if ( luxeed_device_init(dev) < 0 ) {
       result = -1;
+      break;
+    }
+
+    /* Only send if key data is dirty. */
+    if ( ! (force || dev->key_data_dirty) ) {
+      result = 0;
       break;
     }
 
@@ -591,6 +634,9 @@ int luxeed_device_update(luxeed_device *dev)
     /* Store the time of completion. */
     gettimeofday(&now, 0);
     dev->update_last_send_time = now;
+
+    /* key_data has been sent. */
+    dev->key_data_dirty = 0;
 
   } while ( 0 );
 

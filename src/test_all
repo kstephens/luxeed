@@ -1,0 +1,9 @@
+#!/bin/bash
+
+sudo ./luxeed --server &
+
+(while true; do ./luxeed_t1; sleep 1; done) &
+(while true; do ./luxeed_t2; sleep 1; done) &
+(while true; do ./luxeed_t3; sleep 1; done) &
+(while true; do ./luxeed_t4; sleep 1; done) &
+

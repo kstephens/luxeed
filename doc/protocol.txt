@@ -1,0 +1,10 @@
+
+Endpoint Address: 0x2:
+
+
+=====================================================
+
+Read after sending 5 x 65 byte blocks?
+
+EndPoint Address 0x82:
+Read: 01 79

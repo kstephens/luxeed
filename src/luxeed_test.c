@@ -72,13 +72,13 @@ int main (int argc, char **argv)
 
 	for ( j = 0; j < 10; ++ j ) {
 	  int k = (i + j) % LUXEED_NUM_OF_KEYS;
-	  unsigned char *pixel = luxeed_device_pixel(dev, k);
+	  unsigned char *pixel = (void *) luxeed_device_pixel(dev, k);
 	  pixel[0] = r1;
 	  pixel[1] = g1;
 	  pixel[2] = b1;
 	}
 
-	result = luxeed_device_update(dev);
+	result = luxeed_device_update(dev, 1); /* force update. */
 	if ( result ) goto done;
 	usleep(100000);
 

@@ -1,3 +1,4 @@
+
 #ifndef LUXEED_DEVICE_H
 #define LUXEED_DEVICE_H
 
@@ -29,6 +30,7 @@ typedef struct luxeed_device {
 #define LUXEED_NUM_OF_KEYS 76
   /* RGB order, 0x00 - 0xff scale. */
   unsigned char key_data[LUXEED_NUM_OF_KEYS * 3];
+  int key_data_dirty;
 
   /* Message buffer */
   unsigned int msg_id;
@@ -54,7 +56,7 @@ int luxeed_device_open(luxeed_device *dev);
 int luxeed_device_close(luxeed_device *dev);
 int luxeed_device_init(luxeed_device *dev);
 int luxeed_device_send(luxeed_device *dev, int ep, unsigned char *bytes, int size);
-int luxeed_device_update(luxeed_device *dev);
+int luxeed_device_update(luxeed_device *dev, int force);
 
 int luxeed_device_msg_checksum(luxeed_device *dev, unsigned char *buf, int size);
 
@@ -65,8 +67,8 @@ luxeed_key *luxeed_device_key_by_ascii(luxeed_device *dev, int c);
 #define LUXEED_COLOR_MIN 0x00
 #define LUXEED_COLOR_MAX 0xff
 
-unsigned char *luxeed_device_pixel(luxeed_device *dev, int key_id);
-int luxeed_device_set_key_color(luxeed_device *dev, luxeed_key *key, int r, int g, int b);
+const unsigned char *luxeed_device_pixel(luxeed_device *dev, int key_id);
+const unsigned char *luxeed_device_set_key_color(luxeed_device *dev, luxeed_key *key, int r, int g, int b);
 int luxeed_device_key_color(luxeed_device *dev, luxeed_key *key, int *r, int *g, int *b);
 
 #endif
