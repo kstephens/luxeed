@@ -31,6 +31,7 @@ typedef struct luxeed_device {
   /* RGB order, 0x00 - 0xff scale. */
   unsigned char key_data[LUXEED_NUM_OF_KEYS * 3];
   int key_data_dirty;
+  struct timeval update_last_send_time;
 
   /* Message buffer */
   unsigned int msg_id;
@@ -38,14 +39,16 @@ typedef struct luxeed_device {
   int msg_len;
   int msg_size;
 
-  struct timeval update_last_send_time;
 } luxeed_device;
 
+
 typedef struct luxeed_key {
-  int id; /* index into luxeed_device.key_data[* 3] */
-  const char *name[3];
-  int code[3];
-  int shift;
+  int id;               /* Index into luxeed_device.key_data[* 3]. */
+  int mapped;           /* Non-zero if key is actually mapped to an LED. */
+  const char *name[3];  /* The key name. */
+  int code[3];          /* The ASCII code for this key-press. */
+  int shift[3];         /* Non-zero if ASCII code is composed with SHIFT and key. */
+  int x, y;             /* Position relative to the top-leftmost key (~). */
 } luxeed_key;
 
 
@@ -63,6 +66,7 @@ int luxeed_device_msg_checksum(luxeed_device *dev, unsigned char *buf, int size)
 luxeed_key *luxeed_device_key_by_id(luxeed_device *dev, int i);
 luxeed_key *luxeed_device_key_by_name(luxeed_device *dev, const char *keyname);
 luxeed_key *luxeed_device_key_by_ascii(luxeed_device *dev, int c);
+luxeed_key *luxeed_device_key_by_string(luxeed_device *dev, const char *str);
 
 #define LUXEED_COLOR_MIN 0x00
 #define LUXEED_COLOR_MAX 0xff

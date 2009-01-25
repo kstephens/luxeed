@@ -92,7 +92,7 @@ help: \n\
 g <key-id>     : get key's current color. \n\
 s r g b <key-id> ... : set key(s) to current color. \n\
 u              : update keyboard colors. \n\
-w <n>          : wait for n microseconds. \n\
+w <sec>        : wait for sec seconds. \n\
 \n\
 ");
       }
@@ -119,7 +119,7 @@ w <n>          : wait for n microseconds. \n\
       }
 
       while ( (word = parse_word(&s)) ) {
-	luxeed_key *key = luxeed_device_key_by_name(cli->srv->dev, word);
+	luxeed_key *key = luxeed_device_key_by_string(cli->srv->dev, word);
 	if ( key && (pixel = luxeed_device_set_key_color(cli->srv->dev, key, cli->color[0], cli->color[1], cli->color[2])) ) {
 	  if ( cli->opts.debug > 1 ) {
 	    fprintf(stderr, "word %s => key->id = %d, key->name[0] = %s\n", word, key->id, key->name[0]);
@@ -134,7 +134,7 @@ w <n>          : wait for n microseconds. \n\
 
     case 'g': // get key_id
       while ( (word = parse_word(&s)) ) {
-	luxeed_key *key = luxeed_device_key_by_name(cli->srv->dev, word);
+	luxeed_key *key = luxeed_device_key_by_string(cli->srv->dev, word);
 	if ( key && (pixel = cli->srv->dev ? luxeed_device_pixel(cli->srv->dev, key->id) : 0) ) {
 	  if ( cli->opts.debug > 1 ) {
 	    fprintf(stderr, "word %s => key->id = %d, key->name[0] = %s\n", word, key->id, key->name[0]);
