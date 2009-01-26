@@ -119,6 +119,9 @@ w <sec>        : wait for sec seconds. \n\
       }
 
       while ( (word = parse_word(&s)) ) {
+	if ( strcmp(word, "ALL") == 0 ) {
+	  luxeed_device_set_key_color_all(cli->srv->dev, cli->color[0], cli->color[1], cli->color[2]);
+	} else {
 	luxeed_key *key = luxeed_device_key_by_string(cli->srv->dev, word);
 	if ( key && (pixel = luxeed_device_set_key_color(cli->srv->dev, key, cli->color[0], cli->color[1], cli->color[2])) ) {
 	  if ( cli->opts.debug > 1 ) {
@@ -128,6 +131,7 @@ w <sec>        : wait for sec seconds. \n\
 	} else {
 	  error = "BAD KEY";
 	  error2 = word;
+	}
 	}
       }
       break;

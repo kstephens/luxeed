@@ -546,14 +546,29 @@ const unsigned char * luxeed_device_set_key_color(luxeed_device *dev, luxeed_key
 
   p = (unsigned char *) luxeed_device_pixel(dev, key->id);
   if ( ! p ) return 0;
-
-  p[0] = r;
-  p[1] = g;
-  p[2] = b;
-
-  dev->key_data_dirty = 1;
+  
+  if ( p[0] != r && p[1] != g && p[2] != b ) {
+    p[0] = r;
+    p[1] = g;
+    p[2] = b;
+    
+    dev->key_data_dirty = 1;  
+  }
 
   return p;
+}
+
+
+int luxeed_device_set_key_color_all(luxeed_device *dev, int r, int g, int b)
+{
+  int i;
+
+  for ( i = 0; i < LUXEED_NUM_OF_KEYS; ++ i ) {
+    luxeed_key *key = luxeed_device_key_by_id(dev, i);
+    luxeed_device_set_key_color(dev, key, r, g, b);
+  }
+
+  return 0;
 }
 
 
@@ -694,6 +709,7 @@ static struct key_map {
 
 static luxeed_key _keys[LUXEED_NUM_OF_KEYS + 1];
 
+
 int luxeed_init_keys()
 {
   static int initialized = 0;
@@ -783,7 +799,7 @@ void luxeed_key_map_dump(FILE *out)
  
   for ( i = 0; (key = &_keys[i])->id >= 0; ++ i ) {
     if ( ! key->mapped ) continue;
-    fprintf(out, "#%02d @%d,%d", key->id, key->x, key->y);
+    fprintf(out, "#%02d @%02d,%d", key->id, key->x, key->y);
     for ( j = 0; key->name[j]; ++ j ) {
       if ( key->name[j][0] <= ' ' ) {
 	char buf[8];

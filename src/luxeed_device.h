@@ -76,5 +76,7 @@ const unsigned char *luxeed_device_pixel(luxeed_device *dev, int key_id);
 const unsigned char *luxeed_device_set_key_color(luxeed_device *dev, luxeed_key *key, int r, int g, int b);
 int luxeed_device_key_color(luxeed_device *dev, luxeed_key *key, int *r, int *g, int *b);
 
+int luxeed_device_set_key_color_all(luxeed_device *dev, int r, int g, int b);
+
 #endif
 
