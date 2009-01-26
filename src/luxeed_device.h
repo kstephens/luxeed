@@ -65,6 +65,7 @@ int luxeed_device_msg_checksum(luxeed_device *dev, unsigned char *buf, int size)
 
 luxeed_key *luxeed_device_key_by_id(luxeed_device *dev, int i);
 luxeed_key *luxeed_device_key_by_name(luxeed_device *dev, const char *keyname);
+luxeed_key *luxeed_device_key_by_position(luxeed_device *dev, int x, int y);
 luxeed_key *luxeed_device_key_by_ascii(luxeed_device *dev, int c);
 luxeed_key *luxeed_device_key_by_string(luxeed_device *dev, const char *str);
 
