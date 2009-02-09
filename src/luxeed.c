@@ -28,6 +28,7 @@ static struct argp_option options[] = {
   { "fifo",     'f', "FIFO",    0,  "Named pipe" },
   { "uds",      'u', "UDS",     0,  "UNIX Domain Socket" },
   { "command",  'c', "COMMAND", 0,  "Command" },
+  { "keymap",   'k', 0,         0,  "Show keymap" },
   { 0 }
 };
 
@@ -60,12 +61,17 @@ parse_opt (int key, char *arg, struct argp_state *state)
     opts->port = atoi(arg);
     break;
     
+  case 'k':
+    opts->show_key_map = 1;
+    break;
+
   case 'c': case ARGP_KEY_ARG:
     if ( opts->commands_n >= 16 )
       /* Too many opts. */
       argp_usage (state);    
     opts->commands[opts->commands_n] = arg;
     break;
+
 
 #if 0
   case ARGP_KEY_END:
@@ -93,6 +99,9 @@ int main (int argc, char **argv)
 
   argp_parse (&argp, argc, argv, 0, 0, &luxeed_options);
 
+  if ( luxeed_options.show_key_map ) {
+    luxeed_key_map_dump(stdout);
+  } else
   if ( luxeed_options.server ) {
     if ( luxeed_options.debug ) {
       fprintf(stderr, "server mode\n");

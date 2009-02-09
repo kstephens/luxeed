@@ -165,52 +165,77 @@ int luxeed_endpoint_accept(luxeed_endpoint *srv, luxeed_endpoint *cli)
 }
 
 
-int luxeed_endpoint_open(luxeed_endpoint *cli, int in_fd, int out_fd)
+int luxeed_endpoint_open(luxeed_endpoint *ep, int in_fd, int out_fd)
 {
   int result = 0;
 
-  PDEBUG(cli, "(%p)", cli);
+  PDEBUG(ep, "(%p)", ep);
 
-  if ( ! cli ) return 0;
+  if ( ! ep ) return 0;
 
-  cli->in_fd = in_fd;
-  cli->out_fd = out_fd;
-  cli->in = fdopen(cli->in_fd, "r");
-  if ( cli->out_fd >= 0 ) {
-    cli->out = fdopen(cli->out_fd, "w");
+  ep->buf_size = sizeof(ep->buf);
+  ep->buf_len = 0;
+
+  ep->in_fd = in_fd;
+  ep->out_fd = out_fd;
+  ep->in = fdopen(ep->in_fd, "r");
+  if ( ep->out_fd >= 0 ) {
+    ep->out = fdopen(ep->out_fd, "w");
   }
 
-  PDEBUG(cli, "(%p) => %d", cli, result);
+  /* Force buffering only up till newline so that select() still
+  ** has other read(0) pending.
+  */
+  setlinebuf(ep->in);
+
+  PDEBUG(ep, "(%p) => %d", ep, result);
 
   return result;
 }
 
 
-int luxeed_endpoint_close(luxeed_endpoint *cli)
+int luxeed_endpoint_close(luxeed_endpoint *ep)
 {
   int result = 0;
 
-  PDEBUG(cli, "(%p)", cli);
+  PDEBUG(ep, "(%p)", ep);
 
-  if ( ! cli ) return 0;
+  if ( ! ep ) return 0;
 
-  if ( cli->in )
-    fclose(cli->in);
-  cli->in = 0;
+  if ( ep->in )
+    fclose(ep->in);
+  ep->in = 0;
 
-  if ( cli->out )
-    fclose(cli->out);
-  cli->out = 0;
+  if ( ep->out )
+    fclose(ep->out);
+  ep->out = 0;
 
-  if ( cli->in_fd >= 0) 
-    close(cli->in_fd);
-  cli->in_fd = -1;
+  if ( ep->in_fd >= 0) 
+    close(ep->in_fd);
+  ep->in_fd = -1;
 
-  if ( cli->out_fd >= 0 )
-    close(cli->out_fd);
-  cli->out_fd = -1;
+  if ( ep->out_fd >= 0 )
+    close(ep->out_fd);
+  ep->out_fd = -1;
 
-  PDEBUG(cli, "(%p) => %d", cli, result);
+  PDEBUG(ep, "(%p) => %d", ep, result);
+
+  return result;
+}
+
+
+int luxeed_endpoint_read_line(luxeed_endpoint *ep, char *buf, size_t buf_size)
+{
+  int result = 0;
+  void *x;
+
+  PDEBUG(ep, "(%p)", ep);
+
+  x = fgets(buf, buf_size, ep->in);
+
+  if ( x == 0 ) {
+    result = -1;
+  }
 
   return result;
 }

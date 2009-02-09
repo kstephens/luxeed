@@ -22,6 +22,10 @@ typedef struct luxeed_endpoint {
   int in_fd, out_fd;
   FILE *in, *out;
 
+  char buf[1024];
+  int buf_len;
+  size_t buf_size;
+
   int socket_family;
   struct sockaddr *socket_addr;
   socklen_t socket_addr_size;
@@ -41,6 +45,6 @@ int luxeed_endpoint_open(luxeed_endpoint *ep, int in_fd, int out_fd);
 int luxeed_endpoint_bind(luxeed_endpoint *srv);
 int luxeed_endpoint_accept(luxeed_endpoint *srv, luxeed_endpoint *cli);
 int luxeed_endpoint_close(luxeed_endpoint *ep);
-
+int luxeed_endpoint_read_line(luxeed_endpoint *ep, char *buf, size_t buf_size);
 
 #endif
