@@ -63,6 +63,8 @@ int luxeed_device_update(luxeed_device *dev, int force);
 
 int luxeed_device_msg_checksum(luxeed_device *dev, unsigned char *buf, int size);
 
+void luxeed_key_map_dump(FILE *out);
+
 luxeed_key *luxeed_device_key_by_id(luxeed_device *dev, int i);
 luxeed_key *luxeed_device_key_by_name(luxeed_device *dev, const char *keyname);
 luxeed_key *luxeed_device_key_by_position(luxeed_device *dev, int x, int y);

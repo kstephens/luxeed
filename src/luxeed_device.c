@@ -622,7 +622,7 @@ int luxeed_device_update(luxeed_device *dev, int force)
     /* Copy key pixel data into place. */
     memcpy(dev->msg + 0x37, dev->key_data, sizeof(dev->key_data));
 
-    /* throttle update frequency */
+    /* Throttle update frequency. */
     {
        struct timeval then = dev->update_last_send_time;
        gettimeofday(&now, 0);
@@ -630,12 +630,12 @@ int luxeed_device_update(luxeed_device *dev, int force)
 	double dt = (now.tv_sec - then.tv_sec);
 	dt += (now.tv_usec - then.tv_usec) / 1000000.0;
 	if ( dev->opts.debug >= 4 ) {
-	  fprintf(stderr, " t = %d.%06d  dt = %lg secs\n", (int) now.tv_sec, (int) now.tv_usec, (double) dt);
+	  fprintf(stderr, "  t = %d.%06d  dt = %lg secs\n", (int) now.tv_sec, (int) now.tv_usec, (double) dt);
 	}
 	if ( min_frame_interval > dt ) {
 	  double pause_time = min_frame_interval - dt;
 	  if ( dev->opts.debug >= 4 ) {
-	    fprintf(stderr, "   sleeping for %lg secs\n", (double) pause_time);
+	    fprintf(stderr, "    sleeping for %lg secs\n", (double) pause_time);
 	  }
 	  usleep(pause_time * 1000000.0);
 	}

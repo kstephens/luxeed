@@ -18,6 +18,7 @@ struct luxeed_options
   int port;
   const char *commands[16];
   int commands_n;
+  int show_key_map;
 } luxeed_options;
 
 
