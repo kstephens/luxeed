@@ -21,9 +21,9 @@ struct luxeed_options
 } luxeed_options;
 
 
-#define PDEBUG(x, ARGS ...)					    \
+#define PDEBUG(x, LEVEL, ARGS ...)				    \
   do {								    \
-    if ( (x)->opts.debug ) {						    \
+    if ( (x)->opts.debug >= LEVEL ) {						    \
       fprintf(stderr, "%s: DEBUG: %s", (x)->opts.progname, __FUNCTION__);	\
       fprintf(stderr, ARGS);					    \
       fprintf(stderr, "\n");					    \

@@ -41,11 +41,11 @@ parse_opt (int key, char *arg, struct argp_state *state)
   
   switch ( key ) {
   case 'd':
-    opts->debug = 1;
+    opts->debug += 1;
     break;
 
   case 'v':
-    opts->verbose = 1;
+    opts->verbose += 1;
     break;
 
   case 's':

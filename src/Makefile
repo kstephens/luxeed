@@ -4,7 +4,8 @@ LIBLUXEED_C = \
   luxeed_misc.c \
   luxeed_device.c \
   luxeed_endpoint.c \
-  luxeed_server.c
+  luxeed_server.c \
+  luxeed_command.c
 
 LIBLUXEED_O=$(LIBLUXEED_C:.c=.o)
 

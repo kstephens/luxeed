@@ -10,7 +10,7 @@ int luxeed_endpoint_init(luxeed_endpoint *ep, int init)
 {
   int result = 0;
 
-  PDEBUG(ep, "(%p)", ep);
+  PDEBUG(ep, 2, "(%p)", ep);
 
   /* Clear file descriptors. */
   ep->in_fd = ep->out_fd = -1;
@@ -25,7 +25,7 @@ int luxeed_endpoint_init(luxeed_endpoint *ep, int init)
     ep->socket_addr_size = sizeof(ep->inet_addr);
     if ( init ) {
       /* Bind to address */
-      PDEBUG(ep, "(%p) AF_INET %s:%d", ep, ep->opts.host, ep->opts.port);
+      PDEBUG(ep, 3, "(%p) AF_INET %s:%d", ep, ep->opts.host, ep->opts.port);
       ep->inet_addr.sin_port = htons(ep->opts.port);
       if ( inet_aton(ep->opts.host, &ep->inet_addr.sin_addr) == 0 ) {
 	perror(luxeed_error_action = "inet_aton");
@@ -48,7 +48,7 @@ int luxeed_endpoint_init(luxeed_endpoint *ep, int init)
   }
 
  done:
-  PDEBUG(ep, "(%p) => %d", ep, result);
+  PDEBUG(ep, 2, "(%p) => %d", ep, result);
   
   return result;
 }
@@ -58,7 +58,7 @@ int luxeed_endpoint_bind(luxeed_endpoint *srv)
 {
   int result = 0;
 
-  PDEBUG(srv, "(%p)", srv);
+  PDEBUG(srv, 2, "(%p)", srv);
 
   do {
     /* Prepare socket address. */
@@ -121,7 +121,7 @@ int luxeed_endpoint_bind(luxeed_endpoint *srv)
     }
   } while ( 0 );
 
-  PDEBUG(srv, "(%p) => %d", srv, result);
+  PDEBUG(srv, 2, "(%p) => %d", srv, result);
 
   return result;
 }
@@ -131,7 +131,7 @@ int luxeed_endpoint_accept(luxeed_endpoint *srv, luxeed_endpoint *cli)
 {
   int result = 0;
 
-  PDEBUG(srv, "(%p)", srv);
+  PDEBUG(srv, 2, "(%p)", srv);
 
   do {
     cli->socket_family = srv->socket_family;
@@ -159,7 +159,7 @@ int luxeed_endpoint_accept(luxeed_endpoint *srv, luxeed_endpoint *cli)
     }
   } while ( 0 );
 
-  PDEBUG(srv, "(%p) => %d", srv, result);
+  PDEBUG(srv, 2, "(%p) => %d", srv, result);
 
   return result;
 }
@@ -169,7 +169,7 @@ int luxeed_endpoint_open(luxeed_endpoint *cli, int in_fd, int out_fd)
 {
   int result = 0;
 
-  PDEBUG(cli, "(%p)", cli);
+  PDEBUG(cli, 2, "(%p, %d, %d)", cli, (int) in_fd, (int) out_fd);
 
   if ( ! cli ) return 0;
 
@@ -180,7 +180,7 @@ int luxeed_endpoint_open(luxeed_endpoint *cli, int in_fd, int out_fd)
     cli->out = fdopen(cli->out_fd, "w");
   }
 
-  PDEBUG(cli, "(%p) => %d", cli, result);
+  PDEBUG(cli, 2, "(%p) => %d", cli, result);
 
   return result;
 }
@@ -190,9 +190,9 @@ int luxeed_endpoint_close(luxeed_endpoint *cli)
 {
   int result = 0;
 
-  PDEBUG(cli, "(%p)", cli);
-
   if ( ! cli ) return 0;
+
+  PDEBUG(cli, 2, "(%p): %d, %d", cli, cli->in_fd, cli->out_fd);
 
   if ( cli->in )
     fclose(cli->in);
@@ -210,7 +210,7 @@ int luxeed_endpoint_close(luxeed_endpoint *cli)
     close(cli->out_fd);
   cli->out_fd = -1;
 
-  PDEBUG(cli, "(%p) => %d", cli, result);
+  PDEBUG(cli, 2, "(%p) => %d", cli, result);
 
   return result;
 }
