@@ -217,7 +217,7 @@ int luxeed_device_find(luxeed_device *dev, uint16_t vendor, uint16_t product)
 	dev->msg = malloc(sizeof(dev->msg[0]) * dev->msg_size);
 	memset(dev->msg, 0, sizeof(dev->msg[0]) * dev->msg_size);
 
-	if ( dev->opts.debug >= 1 ) {
+	if ( dev->opts.debug >= 2 ) {
 	  fprintf(stderr, "  bus %s 0x%x\n", (char*) u_bus->dirname, (int) u_bus->location);
 	  fprintf(stderr, "  dev %s 0x%x\n", (char*) u_dev->filename, (int) u_dev->devnum);
 	}
@@ -228,6 +228,12 @@ int luxeed_device_find(luxeed_device *dev, uint16_t vendor, uint16_t product)
   }
 
   return -1;
+}
+
+
+int luxeed_device_opened(luxeed_device *dev)
+{
+  return dev ? dev->opened : 0;
 }
 
 
@@ -247,7 +253,7 @@ int luxeed_device_open(luxeed_device *dev)
     dev->opening = 1;
     dev->opened = 0;
 
-    if ( dev->opts.debug >= 1 ) {
+    if ( dev->opts.debug >= 2 ) {
       fprintf(stderr, "dev opening\n");
     }
 
@@ -281,7 +287,7 @@ int luxeed_device_open(luxeed_device *dev)
     dev->opening = 0;
     dev->opened = 1;
 
-    if ( dev->opts.debug >= 1 ) {
+    if ( dev->opts.debug >= 2 ) {
       fprintf(stderr, "dev opened\n");
     }
 
@@ -547,7 +553,7 @@ const unsigned char * luxeed_device_set_key_color(luxeed_device *dev, luxeed_key
   p = (unsigned char *) luxeed_device_pixel(dev, key->id);
   if ( ! p ) return 0;
   
-  if ( p[0] != r && p[1] != g && p[2] != b ) {
+  if ( ! (p[0] == r && p[1] == g && p[2] == b) ) {
     p[0] = r;
     p[1] = g;
     p[2] = b;
