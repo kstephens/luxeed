@@ -71,11 +71,15 @@ int luxeed_client_sleep(luxeed_client *cli, double sec)
   }
 
   /* Stop reading from client. */
-  event_del(&cli->ep.read_ev);
+  if ( cli->ep.read_ev_active ) {
+    cli->ep.read_ev_active = 0;
+    event_del(&cli->ep.read_ev);
+  }
 
   /* Add the timer. */
   cli->ep.timer_timeval.tv_sec = (time_t) sec;
   cli->ep.timer_timeval.tv_usec = (long) ((sec - (time_t) sec) * 1000000.0);
+  cli->ep.timer_ev_active = 1;
   evtimer_add(&cli->ep.timer_ev, &cli->ep.timer_timeval);
 
   PDEBUG(cli, 3, "(%p, %g) => %d", cli, (double) sec, (int) result);
@@ -92,9 +96,13 @@ void luxeed_client_sleep_finished(int fd, short event, void *data)
   PDEBUG(cli, 3, "(%d, %d, %p)", (int) fd, (int) event, data);
 
   /* Remove the timer. */
-  evtimer_del(&cli->ep.timer_ev);
+  if ( cli->ep.read_ev_active ) {
+    cli->ep.timer_ev_active = 0;
+    evtimer_del(&cli->ep.timer_ev);
+  }
 
   /* Continue reading from client. */
+  cli->ep.read_ev_active = 1;
   event_add(&cli->ep.read_ev, 0);
 
   PDEBUG(cli, 3, "(%d, %d, %p) => %d", (int) fd, (int) event, data, result);
@@ -118,6 +126,7 @@ void luxeed_client_read(int fd, short event, void *data)
     free(cli);
   } 
   else if ( result == 0 ) {
+    cli->ep.read_ev_active = 1;
     event_add(&cli->ep.read_ev, 0);
   }
   else {
@@ -144,10 +153,12 @@ int luxeed_client_open(luxeed_client *cli, luxeed_server *srv, int in_fd, int ou
     cli->color[0] = cli->color[1] = cli->color[2] = 0;
     
     /* Start reading on cli socket. */
+    cli->ep.read_ev_active = 1;
     event_set(&cli->ep.read_ev, cli->ep.in_fd, EV_READ, &luxeed_client_read, cli); 
     event_add(&cli->ep.read_ev, 0);
 
     /* Prepare a timer for "wait" commands. */
+    cli->ep.timer_ev_active = 1;
     evtimer_set(&cli->ep.timer_ev, luxeed_client_sleep_finished, (void *) cli);
   
   } while ( 0 );
@@ -167,13 +178,24 @@ int luxeed_client_close(luxeed_client *cli)
   if ( ! cli ) return 0;
 
   /* Remove timer event. */
-  evtimer_del(&cli->ep.timer_ev);
-
+  if ( cli->ep.timer_ev_active ) {
+    cli->ep.timer_ev_active = 0;
+    evtimer_del(&cli->ep.timer_ev);
+  }
+  
   /* Stop read events. */
-  event_del(&cli->ep.read_ev);
+  if ( cli->ep.read_ev_active ) {
+    cli->ep.read_ev_active = 0;
+    event_del(&cli->ep.read_ev);
+  }
 
   /* Close FDs and FILEs. */
   luxeed_endpoint_close(&cli->ep);
+
+  /* Update the device, if open and dirty. */
+  if ( luxeed_device_opened(cli->srv->dev) ) {
+    luxeed_device_update(cli->srv->dev, 0);
+  }
 
   PDEBUG(cli, 2, "(%p) => %d", cli, result);
 
@@ -195,6 +217,7 @@ void luxeed_server_accept(int fd, short event, void *data)
 
   do {
     /* Accept another. */
+    srv->ep.accept_ev_active = 1;
     event_add(&srv->ep.accept_ev, 0);
     
     /* Open client. */
@@ -236,11 +259,12 @@ int luxeed_server_open_socket(luxeed_server *srv)
     }
 
     /* Register for accept events. */
+    srv->ep.accept_ev_active = 1;
     event_set(&srv->ep.accept_ev, srv->ep.in_fd, EV_READ, &luxeed_server_accept, srv); 
     event_add(&srv->ep.accept_ev, 0);
   } while ( 0 );
 
-  PDEBUG(srv, 1, "(%p) => %d", srv, result);
+  PDEBUG(srv, 1, "(%p) => %d, fd = %d", srv, result, srv->ep.in_fd);
 
   return result;
 }
@@ -342,16 +366,14 @@ int luxeed_server_open_fifo(luxeed_server *srv)
 }
 
 
-int luxeed_server_open(luxeed_server *srv)
+luxeed_device *luxeed_server_device(luxeed_server *srv)
 {
   int result = 0;
-
+  
   PDEBUG(srv, 1, "(%p)", srv);
 
   do {
-    // strcpy(srv->server_uri, "tcp://127.0.0.1:25324");
-    strncpy(srv->server_path, "/tmp/luxeed", sizeof(srv->server_path));
-
+    /* Allocate a device object. */
     if ( ! srv->dev ) {
       srv->dev = luxeed_device_create();
       srv->dev->opts = srv->opts;
@@ -361,20 +383,39 @@ int luxeed_server_open(luxeed_server *srv)
     if ( luxeed_device_find(srv->dev, 0, 0) ) {
       fprintf(stderr, "%s: luxeed keyboard not found\n", srv->opts.progname);
       luxeed_error_action = "luxeed_device_find";
-      // result = -1;
-      // break;
+      result = -1;
+      break;
     }
 
     /* Attempt to open the device now. */
     if ( srv->dev ) {
       if ( (result = luxeed_device_open(srv->dev)) ) {
 	luxeed_error_action = "luxeed_device_open";
-	// result = -1;
-	// break;
+	result = -1;
+	break;
       }
     }
 
+  } while ( 0 );
+
+  return result ? 0 : srv->dev;
+}
+
+
+int luxeed_server_open(luxeed_server *srv)
+{
+  int result = 0;
+
+  PDEBUG(srv, 1, "(%p)", srv);
+
+  do {
     srv->ep.opts = srv->opts;
+
+    // strcpy(srv->server_uri, "tcp://127.0.0.1:25324");
+    strncpy(srv->server_path, "/tmp/luxeed", sizeof(srv->server_path));
+
+    /* Open device here. */
+    luxeed_server_device(srv);
 
     if ( srv->opts.fifo ) {
       if ( luxeed_server_open_fifo(srv) ) {
@@ -421,7 +462,10 @@ int luxeed_server_close(luxeed_server *srv)
   PDEBUG(srv, 1, "(%p)", srv);
 
   do {
-    event_del(&srv->ep.accept_ev);
+    if ( srv->ep.accept_ev_active ) {
+      srv->ep.accept_ev_active = 0;
+      event_del(&srv->ep.accept_ev);
+    }
 
     if ( srv->dev ) {
       luxeed_device_destroy(srv->dev);

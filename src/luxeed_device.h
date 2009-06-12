@@ -57,6 +57,7 @@ int luxeed_device_destroy(luxeed_device *dev);
 int luxeed_device_find(luxeed_device *dev, uint16_t vendor, uint16_t product);
 int luxeed_device_open(luxeed_device *dev);
 int luxeed_device_close(luxeed_device *dev);
+int luxeed_device_opened(luxeed_device *dev);
 int luxeed_device_init(luxeed_device *dev);
 int luxeed_device_send(luxeed_device *dev, int ep, unsigned char *bytes, int size);
 int luxeed_device_update(luxeed_device *dev, int force);
