@@ -19,13 +19,17 @@ static char *parse_word(char **buf)
 
   if ( *s ) {
     b = s;
+
     while ( *s && ! isspace(*s) )
       ++ s;
-    *(s ++) = '\0';
-  }
 
-  while ( *s && isspace(*s) )
-    ++ s;
+    if ( *s ) {
+      *(s ++) = '\0';
+
+      while ( *s && isspace(*s) )
+	++ s;
+    }
+  }
 
   *buf = s;
   
@@ -64,7 +68,7 @@ int luxeed_client_run_command(luxeed_client *cli, char *buf, char *out_buf, size
   cmd = parse_word(&s);
 
   if ( cli->opts.debug >= 3 ) {
-    fprintf(stderr, "cmd = %p \"%s\" '%c'\n", cmd, cmd, cmd && cmd[0]);
+    fprintf(stderr, "  cmd = %p \"%s\", s = \"%s\" \n", cmd, cmd ? cmd : "<<NULL>>", s ? s : "<<NULL>");
   }
   
   /* Blank line? */
