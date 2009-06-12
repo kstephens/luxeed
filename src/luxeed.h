@@ -11,6 +11,7 @@ struct luxeed_options
   const char *progname;
   int verbose;
   int debug;
+  int debug_syscall;
   int server;
   const char *fifo;
   const char *uds;
@@ -22,13 +23,14 @@ struct luxeed_options
 } luxeed_options;
 
 
-#define PDEBUG(x, LEVEL, ARGS ...)				    \
-  do {								    \
-    if ( (x)->opts.debug >= LEVEL ) {						    \
-      fprintf(stderr, "%s: DEBUG: %s", (x)->opts.progname, __FUNCTION__);	\
-      fprintf(stderr, ARGS);					    \
-      fprintf(stderr, "\n");					    \
-    }								    \
+#define PDEBUG(x, LEVEL, ARGS ...)					\
+  do {									\
+    int __level = (LEVEL);						\
+    if ( (x)->opts.debug >= __level ) {					\
+      fprintf(stderr, "%s: DEBUG %d: %s", (x)->opts.progname, __level, __FUNCTION__); \
+      fprintf(stderr, ARGS);						\
+      fprintf(stderr, "\n");						\
+    }									\
   } while (0)
 
 

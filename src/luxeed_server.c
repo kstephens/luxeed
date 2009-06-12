@@ -141,9 +141,9 @@ int luxeed_client_open(luxeed_client *cli, luxeed_server *srv, int in_fd, int ou
 {
   int result = 0;
 
-  do {
-    PDEBUG(cli, 2, "(%p, %p, %d, %d)", cli, srv, (int) in_fd, (int) out_fd);
+  PDEBUG(cli, 2, "(%p, %p, %d, %d)", cli, srv, (int) in_fd, (int) out_fd);
 
+  do {
     cli->srv = srv;
     cli->opts = srv->opts;
     cli->ep.opts = cli->opts;

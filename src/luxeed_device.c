@@ -28,13 +28,13 @@ double chunk_delay = 0.0;
 
 
 #if 1
-#define RCALL(V,X) do { V = X; if ( V < 0 || dev->opts.debug >= 4 ) { fprintf(stderr, "  %s => %d\n", #X, (int) V); } } while ( 0 )
+#define RCALL(V,X) do { V = X; if ( dev->opts.debug_syscall >= 1 ) { fprintf(stderr, "  %s => %d\n", #X, (int) V); } } while ( 0 )
 #else
 #define RCALL(V,X) V = X
 #endif
 
 
-/* Parsed from ep01.txt as initialization, minues the leading 0x02.
+/* Parsed from ep01.txt as initialization, minus the leading 0x02.
    Chunks are sent 65 bytes long.
    Checksum appears at 0x14e.
 */
@@ -174,16 +174,21 @@ int luxeed_device_destroy(luxeed_device *dev)
   if ( ! dev ) {
     return 0;
   }
+  PDEBUG(dev, 1, "(%p)", dev);
+
   luxeed_device_close(dev);
   free(dev->msg);
   memset(dev, 0, sizeof(*dev));
   free(dev);
+
   return 0;
 }
 
 
 int luxeed_device_find(luxeed_device *dev, uint16_t vendor, uint16_t product)
 {
+  int result = -1; /* not found */
+
   struct usb_bus *u_bus;
   struct usb_device *u_dev;
   struct usb_bus *u_busses;
@@ -195,12 +200,14 @@ int luxeed_device_find(luxeed_device *dev, uint16_t vendor, uint16_t product)
     product = LUXEED_USB_PRODUCT;
   }
 
+  PDEBUG(dev, 1, "(%p, %d, %d)", dev, vendor, product);
+
   usb_init();
   usb_find_busses();
   usb_find_devices();
   u_busses = usb_get_busses();
 
-  if ( dev->opts.debug >= 2 ) {
+  if ( dev->opts.debug_syscall >= 1 ) {
     usb_set_debug(usb_debug_level);
   }
 
@@ -217,17 +224,21 @@ int luxeed_device_find(luxeed_device *dev, uint16_t vendor, uint16_t product)
 	dev->msg = malloc(sizeof(dev->msg[0]) * dev->msg_size);
 	memset(dev->msg, 0, sizeof(dev->msg[0]) * dev->msg_size);
 
-	if ( dev->opts.debug >= 2 ) {
+	if ( dev->opts.debug_syscall >= 2 ) {
 	  fprintf(stderr, "  bus %s 0x%x\n", (char*) u_bus->dirname, (int) u_bus->location);
 	  fprintf(stderr, "  dev %s 0x%x\n", (char*) u_dev->filename, (int) u_dev->devnum);
 	}
 
-        return 0;
+        result = 0;
+	goto done;
       }
     }
   }
 
-  return -1;
+ done:
+  PDEBUG(dev, 1, "(%p, %d, %d) => %d", dev, vendor, product, result);
+
+  return result;
 }
 
 
@@ -240,6 +251,8 @@ int luxeed_device_opened(luxeed_device *dev)
 int luxeed_device_open(luxeed_device *dev)
 {
   int result = -1;
+
+  PDEBUG(dev, 1, "(%p)", dev);
 
   do {
     if ( dev->opened ) {
@@ -295,6 +308,9 @@ int luxeed_device_open(luxeed_device *dev)
 
   } while ( 0 );
 
+
+  PDEBUG(dev, 1, "(%p) => %d", dev, result);
+
   return result;
 }
 
@@ -302,6 +318,8 @@ int luxeed_device_open(luxeed_device *dev)
 int luxeed_device_close(luxeed_device *dev)
 {
   int result = 0;
+
+  PDEBUG(dev, 1, "(%p)", dev);
 
   do {
     if ( dev->u_dh ) {
@@ -322,6 +340,8 @@ int luxeed_device_close(luxeed_device *dev)
     dev->inited = 0;
     dev->initing = 0;
   } while ( 0 );
+
+  PDEBUG(dev, 1, "(%p) => %d", dev, result);
 
   return result;
 }
@@ -359,11 +379,13 @@ int luxeed_send_chunked (luxeed_device *dev, int ep, unsigned char *bytes, int s
   int result = 0;
   int timeout = 1000;
 
+  PDEBUG(dev, 2, "(%p, %d, %p, %d)", dev, ep, bytes, size);
+
   usb_dev_handle *dh;
 
   luxeed_device_msg_checksum(dev, bytes, size);
 
-  if ( dev->opts.debug >= 4 ) {
+  if ( dev->opts.debug_syscall >= 2 ) {
     fprintf(stderr, "send_bytes(%d, %d)...", (int) ep, (int) size);
     dump_buf(bytes, size);
   }
@@ -385,7 +407,7 @@ int luxeed_send_chunked (luxeed_device *dev, int ep, unsigned char *bytes, int s
       int wsize = blksize < left ? blksize : left;
       wsize += 1;
 
-      if ( dev->opts.debug >= 5 ) {
+      if ( dev->opts.debug_syscall >= 3 ) {
 	dump_buf(xbuf, wsize);
       }
 
@@ -418,7 +440,7 @@ int luxeed_send_chunked (luxeed_device *dev, int ep, unsigned char *bytes, int s
       // result = -1;
     }
     if ( read_result > 0 ) {
-      if ( dev->opts.debug >= 5 ) {
+      if ( dev->opts.debug_syscall >= 2 ) {
 	fprintf(stderr, "read result:"); dump_buf((unsigned char *) buf, read_result);
       }
       if ( 0 ) {
@@ -432,6 +454,8 @@ int luxeed_send_chunked (luxeed_device *dev, int ep, unsigned char *bytes, int s
     RCALL(result, usb_clear_halt(dh, ep));
   }
 
+  PDEBUG(dev, 2, "(%p, %d, %p, %d) => %d", dev, ep, bytes, size, result);
+
   return result;
 }
 
@@ -443,6 +467,8 @@ int luxeed_device_msg_checksum(luxeed_device *dev, unsigned char *buf, int size)
   int i;
   int sum_save;
   int chksum_i = 0x14e; // 0x154 in total msg output.
+
+  PDEBUG(dev, 3, "(%p, %p, %d)", dev, buf, size);
 
   // return 0;
 
@@ -473,6 +499,8 @@ int luxeed_device_msg_checksum(luxeed_device *dev, unsigned char *buf, int size)
     buf[chksum_i - 1] = 0;
   }
 
+  PDEBUG(dev, 3, "(%p, %p, %d) => %d", dev, buf, size, sum);
+
   return sum;
 }
 
@@ -481,6 +509,8 @@ int luxeed_device_msg_checksum(luxeed_device *dev, unsigned char *buf, int size)
 int luxeed_device_init(luxeed_device *dev)
 {
   int result = -1;
+
+  PDEBUG(dev, 3, "(%p)", dev);
 
   do {
     int slp = 100000;
@@ -531,6 +561,8 @@ int luxeed_device_init(luxeed_device *dev)
 
   } while ( 0 );
 
+  PDEBUG(dev, 3, "(%p) => %d", dev, result);
+
   return result;
 }
 
@@ -580,7 +612,6 @@ int luxeed_device_set_key_color_all(luxeed_device *dev, int r, int g, int b)
 
 int luxeed_device_key_color(luxeed_device *dev, luxeed_key *key, int *r, int *g, int *b)
 {
- 
   const unsigned char *p;
 
   if ( ! key ) return -1;
@@ -600,6 +631,8 @@ int luxeed_device_update(luxeed_device *dev, int force)
 {
   int result = 0;
 
+  PDEBUG(dev, 3, "(%p, %d)", dev, force);
+
   do {
     struct timeval now;
 
@@ -616,6 +649,7 @@ int luxeed_device_update(luxeed_device *dev, int force)
     /* Only send if key data is dirty. */
     if ( ! (force || dev->key_data_dirty) ) {
       result = 0;
+      PDEBUG(dev, 3, "(%p, %d): not dirty or forced", dev, force);
       break;
     }
 
@@ -667,6 +701,8 @@ int luxeed_device_update(luxeed_device *dev, int force)
     luxeed_device_close(dev);
     return 0;
   }
+
+  PDEBUG(dev, 3, "(%p, %d) => %d", dev, force, result);
 
   return result;
 }
