@@ -40,6 +40,7 @@ update
 wait 0.3
 set ff 00 00 #23
 update
+wait 0.3
 
 set 00 ff 00 #20
 update

@@ -22,6 +22,7 @@ static char args_doc[] = "COMMAND ...";
 static struct argp_option options[] = {
   { "verbose",  'v', 0,         0,  "Produce verbose output" },
   { "debug",    'd', 0,         0,  "Debug mode" },
+  { "debug-syscall", 'D', 0,    0,  "Debug syscalls" },
   { "server",   's', 0,         0,  "Server mode" },
   { "host",     'h', "HOST",    0,  "Hostname or IP address" },
   { "port",     'p', "PORT",    0,  "Port" },
@@ -42,11 +43,15 @@ parse_opt (int key, char *arg, struct argp_state *state)
   
   switch ( key ) {
   case 'd':
-    opts->debug = 1;
+    opts->debug += 1;
+    break;
+
+  case 'D':
+    opts->debug_syscall += 1;
     break;
 
   case 'v':
-    opts->verbose = 1;
+    opts->verbose += 1;
     break;
 
   case 's':
@@ -71,7 +76,6 @@ parse_opt (int key, char *arg, struct argp_state *state)
       argp_usage (state);    
     opts->commands[opts->commands_n] = arg;
     break;
-
 
 #if 0
   case ARGP_KEY_END:

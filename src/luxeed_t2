@@ -40,6 +40,7 @@ update
 wait 0.75
 set ff 00 00 E
 update
+wait 0.75
 
 set 00 ff 00 TAB
 update
@@ -76,7 +77,7 @@ wait 0.75
 set 00 00 00 W
 update
 wait 0.75
-set 00 00 00 W
+set 00 00 00 E
 update
 wait 0.75
 

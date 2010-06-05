@@ -34,9 +34,14 @@ typedef struct luxeed_endpoint {
   struct sockaddr_un uds_addr;
 
   struct event accept_ev;
+  int accept_ev_active;
+
   struct event read_ev;
+  int read_ev_active;
 
   struct event timer_ev;
+  int timer_ev_active;
+
   struct timeval timer_timeval;
 } luxeed_endpoint;
 
