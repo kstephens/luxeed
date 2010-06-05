@@ -1,0 +1,19 @@
+#!/bin/sh
+
+while true
+do
+(
+cat <<END
+s ff ff ff ALL
+u
+w 0.5
+s fe 23 43 ~ TAB CAPS LSHIFT LCTRL LSTART LALT
+s fe 23 43 4 e d c v g t 5
+s fe 23 43 7 u j m k o 9
+s fe 23 43 - = BACKSPACE [ ' ENTER / RSTART MENU LCTRL
+u 
+w 0.5
+END
+) | netcat -q 0 localhost 12345
+done
+
