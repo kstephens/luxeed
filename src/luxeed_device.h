@@ -1,10 +1,17 @@
-
 #ifndef LUXEED_DEVICE_H
 #define LUXEED_DEVICE_H
 
 #include "luxeed.h" /* luxeed_options */
 
-#include <usb.h>
+#ifdef __APPLE__
+typedef unsigned short uint16_t;
+#endif
+
+#ifdef LIBUSB_1_0
+#include "libusb.h"
+#else
+#include "usb.h"
+#endif
 #include <time.h> /* struct timeval */
 
 #define LUXEED_USB_VENDOR   0x534B

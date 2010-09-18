@@ -1,15 +1,16 @@
-LIBS=-L. -lluxeed -lusb -levent #
+# on OS X: sudo port install libusb-compat argp-standalone libevent
+LIBS=-L. -lluxeed -L/opt/local/lib -lusb -levent -largp #
 #LIBS+= -largp #
 LIBLUXEED_C = \
-  luxeed_misc.c \
   luxeed_device.c \
   luxeed_endpoint.c \
   luxeed_server.c \
-  luxeed_command.c
+  luxeed_command.c \
+  luxeed_misc.c
 
 LIBLUXEED_O=$(LIBLUXEED_C:.c=.o)
 
-CFLAGS+=-g -O2 -Wall
+CFLAGS+=-g -O2 -Wall -I/opt/local/include
 
 all : products
 
