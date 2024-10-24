@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+(
+  cat <<END
+s 00 00 00 ALL
+u
+END
+  while true
+  do
+    (( r = $RANDOM % 255 ))
+    (( g = $RANDOM % 255 ))
+    (( b = $RANDOM % 255 ))
+    (( key = $RANDOM % 76 ))
+    printf $'s %2x %2x %2x #%s\nu\n' $r $g $b $key
+    sleep 0.2
+  done
+) | netcat -c localhost "${1:-12345}" || exit 9
