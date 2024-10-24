@@ -257,11 +257,11 @@ int luxeed_device_open(luxeed_device *dev)
   int usb_result = 0;
 
   if ( dev->opened ) {
-    PDEBUG(dev, 2, "(%p) : dev already open", dev);
+    PDEBUG(dev, 2, "(%p) : already open", dev);
     return 0;
   }
   if ( dev->opening ) {
-    PDEBUG(dev, 2, "(%p) : dev already opening", dev);
+    PDEBUG(dev, 2, "(%p) : already opening", dev);
     return 0;
   }
 
@@ -271,7 +271,7 @@ int luxeed_device_open(luxeed_device *dev)
     dev->opening = 1;
     dev->opened = 0;
 
-    PDEBUG(dev, 1, "dev opening");
+    PDEBUG(dev, 1, "opening");
 
     /* Locate the USB device. */
     if ( ! dev->u_dev ) {
@@ -307,7 +307,7 @@ int luxeed_device_open(luxeed_device *dev)
     dev->opening = 0;
     dev->opened = 1;
 
-    PDEBUG(dev, 1, "dev opened");
+    PDEBUG(dev, 1, "opened");
 
     result = 0;
 
