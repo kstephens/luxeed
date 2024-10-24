@@ -1,5 +1,6 @@
 
 #include "luxeed_command.h"
+#include "luxeed_device.h"
 #include <ctype.h>
 
 

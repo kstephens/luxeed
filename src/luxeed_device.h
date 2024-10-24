@@ -62,12 +62,6 @@ int luxeed_device_msg_checksum(luxeed_device *dev, unsigned char *buf, int size)
 
 void luxeed_key_map_dump(FILE *out);
 
-luxeed_key *luxeed_device_key_by_id(luxeed_device *dev, int i);
-luxeed_key *luxeed_device_key_by_name(luxeed_device *dev, const char *keyname);
-luxeed_key *luxeed_device_key_by_position(luxeed_device *dev, int x, int y);
-luxeed_key *luxeed_device_key_by_ascii(luxeed_device *dev, int c);
-luxeed_key *luxeed_device_key_by_string(luxeed_device *dev, const char *str);
-
 #define LUXEED_COLOR_MIN 0x00
 #define LUXEED_COLOR_MAX 0xff
 
@@ -78,4 +72,3 @@ int luxeed_device_key_color(luxeed_device *dev, luxeed_key *key, int *r, int *g,
 int luxeed_device_set_key_color_all(luxeed_device *dev, int r, int g, int b);
 
 #endif
-
