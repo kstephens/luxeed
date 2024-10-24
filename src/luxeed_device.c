@@ -208,7 +208,7 @@ int luxeed_device_find(luxeed_device *dev, uint16_t vendor, uint16_t product)
   if ( dev->opts.debug_syscall >= 1 ) {
     usb_set_debug(usb_debug_level);
   }
-  if ( RCALL(result, usb_find_busses()) ) break;
+  RCALL(usb_result, usb_find_busses());
   RCALL(usb_result, usb_find_devices());
   u_busses = usb_get_busses();
 
@@ -329,13 +329,12 @@ int luxeed_device_close(luxeed_device *dev)
     if ( dev->u_dh ) {
       RCALL(result, usb_release_interface(dev->u_dh, LUXEED_USB_INTERFACE));
       RCALL(result, usb_close(dev->u_dh));
-      if ( result ) break;
-
       dev->u_dh = 0;
     }
 
     /* Force device search on open(). */
     dev->u_dev = 0;
+    dev->u_bus = 0;
 
     dev->opened = 0;
     dev->opening = 0;
@@ -637,11 +636,13 @@ int luxeed_device_update(luxeed_device *dev, int force)
     struct timeval now;
 
     if ( luxeed_device_open(dev) < 0 ) {
+      return -1;
       result = -1;
       break;
     }
 
     if ( luxeed_device_init(dev) < 0 ) {
+      luxeed_device_close(dev);
       result = -1;
       break;
     }
@@ -693,6 +694,7 @@ int luxeed_device_update(luxeed_device *dev, int force)
 
   /* Try again next time. */
   if ( result < 0 ) {
+    PDEBUG(dev, 1, "reopen later");
     luxeed_device_close(dev);
     return 0;
   }

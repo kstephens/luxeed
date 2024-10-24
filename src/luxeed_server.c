@@ -374,6 +374,7 @@ luxeed_device *luxeed_server_device(luxeed_server *srv)
       srv->dev->opts = srv->opts;
     }
 
+#if 0
     /* Find the luxeed device. */
     if ( luxeed_device_find(srv->dev, 0, 0) ) {
       luxeed_error("luxeed keyboard not found");
@@ -391,6 +392,7 @@ luxeed_device *luxeed_server_device(luxeed_server *srv)
         break;
       }
     }
+#endif
 
   } while ( 0 );
 

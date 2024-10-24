@@ -15,7 +15,13 @@ set-color() {
     random-color
     set-color $r $g $b ALL
     sleep 2
-    for i in {1..100}
+    for key in {0..75}
+    do
+      random-color
+      set-color $r $g $b "#$key"
+      sleep 0.2
+    done
+    for key in {1..100}
     do
       (( key = $RANDOM % 76 ))
       random-color
