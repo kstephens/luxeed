@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 
+(
 while true
 do
-(
-cat <<END
+  cat <<END
 s ff ff ff ALL
 u
 w 0.5
 s fe 23 43 ~ TAB CAPS LSHIFT LCTRL LSTART LALT
 s fe 23 43 4 e d c v g t 5
 s fe 23 43 7 u j m k o 9
-s fe 23 43 - = BACKSPACE [ ' ENTER / RSTART MENU LCTRL
+s fe 23 43 - = BACKSPACE [ ' ENTER / RSTART MENU RCTRL
 u
 w 1.0
 END
-sleep 1
-) | netcat -v -c localhost "${1:-12345}" || exit 9
+  sleep 1
 done
+) | netcat -v -c localhost "${1:-12345}" || exit 9

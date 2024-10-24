@@ -1,17 +1,26 @@
 #!/usr/bin/env bash
 
+random-color() {
+  (( r = $RANDOM % 255 ))
+  (( g = $RANDOM % 255 ))
+  (( b = $RANDOM % 255 ))
+}
+set-color() {
+  printf $'s %2x %2x %2x %s\nu\n' "$@"
+}
+
 (
-  cat <<END
-s 00 00 00 ALL
-u
-END
   while true
   do
-    (( r = $RANDOM % 255 ))
-    (( g = $RANDOM % 255 ))
-    (( b = $RANDOM % 255 ))
-    (( key = $RANDOM % 76 ))
-    printf $'s %2x %2x %2x #%s\nu\n' $r $g $b $key
-    sleep 0.2
+    random-color
+    set-color $r $g $b ALL
+    sleep 2
+    for i in {1..100}
+    do
+      (( key = $RANDOM % 76 ))
+      random-color
+      set-color $r $g $b "#$key"
+      sleep 0.2
+    done
   done
 ) | netcat -c localhost "${1:-12345}" || exit 9
