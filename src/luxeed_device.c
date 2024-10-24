@@ -23,8 +23,8 @@ static double min_frame_interval = 0.025;
 /* The delay between chunks. */
 /* Emperical throttling between chunks */
 /* 0.02 secs = 5 I/O frames == 0.1 images/sec */
-double chunk_delay = 0.000750;
-// double chunk_delay = 0.0;
+// double chunk_delay = 0.000750;
+double chunk_delay = 0.0;
 
 
 #if 1
@@ -301,7 +301,7 @@ int luxeed_device_open(luxeed_device *dev)
     RCALL(result, usb_claim_interface(dev->u_dh, LUXEED_USB_INTERFACE));
 
     /* Wait for a bit before initializing the device. */
-    usleep(100000);
+    // usleep(100000);
 
     /* Mark device opened. */
     dev->opening = 0;
