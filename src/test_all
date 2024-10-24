@@ -1,9 +1,14 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -x
 
-sudo ./luxeed --server &
+pids=
+trap 'set -x; kill -9 $pids 2>/dev/null' EXIT
 
-(while true; do ./luxeed_t1; sleep 1; done) &
-(while true; do ./luxeed_t2; sleep 1; done) &
-(while true; do ./luxeed_t3; sleep 1; done) &
-(while true; do ./luxeed_t4; sleep 1; done) &
+sudo ./luxeed --server & pids+="$! "
+
+for t in ./luxeed_t{1,2,3,4}
+do
+  (while true; do "$t"; sleep 1; done) &
+  pids+="$! "
+done
 
