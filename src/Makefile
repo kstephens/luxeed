@@ -7,6 +7,7 @@ LIBS=-L. -lluxeed -L/opt/homebrew/lib -lusb -levent -largp #
 
 #LIBS+= -largp #
 LIBLUXEED_C = \
+  luxeed_key.c \
   luxeed_device.c \
   luxeed_endpoint.c \
   luxeed_server.c \
