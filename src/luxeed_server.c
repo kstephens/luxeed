@@ -119,7 +119,8 @@ void luxeed_client_read(int fd, short event, void *data)
     luxeed_client_close(cli);
     PDEBUG(cli, 4, "FREE: (%d, %d, %p)", (int) fd, (int) event, data, result);
     free(cli);
-  } 
+    return;
+  }
   else if ( result == 0 ) {
     cli->ep.read_ev_active = 1;
     event_add(&cli->ep.read_ev, 0);
