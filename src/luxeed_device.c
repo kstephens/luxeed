@@ -230,14 +230,14 @@ int luxeed_device_find(luxeed_device *dev, uint16_t vendor, uint16_t product)
           PDEBUG(dev, 1, "  dev %s 0x%x\n", (char*) u_dev->filename, (int) u_dev->devnum);
         }
 
-        if ( usb_result ) break;
-
         result = 0;
-        break;
+        goto done;
       }
     }
   }
   } while(0);
+
+  done:
   PDEBUG(dev, 1, "(%p, %d, %d) => %d", dev, vendor, product, result);
 
   return result;
