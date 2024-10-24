@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h> /* memset(), memcpy() */
 #include <time.h> /* time() */
@@ -21,9 +20,9 @@ int main (int argc, char **argv)
   do {
     int i = -1;
     srand(getpid() ^ time(0));
-    
+
     dev = luxeed_device_create();
-    
+
     if ( luxeed_device_find(dev, 0, 0) < 0 ) {
       fprintf(stderr, "%s: luxeed keyboard not found\n", progname);
       break;
@@ -34,18 +33,17 @@ int main (int argc, char **argv)
       break;
     }
 
-
     while ( 1 ) {
       /* int j; */
       float scale, scale_dir;
       int r, g, b;
       float max;
 
-      do { 
+      do {
 	r = rand() & 0xff;
 	g = rand() & 0xff;
 	b = rand() & 0xff;
-	
+
 	max = r;
 	if ( max < g ) max = g;
 	if ( max < b ) max = b;
@@ -101,10 +99,9 @@ int main (int argc, char **argv)
     fprintf(stderr, "error: %d\n", result);
   }
   luxeed_device_destroy(dev);
-  
+
   return 0;
 }
 
 
 /* EOF */
-

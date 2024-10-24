@@ -27,7 +27,7 @@ libluxeed.a : $(LIBLUXEED_O) Makefile
 
 $(LIBLUXEED_O) : *.h Makefile
 
-luxeed_test: luxeed_test.c libluxeed.a *.h 
+luxeed_test: luxeed_test.c libluxeed.a *.h
 	$(CC) $(CFLAGS) -o $@ luxeed_test.c $(LIBS)
 
 luxeed: luxeed.c libluxeed.a  *.h
@@ -36,14 +36,14 @@ luxeed: luxeed.c libluxeed.a  *.h
 $(PRODUCTS) : Makefile
 
 test: luxeed_test
-	sudo ./luxeed_test 
+	sudo ./luxeed_test
 
 debug-test: luxeed_test
-	sudo gdb --eval-command='run' --args ./luxeed_test 
+	sudo gdb --eval-command='run' --args ./luxeed_test
 
 debug: luxeed
 	sudo gdb --eval-command='run' --args ./luxeed --server
 
-clean: 
+clean:
 	rm -f $(PRODUCTS) *.o lib*.a
 

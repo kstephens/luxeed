@@ -32,7 +32,7 @@ static char *parse_word(char **buf)
   }
 
   *buf = s;
-  
+
   return b;
 }
 
@@ -70,7 +70,7 @@ int luxeed_client_run_command(luxeed_client *cli, char *buf, char *out_buf, size
   if ( cli->opts.debug >= 3 ) {
     fprintf(stderr, "  cmd = %p \"%s\", s = \"%s\" \n", cmd, cmd ? cmd : "<<NULL>>", s ? s : "<<NULL>");
   }
-  
+
   /* Blank line? */
   if ( ! cmd ) {
     return 0;
@@ -79,7 +79,7 @@ int luxeed_client_run_command(luxeed_client *cli, char *buf, char *out_buf, size
   switch ( cmd[0] ) {
   case '\0': case '#':
     break;
-    
+
   case 'h':
     strcpy(out_buf, "\
 help: \n\
@@ -105,20 +105,20 @@ D <level>      : set global debug level \n\
       cli->opts.debug = val;
     }
     break;
-    
+
   case 'D': /* debug */
     if ( (word = parse_word(&s)) ) {
       int val = atoi(word);
 
-      cli->opts.debug = 
-	cli->srv->opts.debug = 
-	val;
+      cli->opts.debug =
+      cli->srv->opts.debug =
+      val;
       if ( cli->srv->dev ) {
-	cli->srv->dev->opts.debug = val;
+        cli->srv->dev->opts.debug = val;
       }
     }
     break;
-    
+
   case 's': /* set r g b key_id ... */
     /* r */
     if ( (word = parse_word(&s)) ) {
@@ -135,18 +135,18 @@ D <level>      : set global debug level \n\
 
     while ( (word = parse_word(&s)) ) {
       if ( strcmp(word, "ALL") == 0 ) {
-	luxeed_device_set_key_color_all(cli->srv->dev, cli->color[0], cli->color[1], cli->color[2]);
+        luxeed_device_set_key_color_all(cli->srv->dev, cli->color[0], cli->color[1], cli->color[2]);
       } else {
-	luxeed_key *key = luxeed_device_key_by_string(cli->srv->dev, word);
-	if ( key && (pixel = luxeed_device_set_key_color(cli->srv->dev, key, cli->color[0], cli->color[1], cli->color[2])) ) {
-	  if ( cli->opts.debug >= 4 ) {
-	    fprintf(stderr, "  word %s => key->id = %d, key->name[0] = %s\n", word, key->id, key->name[0]);
-	  }
-	  snprintf(out_buf, out_buf_size, "%s %x %x %x #%d", cmd, pixel[0], pixel[1], pixel[2], key->id);
-	} else {
-	  error = "BAD KEY";
-	  error2 = word;
-	}
+        luxeed_key *key = luxeed_device_key_by_string(cli->srv->dev, word);
+        if ( key && (pixel = luxeed_device_set_key_color(cli->srv->dev, key, cli->color[0], cli->color[1], cli->color[2])) ) {
+          if ( cli->opts.debug >= 4 ) {
+            fprintf(stderr, "  word %-10s => key->id = %3d, key->name[0] = %s\n", word, key->id, key->name[0]);
+          }
+          snprintf(out_buf, out_buf_size, "%s %x %x %x #%d", cmd, pixel[0], pixel[1], pixel[2], key->id);
+        } else {
+          error = "BAD KEY";
+          error2 = word;
+        }
       }
     }
     break;
@@ -155,27 +155,27 @@ D <level>      : set global debug level \n\
     while ( (word = parse_word(&s)) ) {
       luxeed_key *key = luxeed_device_key_by_string(cli->srv->dev, word);
       if ( key && (pixel = cli->srv->dev ? luxeed_device_pixel(cli->srv->dev, key->id) : 0) ) {
-	if ( cli->opts.debug >= 4 ) {
-	  fprintf(stderr, "  word %s => key->id = %d, key->name[0] = %s\n", word, key->id, key->name[0]);
-	}
-	snprintf(out_buf, out_buf_size, "%s %x %x %x #%d", cmd, pixel[0], pixel[1], pixel[2], key->id);
-	force_output = 1;
+        if ( cli->opts.debug >= 4 ) {
+          fprintf(stderr, "  word %-10s => key->id = %3d, key->name[0] = %s\n", word, key->id, key->name[0]);
+        }
+        snprintf(out_buf, out_buf_size, "%s %x %x %x #%d", cmd, pixel[0], pixel[1], pixel[2], key->id);
+        force_output = 1;
       } else {
-	error = "BAD KEY";
-	error2 = word;
+        error = "BAD KEY";
+        error2 = word;
       }
     }
     break;
-    
+
   case 'u': /* update */
     if ( cli->srv->dev ) {
       /* Do not force update. */
       if ( luxeed_device_update(cli->srv->dev, 0) ) {
-	error = "UPDATE FAILED";
+        error = "UPDATE FAILED";
       }
     }
     break;
-    
+
   case 'w': /* wait */
     {
       double wait = 1.0;
@@ -184,12 +184,12 @@ D <level>      : set global debug level \n\
       result = 1;  /* Prevent caller from enabling read event. */
     }
     break;
-    
+
   default:
     error = "BAD COMMAND";
     break;
   }
-  
+
   PDEBUG(cli, 3, "(%p) => %d", cli, result);
 
   return result;

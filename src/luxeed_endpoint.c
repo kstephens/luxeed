@@ -1,4 +1,3 @@
-
 #include "luxeed_server.h"
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -28,28 +27,28 @@ int luxeed_endpoint_init(luxeed_endpoint *ep, int init)
       PDEBUG(ep, 3, "(%p) AF_INET %s:%d", ep, ep->opts.host, ep->opts.port);
       ep->inet_addr.sin_port = htons(ep->opts.port);
       if ( inet_aton(ep->opts.host, &ep->inet_addr.sin_addr) == 0 ) {
-	perror(luxeed_error_action = "inet_aton");
-	result = -1;
-	goto done;
+        perror(luxeed_error_action = "inet_aton");
+        result = -1;
+        goto done;
       }
     }
     break;
-    
+
   case AF_UNIX:
     memset(&ep->uds_addr, 0, sizeof(ep->uds_addr));
     ep->uds_addr.sun_family = AF_UNIX;
     ep->socket_addr = (void*) &ep->uds_addr;
     ep->socket_addr_size = sizeof(ep->uds_addr);
     break;
-    
+
   default:
     result = -1;
     break;
   }
 
- done:
+  done:
   PDEBUG(ep, 2, "(%p) => %d", ep, result);
-  
+
   return result;
 }
 
@@ -74,14 +73,14 @@ int luxeed_endpoint_bind(luxeed_endpoint *srv)
       result = -1;
       break;
     }
-    
+
     /* Reuse address. */
 #ifdef SO_REUSEADDR
     {
       int option = 1;
 
       if ( setsockopt(srv->in_fd, SOCK_STREAM, SO_REUSEADDR, &option, sizeof(option)) < 0 ) {
-	perror(luxeed_error_action = "setsockopt: SO_REUSEADDR");
+      	perror(luxeed_error_action = "setsockopt: SO_REUSEADDR");
       }
     }
 #endif
@@ -90,15 +89,16 @@ int luxeed_endpoint_bind(luxeed_endpoint *srv)
     {
       struct linger l = { 0, 0 };
       if ( setsockopt(srv->in_fd, SOCK_STREAM, SO_LINGER, &l, sizeof(l)) < 0 ) {
-	perror(luxeed_error_action = "setsockopt: SO_LINGER");
+        perror(luxeed_error_action = "setsockopt: SO_LINGER");
       }
     }
 
     /* Bind address. */
-    if ( bind(srv->in_fd, 
-	      (const struct sockaddr *) srv->socket_addr, 
-	      (socklen_t) srv->socket_addr_size
-	      ) < 0 ) {
+    PDEBUG(srv, 2, "(%p) : bind(%d, ...)", srv, srv->in_fd);
+    if ( bind(srv->in_fd,
+	      (const struct sockaddr *) srv->socket_addr,
+        (socklen_t) srv->socket_addr_size
+        ) < 0 ) {
       perror(luxeed_error_action = "bind");
       result = -1;
       break;
@@ -107,9 +107,9 @@ int luxeed_endpoint_bind(luxeed_endpoint *srv)
     /* Set perms/ownership. */
     if ( srv->opts.fifo || srv->opts.uds ) {
       if ( fchmod(srv->in_fd, 0644) < 0 ) {
-	perror(luxeed_error_action = "fchmod(srv->fd, ...)");
-	// result = -1;
-	// break;
+        perror(luxeed_error_action = "fchmod(srv->fd, ...)");
+        // result = -1;
+        // break;
       }
     }
 
@@ -140,8 +140,8 @@ int luxeed_endpoint_accept(luxeed_endpoint *srv, luxeed_endpoint *cli)
       result = -1;
       break;
     }
-    
-    if ( (cli->in_fd = accept(srv->in_fd, 
+
+    if ( (cli->in_fd = accept(srv->in_fd,
 			      (struct sockaddr *) cli->socket_addr,
 			      &cli->socket_addr_size)
 	  ) < 0 ) {
@@ -149,7 +149,7 @@ int luxeed_endpoint_accept(luxeed_endpoint *srv, luxeed_endpoint *cli)
       result = -1;
       break;
     }
-    
+
     /* Do not linger. */
     {
       struct linger l = { 0, 0 };
@@ -210,7 +210,7 @@ int luxeed_endpoint_close(luxeed_endpoint *ep)
     fclose(ep->out);
   ep->out = 0;
 
-  if ( ep->in_fd >= 0) 
+  if ( ep->in_fd >= 0 )
     close(ep->in_fd);
   ep->in_fd = -1;
 

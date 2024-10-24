@@ -13,7 +13,7 @@ const char *argp_program_version =
 
 const char *argp_program_bug_address =
   "<ks.luxeed@kurtstephens.com>";
-     
+
 static char doc[] =
   "luxeed -- Luxeed LED Keyboard Driver";
 
@@ -35,12 +35,12 @@ static struct argp_option options[] = {
 
 
 static error_t
-parse_opt (int key, char *arg, struct argp_state *state)
+parse_opt(int key, char *arg, struct argp_state *state)
 {
   /* Get the input argument from argp_parse, which we
      know is a pointer to our arguments structure. */
   struct luxeed_options *opts = state->input;
-  
+
   switch ( key ) {
   case 'd':
     opts->debug += 1;
@@ -57,15 +57,15 @@ parse_opt (int key, char *arg, struct argp_state *state)
   case 's':
     opts->server = 1;
     break;
-    
+
   case 'h':
     opts->host = arg;
     break;
-    
+
   case 'p':
     opts->port = atoi(arg);
     break;
-    
+
   case 'k':
     opts->show_key_map = 1;
     break;
@@ -73,7 +73,7 @@ parse_opt (int key, char *arg, struct argp_state *state)
   case 'c': case ARGP_KEY_ARG:
     if ( opts->commands_n >= 16 )
       /* Too many opts. */
-      argp_usage (state);    
+      argp_usage (state);
     opts->commands[opts->commands_n] = arg;
     break;
 
@@ -101,7 +101,7 @@ int main (int argc, char **argv)
 
   luxeed_options.progname = argv[0];
 
-  argp_parse (&argp, argc, argv, 0, 0, &luxeed_options);
+  argp_parse(&argp, argc, argv, 0, 0, &luxeed_options);
 
   if ( luxeed_options.show_key_map ) {
     luxeed_key_map_dump(stdout);
@@ -120,4 +120,3 @@ int main (int argc, char **argv)
 
   return result ? -1 : 0;
 }
-

@@ -5,10 +5,6 @@
 #include "luxeed_command.h"
 #include <ctype.h>
 
-
-/********************************************************************/
-
-
 /********************************************************************/
 
 int luxeed_client_read_command(luxeed_client *cli)
@@ -38,17 +34,17 @@ int luxeed_client_read_command(luxeed_client *cli)
 
     if ( cli->ep.out ) {
       if ( error ) {
-	fprintf(cli->ep.out, "ERROR %s %s %s\n", cmd, error, error2);
+        fprintf(cli->ep.out, "ERROR %s %s %s\n", cmd, error, error2);
       } else {
-	if ( cli->opts.verbose || force_output ) {
-	  if ( out_buf[0] ) {
-	    fprintf(cli->ep.out, "OK %s\n", out_buf);
-	  } else {
-	    fprintf(cli->ep.out, "OK %s\n", cmd);
-	  }
-	}
+        if ( cli->opts.verbose || force_output ) {
+          if ( out_buf[0] ) {
+            fprintf(cli->ep.out, "OK %s\n", out_buf);
+          } else {
+            fprintf(cli->ep.out, "OK %s\n", cmd);
+          }
+        }
       }
-      
+
       fflush(cli->ep.out);
     }
   }
@@ -151,16 +147,16 @@ int luxeed_client_open(luxeed_client *cli, luxeed_server *srv, int in_fd, int ou
     luxeed_endpoint_open(&cli->ep, in_fd, out_fd);
 
     cli->color[0] = cli->color[1] = cli->color[2] = 0;
-    
+
     /* Start reading on cli socket. */
     cli->ep.read_ev_active = 1;
-    event_set(&cli->ep.read_ev, cli->ep.in_fd, EV_READ, &luxeed_client_read, cli); 
+    event_set(&cli->ep.read_ev, cli->ep.in_fd, EV_READ, &luxeed_client_read, cli);
     event_add(&cli->ep.read_ev, 0);
 
     /* Prepare a timer for "wait" commands. */
     cli->ep.timer_ev_active = 1;
     evtimer_set(&cli->ep.timer_ev, luxeed_client_sleep_finished, (void *) cli);
-  
+
   } while ( 0 );
 
   PDEBUG(cli, 2, "(%p, %p, %d, %d) => %d", cli, srv, (int) in_fd, (int) out_fd, (int) result);
@@ -182,7 +178,7 @@ int luxeed_client_close(luxeed_client *cli)
     cli->ep.timer_ev_active = 0;
     evtimer_del(&cli->ep.timer_ev);
   }
-  
+
   /* Stop read events. */
   if ( cli->ep.read_ev_active ) {
     cli->ep.read_ev_active = 0;
@@ -219,7 +215,7 @@ void luxeed_server_accept(int fd, short event, void *data)
     /* Accept another. */
     srv->ep.accept_ev_active = 1;
     event_add(&srv->ep.accept_ev, 0);
-    
+
     /* Open client. */
     cli = malloc(sizeof(*cli));
     memset(cli, 0, sizeof(*cli));
@@ -239,7 +235,6 @@ void luxeed_server_accept(int fd, short event, void *data)
   }
 
   PDEBUG(srv, 2, "(%p) => %d", srv, result);
-
 }
 
 
@@ -260,7 +255,7 @@ int luxeed_server_open_socket(luxeed_server *srv)
 
     /* Register for accept events. */
     srv->ep.accept_ev_active = 1;
-    event_set(&srv->ep.accept_ev, srv->ep.in_fd, EV_READ, &luxeed_server_accept, srv); 
+    event_set(&srv->ep.accept_ev, srv->ep.in_fd, EV_READ, &luxeed_server_accept, srv);
     event_add(&srv->ep.accept_ev, 0);
   } while ( 0 );
 
@@ -304,11 +299,11 @@ int luxeed_server_open_uds(luxeed_server *srv)
       struct stat s;
 
       if ( stat(srv->opts.uds, &s) == 0 ) {
-	if ( unlink(srv->opts.uds) < 0 ) {
-	  perror(luxeed_error_action = "unlink");
-	  // result = -1;
-	  // break;
-	}
+        if ( unlink(srv->opts.uds) < 0 ) {
+          perror(luxeed_error_action = "unlink");
+          // result = -1;
+          // break;
+        }
       }
     }
 
@@ -340,11 +335,11 @@ int luxeed_server_open_fifo(luxeed_server *srv)
       int client_fd;
 
       PDEBUG(srv, 1, ": open(%s) ...", srv->server_path);
-      
+
       if ( (client_fd = open(srv->server_path, O_RDONLY)) < 0 ) {
-	perror(luxeed_error_action = "open");
-	result = -1;
-	break;
+        perror(luxeed_error_action = "open");
+        result = -1;
+        break;
       }
 
       PDEBUG(srv, 1, ": open(%s) => %d", srv->server_path, client_fd);
@@ -369,7 +364,7 @@ int luxeed_server_open_fifo(luxeed_server *srv)
 luxeed_device *luxeed_server_device(luxeed_server *srv)
 {
   int result = 0;
-  
+
   PDEBUG(srv, 1, "(%p)", srv);
 
   do {
