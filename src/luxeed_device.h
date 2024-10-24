@@ -2,6 +2,7 @@
 #define LUXEED_DEVICE_H
 
 #include "luxeed.h" /* luxeed_options */
+#include "luxeed_key.h"
 
 #ifdef __APPLE__
 typedef unsigned short uint16_t;
@@ -34,7 +35,6 @@ typedef struct luxeed_device {
   short inited;
   int init_count;
 
-#define LUXEED_NUM_OF_KEYS 76
   /* RGB order, 0x00 - 0xff scale. */
   unsigned char key_data[LUXEED_NUM_OF_KEYS * 3];
   int key_data_dirty;
@@ -47,17 +47,6 @@ typedef struct luxeed_device {
   int msg_size;
 
 } luxeed_device;
-
-
-typedef struct luxeed_key {
-  int id;               /* Index into luxeed_device.key_data[* 3]. */
-  int mapped;           /* Non-zero if key is actually mapped to an LED. */
-  const char *name[3];  /* The key name. */
-  int code[3];          /* The ASCII code for this key-press. */
-  int shift[3];         /* Non-zero if ASCII code is composed with SHIFT and key. */
-  int x, y;             /* Position relative to the top-leftmost key (~). */
-} luxeed_key;
-
 
 luxeed_device *luxeed_device_create();
 int luxeed_device_destroy(luxeed_device *dev);

@@ -1,5 +1,6 @@
 #include "luxeed_key.h"
 #include "luxeed.h"
+#include <stdlib.h>
 #include <string.h>
 #include <assert.h>
 #include <ctype.h>
@@ -44,7 +45,7 @@ static struct key_map {
 static luxeed_key _keys[LUXEED_NUM_OF_KEYS + 1];
 
 
-int luxeed_init_keys()
+int luxeed_key_init()
 {
   static int initialized = 0;
   int i;
@@ -129,7 +130,7 @@ void luxeed_key_map_dump(FILE *out)
   int i, j;
   luxeed_key *key;
 
-  luxeed_init_keys();
+  luxeed_key_init();
 
   for ( i = 0; (key = &_keys[i])->id >= 0; ++ i ) {
     if ( ! key->mapped ) continue;
@@ -150,132 +151,105 @@ void luxeed_key_map_dump(FILE *out)
 }
 
 
-luxeed_key *luxeed_device_key_by_id(luxeed_device *dev, int id)
+luxeed_key *luxeed_key_by_id(int id)
 {
-  luxeed_key *key = 0;
   int key_i;
 
   if ( id < 0 || id >= LUXEED_NUM_OF_KEYS )
     return 0;
 
-  luxeed_init_keys();
+  luxeed_key_init();
 
-  for ( key_i = 0; key_i < LUXEED_NUM_OF_KEYS; ++ key_i ) {
-    if ( _keys[key_i].id == id ) {
-      key = &_keys[key_i];
-      break;
-    }
-  }
+  for ( key_i = 0; key_i < LUXEED_NUM_OF_KEYS; ++ key_i )
+    if ( _keys[key_i].id == id )
+      return &_keys[key_i];
 
-  return key;
+  return 0;
 }
 
 
-luxeed_key *luxeed_device_key_by_position(luxeed_device *dev, int x, int y)
+luxeed_key *luxeed_key_by_position(int x, int y)
 {
-  luxeed_key *key = 0;
-
-  if ( x < 0 || y < 0 ) {
+  if ( x < 0 || y < 0 )
     return 0;
-  }
 
-  luxeed_init_keys();
+  luxeed_key_init();
 
   int key_i;
   for ( key_i = 0; key_i < LUXEED_NUM_OF_KEYS; ++ key_i ) {
     luxeed_key *k = &_keys[key_i];
-    if ( k->x == x && k->y == y ) {
-      key = k;
-      goto done;
-    }
+    if ( k->x == x && k->y == y )
+      return k;
   }
 
- done:
-  return key;
+  return 0;
 }
 
 
-luxeed_key *luxeed_device_key_by_ascii(luxeed_device *dev, int c)
+luxeed_key *luxeed_key_by_ascii(int c)
 {
-  luxeed_key *key = 0;
   int key_i;
 
-  if ( ! (0 <= c && c <= 127) ) {
+  if ( ! (0 <= c && c <= 127) )
     return 0;
-  }
 
-  luxeed_init_keys();
+  luxeed_key_init();
 
   for ( key_i = 0; key_i < LUXEED_NUM_OF_KEYS; ++ key_i ) {
     int j;
     luxeed_key *k = &_keys[key_i];
     int code;
-    for ( j = 0; (code = key->code[j]); ++ j ) {
-      if ( code == c ) {
-        key = k;
-        goto done;
-      }
-    }
+    for ( j = 0; (code = k->code[j]); ++ j )
+      if ( code == c )
+        return k;
   }
 
-  done:
-  return key;
+  return 0;
 }
 
 
-luxeed_key *luxeed_device_key_by_name(luxeed_device *dev, const char *keyname)
+luxeed_key *luxeed_key_by_name(const char *keyname)
 {
-  luxeed_key *key = 0;
   int key_i;
 
   if ( ! keyname || ! *keyname )
     return 0;
 
-  luxeed_init_keys();
+  luxeed_key_init();
 
   for ( key_i = 0; key_i < LUXEED_NUM_OF_KEYS; ++ key_i ) {
     int j;
     const char *kn;
     for ( j = 0; (kn = _keys[key_i].name[j]); ++ j ) {
-      if ( strcmp(kn, keyname) == 0 ) {
-        key = &_keys[key_i];
-        goto done;
-      }
+      if ( ! strcmp(kn, keyname) )
+        return &_keys[key_i];
     }
   }
-
-  done:
-  return key;
+  return 0;
 }
 
 
-
-luxeed_key *luxeed_device_key_by_string(luxeed_device *dev, const char *str)
+luxeed_key *luxeed_key_by_string(const char *str)
 {
-  luxeed_key *key = 0;
-
   if ( ! str || ! *str )
     return 0;
 
-  luxeed_init_keys();
+  luxeed_key_init();
 
   if ( *str == '#' && str[1] ) {
-    key = luxeed_device_key_by_id(dev, atoi(str + 1));
+    return luxeed_key_by_id(atoi(str + 1));
   }
   else if ( *str == '@' && str[1] ) {
-    int x = -1;
-    int y = -1;
+    int x = -1, y = -1;
     sscanf(str + 1, "%d,%d", &x, &y);
-    key = luxeed_device_key_by_position(dev, x, y);
+    return luxeed_key_by_position(x, y);
   }
   else if ( *str == '0' && str[1] == 'x' && str[2] ) {
     int code = -1;
     sscanf(str + 2, "%x", &code);
-    key = luxeed_device_key_by_ascii(dev, code);
+    return luxeed_key_by_ascii(code);
   }
   else {
-    key = luxeed_device_key_by_name(dev, str);
+    return luxeed_key_by_name(str);
   }
-
-  return key;
 }

@@ -137,7 +137,7 @@ D <level>      : set global debug level \n\
       if ( strcmp(word, "ALL") == 0 ) {
         luxeed_device_set_key_color_all(cli->srv->dev, cli->color[0], cli->color[1], cli->color[2]);
       } else {
-        luxeed_key *key = luxeed_device_key_by_string(cli->srv->dev, word);
+        luxeed_key *key = luxeed_key_by_string(word);
         if ( key && (pixel = luxeed_device_set_key_color(cli->srv->dev, key, cli->color[0], cli->color[1], cli->color[2])) ) {
           if ( cli->opts.debug >= 4 ) {
             fprintf(stderr, "  word %-10s => key->id = %3d, key->name[0] = %s\n", word, key->id, key->name[0]);
@@ -153,7 +153,7 @@ D <level>      : set global debug level \n\
 
   case 'g': /* get key_id */
     while ( (word = parse_word(&s)) ) {
-      luxeed_key *key = luxeed_device_key_by_string(cli->srv->dev, word);
+      luxeed_key *key = luxeed_key_by_string(word);
       if ( key && (pixel = cli->srv->dev ? luxeed_device_pixel(cli->srv->dev, key->id) : 0) ) {
         if ( cli->opts.debug >= 4 ) {
           fprintf(stderr, "  word %-10s => key->id = %3d, key->name[0] = %s\n", word, key->id, key->name[0]);

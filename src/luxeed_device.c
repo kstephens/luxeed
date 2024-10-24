@@ -604,7 +604,7 @@ int luxeed_device_set_key_color_all(luxeed_device *dev, int r, int g, int b)
   int i;
 
   for ( i = 0; i < LUXEED_NUM_OF_KEYS; ++ i ) {
-    luxeed_key *key = luxeed_device_key_by_id(dev, i);
+    luxeed_key *key = luxeed_key_by_id(i);
     luxeed_device_set_key_color(dev, key, r, g, b);
   }
 
