@@ -186,12 +186,14 @@ int luxeed_device_destroy(luxeed_device *dev)
 
 int luxeed_device_find(luxeed_device *dev, uint16_t vendor, uint16_t product)
 {
-  int result = -1; /* not found */
+  int result = 0;
+  int usb_result = 0;
 
   struct usb_bus *u_bus;
   struct usb_device *u_dev;
   struct usb_bus *u_busses;
 
+  do {
   if ( ! vendor ) {
     vendor  = LUXEED_USB_VENDOR;
   }
