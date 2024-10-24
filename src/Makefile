@@ -1,5 +1,10 @@
 # on OS X: sudo port install libusb-compat argp-standalone libevent
+INCS=-I/opt/local/include
 LIBS=-L. -lluxeed -L/opt/local/lib -lusb -levent -largp #
+# brew install netcat libusb
+INCS=-I/opt/homebrew/include
+LIBS=-L. -lluxeed -L/opt/homebrew/lib -lusb -levent -largp #
+
 #LIBS+= -largp #
 LIBLUXEED_C = \
   luxeed_device.c \
@@ -10,7 +15,9 @@ LIBLUXEED_C = \
 
 LIBLUXEED_O=$(LIBLUXEED_C:.c=.o)
 
-CFLAGS+=-g -O2 -Wall -I/opt/local/include
+CC=gcc-13
+CFLAGS+=-g -O2 -Wall $(INCS)
+# CFLAGS+=-fdebug-macro -fmacro-backtrace-limit=0
 
 all : products
 
