@@ -290,7 +290,7 @@ int luxeed_device_open(luxeed_device *dev)
     }
 
     /* Reset the device */
-    // RCALL(result, usb_reset(dev->u_dh));
+    RCALL(result, usb_reset(dev->u_dh));
 
     // RCALL(result, usb_set_altinterface(dev->u_dh, LUXEED_USB_INTERFACE)); // ???
 
