@@ -328,8 +328,6 @@ int luxeed_device_close(luxeed_device *dev)
   do {
     if ( dev->u_dh ) {
       RCALL(result, usb_release_interface(dev->u_dh, LUXEED_USB_INTERFACE));
-      RCALL(result, usb_release_interface(dev->u_dh, 2)); // ???
-
       RCALL(result, usb_close(dev->u_dh));
       if ( result ) break;
 
