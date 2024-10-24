@@ -22,8 +22,8 @@ static double min_frame_interval = 0.025;
 /* The delay between chunks. */
 /* Emperical throttling between chunks */
 /* 0.02 secs = 5 I/O frames == 0.1 images/sec */
-// double chunk_delay = 0.000750;
-double chunk_delay = 0.0;
+double chunk_delay = 0.000750;
+// double chunk_delay = 0.0;
 
 
 #if 1
