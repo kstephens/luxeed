@@ -84,12 +84,18 @@ int luxeed_client_run_command(luxeed_client *cli, char *buf, char *out_buf, size
   case 'h':
     strcpy(out_buf, "\
 help: \n\
-g <key-id>     : get key's current color. \n\
-s r g b <key-id> ... : set key(s) to current color. \n\
+g <key>     : get key's current color. \n\
+s r g b <key> ... : set key(s) to current color. \n\
 u              : update keyboard colors. \n\
 w <sec>        : wait for sec seconds. \n\
 d <level>      : set debug level \n\
 D <level>      : set global debug level \n\
+\n\
+<key> specification: \n\
+  ALL      : all keys.  \n\
+  #<id>    : key id 0 <= n < 76.  \n\
+  <key>    : the key: e.g. 'q', 'w', '/'.  \n\
+  <name>   : the key name: e.g. ENTER, TAB, LSHIFT.  \n\
 \n\
 ");
     break;
