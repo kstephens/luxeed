@@ -3,8 +3,6 @@
 
 #include <stdio.h>
 
-extern const char *luxeed_error_action;
-
 extern
 struct luxeed_options
 {
@@ -22,16 +20,23 @@ struct luxeed_options
   int show_key_map;
 } luxeed_options;
 
+extern const char *luxeed_progname;
+extern int luxeed_log_level;
+extern const char *luxeed_error_action;
 
-#define PDEBUG(x, LEVEL, ARGS ...)					\
-  do {									\
-    int __level = (LEVEL);						\
-    if ( (x)->opts.debug >= __level ) {					\
-      fprintf(stderr, "%s: DEBUG %d: %s", (x)->opts.progname, __level, __FUNCTION__); \
-      fprintf(stderr, ARGS);						\
-      fprintf(stderr, "\n");						\
-    }									\
+void luxeed_main_argv(int argc, char** argv);
+void luxeed_logv_(const char* file, int line, const char* function, const char* fmt, va_list* vap);
+void luxeed_log_(const char* file, int line, const char* function, const char* fmt, ...);
+#define luxeed_log(FMT, ...) luxeed_log_(__FILE__, __LINE__, __FUNCTION__, FMT, ##__VA_ARGS__)
+#define luxeed_error(FMT, ...) luxeed_log("ERROR: " FMT, ##__VA_ARGS__)
+
+#define PDEBUG(x, LEVEL, FMT, ...)                                \
+  do {                                                            \
+    int __luxeed_level = (LEVEL);                                 \
+    if ( (x)->opts.debug >= __luxeed_level ) {                    \
+      luxeed_progname = (x)->opts.progname ?: luxeed_progname;    \
+      luxeed_log("DEBUG %d : " FMT, __luxeed_level, ##__VA_ARGS__); \
+    }                                                             \
   } while (0)
-
 
 #endif

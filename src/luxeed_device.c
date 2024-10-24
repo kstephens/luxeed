@@ -27,9 +27,9 @@ double chunk_delay = 0.0;
 
 
 #if 1
-#define RCALL(V,X) do { V = X; if ( dev->opts.debug_syscall >= 1 ) { fprintf(stderr, "  %s => %d\n", #X, (int) V); } } while ( 0 )
+#define RCALL(V,X) ({ V = X; if ( dev->opts.debug_syscall >= 1 ) { luxeed_log("  %s => %d", #X, (int) V); }; V; })
 #else
-#define RCALL(V,X) V = X
+#define RCALL(V,X) ({ V = X })
 #endif
 
 
@@ -410,7 +410,7 @@ int luxeed_send_chunked (luxeed_device *dev, int ep, unsigned char *bytes, int s
       }
 
       RCALL(write_result, usb_bulk_write(dev->u_dh, ep, (void*) xbuf, wsize, timeout));
-      // RCALL(usb_bulk_write(dh, ep, xbuf, wsize, timeout));
+      PDEBUG(dev, 3, "usb_bulk_write(%d bytes) => %d", (int) wsize, write_result);
 
       if ( chunk_delay > 0 ) {
         usleep((int) chunk_delay * 1000000);
@@ -433,13 +433,15 @@ int luxeed_send_chunked (luxeed_device *dev, int ep, unsigned char *bytes, int s
     int read_size = 2;
     int read_result = 0;
     RCALL(read_result, usb_bulk_read(dh, ep + 0x80, buf, read_size, timeout));
+    PDEBUG(dev, 3, "usb_bulk_read(%d bytes) => %d", (int) read_size, read_result);
+
     if ( read_result != read_size ) {
-      fprintf(stderr, "read failed\n");
-      // result = -1;
+      luxeed_error("usb_bulk_read() failed");
     }
     if ( read_result > 0 ) {
       if ( dev->opts.debug_syscall >= 2 ) {
-	fprintf(stderr, "read result:"); dump_buf((unsigned char *) buf, read_result);
+        luxeed_log("read result:");
+        dump_buf((unsigned char *) buf, read_result);
       }
       if ( 0 ) {
         assert(buf[0] == 0x01);
@@ -490,7 +492,7 @@ int luxeed_device_msg_checksum(luxeed_device *dev, unsigned char *buf, int size)
   if ( buf == msg_ff || buf == msg_00 ) {
     if ( sum != sum_save ) {
       dump_buf(buf, size);
-      fprintf(stderr, "%p sum %02x, expected %02x\n", (void*) buf, (int) sum, (int) sum_save);
+      luxeed_error("%p sum %02x, expected %02x", (void*) buf, (int) sum, (int) sum_save);
       assert(sum == sum_save);
     }
   } else {
@@ -524,9 +526,7 @@ int luxeed_device_init(luxeed_device *dev)
       break;
     }
 
-    if ( dev->opts.debug >= 1 ) {
-      fprintf(stderr, "dev initing\n");
-    }
+    PDEBUG(dev, 1, "dev initing");
 
     dev->initing = 1;
     dev->inited = 0;

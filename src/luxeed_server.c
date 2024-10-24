@@ -26,9 +26,7 @@ int luxeed_client_read_command(luxeed_client *cli)
     char *error = 0;
     char *error2 = "";
 
-    if ( cli->opts.debug >= 5 ) {
-      fprintf(stderr, "read command from %d:\n", cli->ep.in_fd);
-    }
+    PDEBUG(cli, 5, "read command from %d", cli->ep.in_fd);
 
     result = luxeed_client_run_command(cli, buf, out_buf, out_buf_size, &force_output, &cmd, &error, &error2);
 
@@ -119,6 +117,7 @@ void luxeed_client_read(int fd, short event, void *data)
 
   if ( result < 0 ) {
     luxeed_client_close(cli);
+    PDEBUG(cli, 4, "FREE: (%d, %d, %p)", (int) fd, (int) event, data, result);
     free(cli);
   } 
   else if ( result == 0 ) {
@@ -376,7 +375,7 @@ luxeed_device *luxeed_server_device(luxeed_server *srv)
 
     /* Find the luxeed device. */
     if ( luxeed_device_find(srv->dev, 0, 0) ) {
-      fprintf(stderr, "%s: luxeed keyboard not found\n", srv->opts.progname);
+      luxeed_error("luxeed keyboard not found");
       luxeed_error_action = "luxeed_device_find";
       result = -1;
       break;
@@ -385,9 +384,10 @@ luxeed_device *luxeed_server_device(luxeed_server *srv)
     /* Attempt to open the device now. */
     if ( srv->dev ) {
       if ( (result = luxeed_device_open(srv->dev)) ) {
-	luxeed_error_action = "luxeed_device_open";
-	result = -1;
-	break;
+        luxeed_error("luxeed_device_open failed");
+        luxeed_error_action = "luxeed_device_open";
+        result = -1;
+        break;
       }
     }
 
@@ -414,25 +414,25 @@ int luxeed_server_open(luxeed_server *srv)
 
     if ( srv->opts.fifo ) {
       if ( luxeed_server_open_fifo(srv) ) {
-	luxeed_error_action = "luxeed_server_open_fifo";
-	result = -1;
-	break;
+        luxeed_error_action = "luxeed_server_open_fifo";
+        result = -1;
+        break;
       }
     }
 
     if ( srv->opts.uds ) {
       if ( luxeed_server_open_uds(srv) ) {
-	luxeed_error_action = "luxeed_server_open_uds";
-	result = -1;
-	break;
+        luxeed_error_action = "luxeed_server_open_uds";
+        result = -1;
+        break;
       }
     }
 
     if ( srv->opts.host ) {
       if ( luxeed_server_open_inet(srv) ) {
-	luxeed_error_action = "luxeed_server_open_inet";
-	result = -1;
-	break;
+        luxeed_error_action = "luxeed_server_open_inet";
+        result = -1;
+        break;
       }
     }
 
@@ -485,16 +485,22 @@ int luxeed_server_close(luxeed_server *srv)
 int luxeed_server_main(int argc, char **argv)
 {
   int result = 0;
-  luxeed_server _srv, *srv = &_srv;
- 
+  luxeed_server _srv = { 0 }, *srv = &_srv;
+
+  luxeed_main_argv(argc, argv);
+
   do {
-    /* Initialize libevent. */
+    if ( luxeed_log_level > 0 )
+      luxeed_log("Initialize libevent.");
     event_init();
-    
-    /* Initialize server. */
+
+    if ( luxeed_log_level > 0 )
+      luxeed_log("Initialize server.");
     memset(srv, 0, sizeof(*srv));
 
+    luxeed_options.progname = luxeed_progname;
     srv->opts = luxeed_options;
+    srv->opts.debug = luxeed_log_level;
 
     if ( ! srv->opts.host ) {
       srv->opts.host = "127.0.0.1";
@@ -502,6 +508,7 @@ int luxeed_server_main(int argc, char **argv)
     if ( ! srv->opts.port ) {
       srv->opts.port = 12345;
     }
+    PDEBUG(srv, 1, "listen on %s:%d", srv->opts.host, srv->opts.port);
 
     /* Open server and device. */
     result = luxeed_server_open(srv);
@@ -513,7 +520,8 @@ int luxeed_server_main(int argc, char **argv)
   } while ( 0 );
 
   if ( result ) {
-    fprintf(stderr, "%s: error: %d\n", luxeed_options.progname, result);
+    PDEBUG(srv, 1, "error %d", result);
+    luxeed_error("error: %d", result);
     perror(luxeed_error_action ? luxeed_error_action : luxeed_options.progname);
   }
 

@@ -99,7 +99,7 @@ int main (int argc, char **argv)
 {
   int result = 0;
 
-  luxeed_options.progname = argv[0];
+  luxeed_main_argv(argc, argv);
 
   argp_parse(&argp, argc, argv, 0, 0, &luxeed_options);
 
@@ -108,12 +108,12 @@ int main (int argc, char **argv)
   } else
   if ( luxeed_options.server ) {
     if ( luxeed_options.debug ) {
-      fprintf(stderr, "server mode\n");
+      luxeed_log("server mode");
     }
     result = luxeed_server_main(argc, argv);
   } else {
     if ( luxeed_options.debug ) {
-      fprintf(stderr, "client mode\n");
+      luxeed_log("client mode");
     }
     // result = luxeed_client_main(argc, argv);
   }

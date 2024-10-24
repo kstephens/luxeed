@@ -68,6 +68,7 @@ int luxeed_endpoint_bind(luxeed_endpoint *srv)
     }
 
     /* Open socket. */
+    PDEBUG(srv, 2, "(%p) : Open socket.", srv);
     if ( (srv->in_fd = socket(srv->socket_family, SOCK_STREAM, 0)) < 0 ) {
       perror(luxeed_error_action = "socket");
       result = -1;
@@ -79,6 +80,7 @@ int luxeed_endpoint_bind(luxeed_endpoint *srv)
     {
       int option = 1;
 
+      PDEBUG(srv, 2, "(%p) : setsockopt(%d, SO_REUSEADDR)", srv, srv->in_fd);
       if ( setsockopt(srv->in_fd, SOCK_STREAM, SO_REUSEADDR, &option, sizeof(option)) < 0 ) {
       	perror(luxeed_error_action = "setsockopt: SO_REUSEADDR");
       }
@@ -86,6 +88,7 @@ int luxeed_endpoint_bind(luxeed_endpoint *srv)
 #endif
 
     /* Do not linger. */
+    PDEBUG(srv, 2, "(%p) : setsockopt(%d, SO_LINGER)", srv, srv->in_fd);
     {
       struct linger l = { 0, 0 };
       if ( setsockopt(srv->in_fd, SOCK_STREAM, SO_LINGER, &l, sizeof(l)) < 0 ) {
@@ -114,6 +117,7 @@ int luxeed_endpoint_bind(luxeed_endpoint *srv)
     }
 
     /* Listen. */
+    PDEBUG(srv, 2, "(%p) : bind(%d, ...)", srv, srv->in_fd);
     if ( listen(srv->in_fd, 5) < 0 ) {
       perror(luxeed_error_action = "listen");
       result = -1;

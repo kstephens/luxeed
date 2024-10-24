@@ -3,18 +3,16 @@
 #include <time.h> /* time() */
 #include <string.h>
 #include <assert.h>
+#include "luxeed.h"
 #include "luxeed_device.h"
-
-
-static char *progname;
 
 int main (int argc, char **argv)
 {
   int result = 0;
   luxeed_device *dev = 0;
 
-  progname = argv[0];
-  
+  luxeed_progname = argv[0];
+
   // dev->debug ++;
 
   do {
@@ -24,12 +22,12 @@ int main (int argc, char **argv)
     dev = luxeed_device_create();
 
     if ( luxeed_device_find(dev, 0, 0) < 0 ) {
-      fprintf(stderr, "%s: luxeed keyboard not found\n", progname);
+      luxeed_error("keyboard : not found");
       break;
     }
 
     if ( luxeed_device_open(dev) < 0 ) {
-      fprintf(stderr, "%s: luxeed keyboard cannot open\n", progname);
+      luxeed_error("keyboard : cannot open");
       break;
     }
 
@@ -95,9 +93,8 @@ int main (int argc, char **argv)
   } while ( 0 );
 
  done:
-  if ( result ) {
-    fprintf(stderr, "error: %d\n", result);
-  }
+  if ( result )
+    luxeed_error("error: %d", result);
   luxeed_device_destroy(dev);
 
   return 0;
