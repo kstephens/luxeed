@@ -190,8 +190,10 @@ int luxeed_device_destroy(luxeed_device *dev)
 int luxeed_device_find(luxeed_device *dev, int vendor, int product) {
   int result = 0;
   int usb_result = 0;
-
   libusb_device **devs = 0;
+
+  dev->u_dev = 0;
+  memset(&dev->u_dev_desc, 0, sizeof(dev->u_dev_desc));
 
   PDEBUG(dev, 1, "(%p, %d, %d)", dev, vendor, product);
 
@@ -199,9 +201,10 @@ int luxeed_device_find(luxeed_device *dev, int vendor, int product) {
     libusb_set_debug(dev->u_ctx, usb_debug_level);
   }
 
-  libusb_device* u_dev = 0;
   ssize_t n_devices = 0;
   RCALL(n_devices, libusb_get_device_list(dev->u_ctx, &devs));
+
+  libusb_device* u_dev = 0;
   for ( int dev_i = 0; (u_dev = devs[dev_i]); dev_i ++) {
 		struct libusb_device_descriptor desc;
 		RCALL(usb_result, libusb_get_device_descriptor(u_dev, &desc));
@@ -216,7 +219,7 @@ int luxeed_device_find(luxeed_device *dev, int vendor, int product) {
       dev->u_dev_desc = desc;
     }
 
-		fprintf(stderr, "device %d : %04x:%04x (bus %d, device %d) : %p%s\n",
+		luxeed_log("device %d : %04x:%04x (bus %d, device %d) : %p%s\n",
       dev_i,
 			desc.idVendor, desc.idProduct,
 			libusb_get_bus_number(u_dev), libusb_get_device_address(u_dev),
@@ -425,9 +428,10 @@ int luxeed_send_chunked (luxeed_device *dev, int ep_out, unsigned char *bytes, i
         usleep((int) chunk_delay * 1000000);
 
       if ( transferred ) {
-        // transferred --;
-        buf += blksize; // transferred;
-        left -= blksize; // transferred;
+        // int sent = blksize;
+        int sent = transferred - 1;
+        buf += sent; // transferred;
+        left -= sent; // transferred;
       }
     }
 
@@ -449,7 +453,7 @@ int luxeed_send_chunked (luxeed_device *dev, int ep_out, unsigned char *bytes, i
 
   PDEBUG(dev, 2, "(%p, %d, %p, %d) => %d", dev, ep_out, bytes, size, result);
 
-  if ( result ) abort();
+  // if ( result ) abort();
 
   return result;
 }
@@ -622,7 +626,6 @@ int luxeed_device_update(luxeed_device *dev, int force)
     struct timeval now;
 
     if ( luxeed_device_open(dev) < 0 ) {
-      return -1;
       result = -1;
       break;
     }
@@ -682,6 +685,7 @@ int luxeed_device_update(luxeed_device *dev, int force)
   if ( result < 0 ) {
     PDEBUG(dev, 1, "reopen later");
     luxeed_device_close(dev);
+    usleep(100000);
     return 0;
   }
 
