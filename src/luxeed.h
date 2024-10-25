@@ -1,7 +1,13 @@
 #ifndef LUXEED_H
 #define LUXEED_H
 
-#include <stdio.h>
+#ifdef LUXEED_LIBUSB_VERSION
+#include "libusb-1.0/libusb.h"
+#else
+#include "usb.h"
+#endif
+#include <stdarg.h>
+#include <time.h> /* struct timeval */
 
 extern
 struct luxeed_options

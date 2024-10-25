@@ -15,6 +15,8 @@ typedef struct luxeed_server {
   char server_path[1024];
 
   luxeed_endpoint ep;
+
+  libusb_context* u_ctx;
 } luxeed_server;
 
 int luxeed_server_open(luxeed_server *srv);

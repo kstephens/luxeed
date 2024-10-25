@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h> /* memset(), memcpy() */
 #include <time.h> /* time() */
+#include <unistd.h> // getpid(), usleep()
 #include <string.h>
 #include <assert.h>
 #include "luxeed.h"
@@ -20,11 +21,6 @@ int main (int argc, char **argv)
     srand(getpid() ^ time(0));
 
     dev = luxeed_device_create();
-
-    if ( luxeed_device_find(dev, 0, 0) < 0 ) {
-      luxeed_error("keyboard : not found");
-      break;
-    }
 
     if ( luxeed_device_open(dev) < 0 ) {
       luxeed_error("keyboard : cannot open");

@@ -7,8 +7,10 @@
 #include <ctype.h>
 #include <sys/time.h>
 #include <time.h> /* gettimeofday() */
+#include <unistd.h> // usleep()
 #include "luxeed_device.h"
 #include "luxeed_key.h"
+#include "luxeed_usb.c"
 
 
 static int luxeed_dev_id = 0;
@@ -23,16 +25,15 @@ static double min_frame_interval = 0.025;
 /* The delay between chunks. */
 /* Emperical throttling between chunks */
 /* 0.02 secs = 5 I/O frames == 0.1 images/sec */
-// double chunk_delay = 0.000750;
-double chunk_delay = 0.0;
+double chunk_delay = 0.000750;
+// double chunk_delay = 0.0;
 
 
 #if 1
-#define RCALL(V,X) ({ V = X; if ( dev->opts.debug_syscall >= 1 ) { luxeed_log("  %s => %d", #X, (int) V); }; V; })
+#define RCALL(V,X) ({ V = X; if ( dev->opts.debug_syscall >= 1 ) { luxeed_log("  %s => %ld", #X, (long) V); }; V; })
 #else
 #define RCALL(V,X) ({ V = X })
 #endif
-
 
 /* Parsed from ep01.txt as initialization, minus the leading 0x02.
    Chunks are sent 65 bytes long.
@@ -164,6 +165,7 @@ luxeed_device *luxeed_device_create()
   luxeed_device *dev = malloc(sizeof(*dev));
 
   memset(dev, 0, sizeof(*dev));
+  dev->id = luxeed_dev_id ++;
 
   return dev;
 }
@@ -185,60 +187,115 @@ int luxeed_device_destroy(luxeed_device *dev)
 }
 
 
-int luxeed_device_find(luxeed_device *dev, uint16_t vendor, uint16_t product)
-{
+int luxeed_device_find(luxeed_device *dev, int vendor, int product) {
   int result = 0;
   int usb_result = 0;
 
-  struct usb_bus *u_bus;
-  struct usb_device *u_dev;
-  struct usb_bus *u_busses;
-
-  do {
-  if ( ! vendor ) {
-    vendor  = LUXEED_USB_VENDOR;
-  }
-  if ( ! product ) {
-    product = LUXEED_USB_PRODUCT;
-  }
+  libusb_device **devs = 0;
 
   PDEBUG(dev, 1, "(%p, %d, %d)", dev, vendor, product);
 
-  usb_init();
   if ( dev->opts.debug_syscall >= 1 ) {
-    usb_set_debug(usb_debug_level);
+    libusb_set_debug(dev->u_ctx, usb_debug_level);
   }
-  RCALL(usb_result, usb_find_busses());
-  RCALL(usb_result, usb_find_devices());
-  u_busses = usb_get_busses();
 
-  result = -1; /* not found */
-  for ( u_bus = u_busses; u_bus; u_bus = u_bus->next ) {
-    for ( u_dev = u_bus->devices; u_dev; u_dev = u_dev->next ) {
-      if ( (u_dev->descriptor.idVendor == vendor) && (u_dev->descriptor.idProduct == product) ) {
-        dev->id = luxeed_dev_id ++;
-
-        dev->u_bus = u_bus;
-        dev->u_dev = u_dev;
-
-        dev->msg_size = msg_size;
-        dev->msg_len = msg_size;
-        dev->msg = malloc(sizeof(dev->msg[0]) * dev->msg_size);
-        memset(dev->msg, 0, sizeof(dev->msg[0]) * dev->msg_size);
-
-        if ( dev->opts.debug_syscall >= 2 ) {
-          PDEBUG(dev, 1, "  bus %s 0x%x\n", (char*) u_bus->dirname, (int) u_bus->location);
-          PDEBUG(dev, 1, "  dev %s 0x%x\n", (char*) u_dev->filename, (int) u_dev->devnum);
-        }
-
-        result = 0;
-        goto done;
-      }
+  libusb_device* u_dev = 0;
+  ssize_t n_devices = 0;
+  RCALL(n_devices, libusb_get_device_list(dev->u_ctx, &devs));
+  for ( int dev_i = 0; (u_dev = devs[dev_i]); dev_i ++) {
+		struct libusb_device_descriptor desc;
+		RCALL(usb_result, libusb_get_device_descriptor(u_dev, &desc));
+    if ( usb_result ) {
+      luxeed_error("libusb_get_device_descriptor() failed : %d", usb_result);
+      result = -1;
     }
+
+    int found = desc.idVendor == vendor && desc.idProduct == product;
+    if ( found ) {
+      dev->u_dev = u_dev;
+      dev->u_dev_desc = desc;
+    }
+
+		fprintf(stderr, "device %d : %04x:%04x (bus %d, device %d) : %p%s\n",
+      dev_i,
+			desc.idVendor, desc.idProduct,
+			libusb_get_bus_number(u_dev), libusb_get_device_address(u_dev),
+      u_dev,
+      found ? " <<<<" : ""
+    );
   }
+
+  if ( ! dev->u_dev ) {
+    luxeed_error("device not found");
+    result = -1;
+  }
+
+  if ( devs )
+    libusb_free_device_list(devs, 1);
+
+  PDEBUG(dev, 1, "(%p, %d, %d) => %d", dev, vendor, product, result);
+
+  return result;
+}
+
+int luxeed_device_open(luxeed_device *dev)
+{
+  int result = 0;
+  int usb_result = 0;
+  int vendor = LUXEED_USB_VENDOR;
+  int product = LUXEED_USB_PRODUCT;
+
+  if ( dev->opened ) {
+    PDEBUG(dev, 2, "(%p) : already open", dev);
+    return 0;
+  }
+  if ( dev->opening ) {
+    PDEBUG(dev, 2, "(%p) : already opening", dev);
+    return 0;
+  }
+
+  PDEBUG(dev, 1, "(%p)", dev);
+  do {
+    assert(dev->u_ctx);
+    dev->u_dev_hd = 0;
+    dev->opening = 1;
+    dev->opened = 0;
+    PDEBUG(dev, 1, "opening");
+
+    result = luxeed_device_find(dev, vendor, product);
+    if ( result ) {
+      result = -1;
+      break;
+    }
+
+    RCALL(usb_result, libusb_open(dev->u_dev, &dev->u_dev_hd));
+    if ( usb_result ) {
+      luxeed_error("libusb_open(%p, %p): failed : %d", dev->u_ctx, &dev->u_dev_hd, usb_result);
+      result = -1;
+      break;
+    }
+
+    dev->u_dev = libusb_get_device(dev->u_dev_hd);
+    dev->msg_size = msg_size;
+    dev->msg_len = msg_size;
+    dev->msg = malloc(sizeof(dev->msg[0]) * dev->msg_size);
+    memset(dev->msg, 0, sizeof(dev->msg[0]) * dev->msg_size);
+
+    /* Reset the device */
+    RCALL(result, libusb_reset_device(dev->u_dev_hd));
+
+    /* Claim the interface. */
+    RCALL(usb_result, libusb_claim_interface(dev->u_dev_hd, LUXEED_USB_INTERFACE));
+
+    /* Wait for a bit before initializing the device. */
+    // usleep(100000);
+
+    /* Mark device opened. */
+    dev->opening = 0;
+    dev->opened = 1;
+    luxeed_device_show(dev);
   } while(0);
 
-  done:
   PDEBUG(dev, 1, "(%p, %d, %d) => %d", dev, vendor, product, result);
 
   return result;
@@ -251,74 +308,6 @@ int luxeed_device_opened(luxeed_device *dev)
 }
 
 
-int luxeed_device_open(luxeed_device *dev)
-{
-  int result = -1;
-  int usb_result = 0;
-
-  if ( dev->opened ) {
-    PDEBUG(dev, 2, "(%p) : already open", dev);
-    return 0;
-  }
-  if ( dev->opening ) {
-    PDEBUG(dev, 2, "(%p) : already opening", dev);
-    return 0;
-  }
-
-  PDEBUG(dev, 1, "(%p)", dev);
-
-  do {
-    dev->opening = 1;
-    dev->opened = 0;
-
-    PDEBUG(dev, 1, "opening");
-
-    /* Locate the USB device. */
-    if ( ! dev->u_dev ) {
-      if ( (result = luxeed_device_find(dev, 0, 0)) < 0 ) {
-        PDEBUG(dev, 1, "luxeed_device_find() failed");
-        break;
-      }
-    }
-
-    /* Open the USB device. */
-    dev->u_dh = usb_open(dev->u_dev);
-    if ( ! dev->u_dh ) {
-      PDEBUG(dev, 1, "usb_open() failed");
-      result = -1;
-      break;
-    }
-
-    /* Reset the device */
-    RCALL(result, usb_reset(dev->u_dh));
-
-    // RCALL(result, usb_set_altinterface(dev->u_dh, LUXEED_USB_INTERFACE)); // ???
-
-    /* Detach any kernel drivers for the endpoint */
-    // RCALL(result, usb_detach_kernel_driver_np(dev->u_dh, LUXEED_USB_INTERFACE));
-
-    /* Claim the interface. */
-    RCALL(result, usb_claim_interface(dev->u_dh, LUXEED_USB_INTERFACE));
-
-    /* Wait for a bit before initializing the device. */
-    // usleep(100000);
-
-    /* Mark device opened. */
-    dev->opening = 0;
-    dev->opened = 1;
-
-    PDEBUG(dev, 1, "opened");
-
-    result = 0;
-
-  } while ( 0 );
-
-  PDEBUG(dev, 1, "(%p) => %d", dev, result);
-
-  return result;
-}
-
-
 int luxeed_device_close(luxeed_device *dev)
 {
   int result = 0;
@@ -326,15 +315,14 @@ int luxeed_device_close(luxeed_device *dev)
   PDEBUG(dev, 1, "(%p)", dev);
 
   do {
-    if ( dev->u_dh ) {
-      RCALL(result, usb_release_interface(dev->u_dh, LUXEED_USB_INTERFACE));
-      RCALL(result, usb_close(dev->u_dh));
-      dev->u_dh = 0;
+    if ( dev->u_dev_hd ) {
+      RCALL(result, libusb_release_interface(dev->u_dev_hd, LUXEED_USB_INTERFACE));
+      libusb_close(dev->u_dev_hd);
+      dev->u_dev_hd = 0;
     }
 
-    /* Force device search on open(). */
     dev->u_dev = 0;
-    dev->u_bus = 0;
+    memset(&dev->u_dev_desc, 0, sizeof(dev->u_dev_desc));
 
     dev->opened = 0;
     dev->opening = 0;
@@ -375,95 +363,96 @@ static int dump_buf(unsigned char *bytes, int size)
 #define luxeed_send luxeed_send_chunked
 
 
-int luxeed_send_chunked (luxeed_device *dev, int ep, unsigned char *bytes, int size)
+int luxeed_send_chunked (luxeed_device *dev, int ep_out, unsigned char *bytes, int size)
 {
   int result = 0;
   int timeout = 1000;
+  // timeout = 0;
 
-  PDEBUG(dev, 2, "(%p, %d, %p, %d)", dev, ep, bytes, size);
-
-  usb_dev_handle *dh;
+  PDEBUG(dev, 2, "(%p, %d, %p, %d)", dev, ep_out, bytes, size);
 
   do {
   luxeed_device_msg_checksum(dev, bytes, size);
 
   if ( dev->opts.debug_syscall >= 2 ) {
-    fprintf(stderr, "send_bytes(%d, %d)...", (int) ep, (int) size);
+    fprintf(stderr, "send bytes %d : %d bytes", (int) ep_out, (int) size);
     dump_buf(bytes, size);
   }
 
   {
     unsigned char *buf = bytes;
     int left = size;
-    int blksize = LUXEED_BLOCK_SIZE;
+    size_t blksize = LUXEED_BLOCK_SIZE;
 
     while ( left > 0 ) {
       /* Chunk of 0x02 + 64 bytes */
       unsigned char xbuf[1 + blksize];
-      int write_result = 0;
+      int usb_result = 0;
 
       xbuf[0] = 0x02;
       memcpy(xbuf + 1, buf, blksize);
 
-      int wsize = blksize < left ? blksize : left;
-      wsize += 1;
+      int buf_size = 1 + (blksize < left ? blksize : left);
 
       if ( dev->opts.debug_syscall >= 3 ) {
-        dump_buf(xbuf, wsize);
+        fprintf(stderr, "send chunk %d : %d bytes", (int) ep_out, (int) buf_size);
+        dump_buf(xbuf, buf_size);
       }
 
-      RCALL(write_result, usb_bulk_write(dev->u_dh, ep, (void*) xbuf, wsize, timeout));
-      PDEBUG(dev, 3, "usb_bulk_write(%d bytes) => %d", (int) wsize, write_result);
+      int transferred = 0;
+ #if 1
+      RCALL(usb_result, libusb_bulk_transfer(dev->u_dev_hd, ep_out | LIBUSB_ENDPOINT_OUT, (void*) xbuf, buf_size, &transferred, timeout));
+      PDEBUG(dev, 3, "libusb_bulk_transfer(%d bytes) : transferred %d => %d", buf_size, transferred, usb_result);
+#else
+      RCALL(usb_result, libusb_control_transfer(dev->u_dev_hd, ep | LIBUSB_ENDPOINT_OUT | LIBUSB_REQUEST_TYPE_VENDOR | LIBUSB_RECIPIENT_DEVICE, (void*) buf, buf_size, &transferred, timeout));
+#endif
 
-      if ( chunk_delay > 0 ) {
-        usleep((int) chunk_delay * 1000000);
-      }
-
-      // See: https://github.com/libusb/libusb-compat-0.1/blob/f16e0b30dae41858ef976823e71a1bafd6ec11f9/libusb/core.c#L782
-      if ( write_result < 0 || write_result != wsize ) {
+      if ( usb_result ) {
+        luxeed_error("libusb : send failed : %d : %s", usb_result, libusb_error_name(usb_result));
+#if 0
+        PV(LIBUSB_ERROR_TIMEOUT, "if the transfer timed out (and populates transferred)");
+        PV(LIBUSB_ERROR_PIPE, "if the endpoint halted");
+        PV(LIBUSB_ERROR_OVERFLOW, "if the device offered more data, see Packets and overflows");
+        PV(LIBUSB_ERROR_NO_DEVICE, "if the device has been disconnected");
+        PV(LIBUSB_ERROR_BUSY, "if called from event handling context");
+        PV(LIBUSB_ERROR_INVALID_PARAM, "if the transfer size is larger than the operating system and/or hardware can support (see Transfer length limitations)");
+#endif
         result = -1;
         break;
       }
-      buf += blksize; // ??? write_result;
-      left -= blksize; // ??? write_result;
-    }
-  }
 
+      if ( chunk_delay > 0 )
+        usleep((int) chunk_delay * 1000000);
 
-  /* Read result */
-  if ( 0 && result == 0 ) {
-    char buf[1024];
-    // int buf_size = sizeof(buf);
-    int read_size = 2;
-    int read_result = 0;
-    RCALL(read_result, usb_bulk_read(dh, ep + 0x80, buf, read_size, timeout));
-    PDEBUG(dev, 3, "usb_bulk_read(%d bytes) => %d", (int) read_size, read_result);
-
-    if ( read_result != read_size ) {
-      luxeed_error("usb_bulk_read() failed");
-    }
-    if ( read_result > 0 ) {
-      if ( dev->opts.debug_syscall >= 2 ) {
-        luxeed_log("read result:");
-        dump_buf((unsigned char *) buf, read_result);
+      if ( transferred ) {
+        // transferred --;
+        buf += blksize; // transferred;
+        left -= blksize; // transferred;
       }
-      if ( 0 ) {
-        assert(buf[0] == 0x01);
-        assert(buf[1] == 0x79);
-      }
+    }
+
+    int ep_in = ep_out + 0x80;
+    if ( 0 ) {
+      int usb_result = 0;
+      unsigned char buf[256];
+      int buf_size = sizeof(buf);
+      memcpy(buf, 0, buf_size);
+      int transferred = 0;
+      RCALL(usb_result, libusb_bulk_transfer(dev->u_dev_hd, ep_in, (void*) buf, buf_size, &transferred, timeout));
     }
   }
 
   if ( 0 ) {
-    RCALL(result, usb_clear_halt(dh, ep));
+    RCALL(result, libusb_clear_halt(dev->u_dev_hd, ep_out));
   }
   } while(0);
 
-  PDEBUG(dev, 2, "(%p, %d, %p, %d) => %d", dev, ep, bytes, size, result);
+  PDEBUG(dev, 2, "(%p, %d, %p, %d) => %d", dev, ep_out, bytes, size, result);
+
+  if ( result ) abort();
 
   return result;
 }
-
 
 
 int luxeed_device_msg_checksum(luxeed_device *dev, unsigned char *buf, int size)
@@ -520,8 +509,6 @@ int luxeed_device_init(luxeed_device *dev)
   do {
     int slp = 100000;
     int i;
-    int n = 2;
-
     if ( dev->initing ) {
       result = 0;
       break;
@@ -537,20 +524,19 @@ int luxeed_device_init(luxeed_device *dev)
     dev->inited = 0;
 
     if ( dev->init_count == 0 ) {
+      int n = 1;
       usleep(slp);
       for ( i = 0; i < n; ++ i ) {
-        RCALL(result, luxeed_send (dev, LUXEED_USB_ENDPOINT_DATA, msg_00, sizeof(msg_00)));
+        RCALL(result, luxeed_send (dev, LUXEED_USB_ENDPOINT_DATA, msg_ff, sizeof(msg_ff)));
         if ( result ) break;
         usleep(slp);
 
-        RCALL(result, luxeed_send (dev, LUXEED_USB_ENDPOINT_DATA, msg_ff, sizeof(msg_ff)));
+        RCALL(result, luxeed_send (dev, LUXEED_USB_ENDPOINT_DATA, msg_00, sizeof(msg_00)));
         if ( result ) break;
         usleep(slp);
       }
     }
 
-    RCALL(result, luxeed_send (dev, LUXEED_USB_ENDPOINT_DATA, msg_00, sizeof(msg_00)));
-    usleep(slp);
     if ( result ) break;
 
     dev->initing = 0;

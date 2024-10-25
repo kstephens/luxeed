@@ -69,7 +69,7 @@ int luxeed_client_run_command(luxeed_client *cli, char *buf, char *out_buf, size
   cmd = parse_word(&s);
 
   if ( cli->opts.debug >= 3 ) {
-    fprintf(stderr, "  cmd = %p \"%s\", s = \"%s\" \n", cmd, cmd ? cmd : "<<NULL>>", s ? s : "<<NULL>");
+    luxeed_log("  cmd = %p \"%s\", s = \"%s\" \n", cmd, cmd ? cmd : "<<NULL>>", s ? s : "<<NULL>");
   }
 
   /* Blank line? */
@@ -147,7 +147,7 @@ D <level>      : set global debug level \n\
         luxeed_key *key = luxeed_key_by_string(word);
         if ( key && (pixel = luxeed_device_set_key_color(cli->srv->dev, key, cli->color[0], cli->color[1], cli->color[2])) ) {
           if ( cli->opts.debug >= 4 ) {
-            fprintf(stderr, "  word %-10s => key->id = %3d, key->name[0] = %s\n", word, key->id, key->name[0]);
+            luxeed_log("  word %-10s => key->id = %3d, key->name[0] = %s\n", word, key->id, key->name[0]);
           }
           snprintf(out_buf, out_buf_size, "%s %x %x %x #%d", cmd, pixel[0], pixel[1], pixel[2], key->id);
         } else {
@@ -163,7 +163,7 @@ D <level>      : set global debug level \n\
       luxeed_key *key = luxeed_key_by_string(word);
       if ( key && (pixel = cli->srv->dev ? luxeed_device_pixel(cli->srv->dev, key->id) : 0) ) {
         if ( cli->opts.debug >= 4 ) {
-          fprintf(stderr, "  word %-10s => key->id = %3d, key->name[0] = %s\n", word, key->id, key->name[0]);
+          luxeed_log("  word %-10s => key->id = %3d, key->name[0] = %s\n", word, key->id, key->name[0]);
         }
         snprintf(out_buf, out_buf_size, "%s %x %x %x #%d", cmd, pixel[0], pixel[1], pixel[2], key->id);
         force_output = 1;

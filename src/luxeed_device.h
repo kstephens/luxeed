@@ -1,19 +1,13 @@
 #ifndef LUXEED_DEVICE_H
 #define LUXEED_DEVICE_H
 
+#include <stdio.h>
 #include "luxeed.h" /* luxeed_options */
 #include "luxeed_key.h"
 
 #ifdef __APPLE__
 typedef unsigned short uint16_t;
 #endif
-
-#ifdef LIBUSB_1_0
-#include "libusb.h"
-#else
-#include "usb.h"
-#endif
-#include <time.h> /* struct timeval */
 
 #define LUXEED_USB_VENDOR   0x534B
 #define LUXEED_USB_PRODUCT  0x0600
@@ -25,9 +19,10 @@ typedef struct luxeed_device {
   int id;
   struct luxeed_options opts;
 
-  struct usb_bus *u_bus;
-  struct usb_device *u_dev;
-  usb_dev_handle *u_dh;
+  libusb_context* u_ctx;
+  libusb_device* u_dev;
+  struct libusb_device_descriptor u_dev_desc;
+  libusb_device_handle* u_dev_hd;
 
   short opening;
   short opened;
@@ -50,7 +45,6 @@ typedef struct luxeed_device {
 
 luxeed_device *luxeed_device_create();
 int luxeed_device_destroy(luxeed_device *dev);
-int luxeed_device_find(luxeed_device *dev, uint16_t vendor, uint16_t product);
 int luxeed_device_open(luxeed_device *dev);
 int luxeed_device_close(luxeed_device *dev);
 int luxeed_device_opened(luxeed_device *dev);

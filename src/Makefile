@@ -1,9 +1,14 @@
+CC=gcc-13
+CFLAGS+=-g -O2 -Wall $(INCS)
+
 # on OS X: sudo port install libusb-compat argp-standalone libevent
 INCS=-I/opt/local/include
 LIBS=-L. -lluxeed -L/opt/local/lib -lusb -levent -largp #
 # brew install netcat libusb
+LUXEED_LIBUSB_VERSION=1.0
+CFLAGS+=-D LUXEED_LIBUSB_VERSION="\"$(LUXEED_LIBUSB_VERSION)\""
 INCS=-I/opt/homebrew/include
-LIBS=-L. -lluxeed -L/opt/homebrew/lib -lusb -levent -largp #
+LIBS=-L. -lluxeed -L/opt/homebrew/lib -lusb-$(LUXEED_LIBUSB_VERSION) -levent -largp #
 
 #LIBS+= -largp #
 LIBLUXEED_C = \
@@ -16,8 +21,6 @@ LIBLUXEED_C = \
 
 LIBLUXEED_O=$(LIBLUXEED_C:.c=.o)
 
-CC=gcc-13
-CFLAGS+=-g -O2 -Wall $(INCS)
 # CFLAGS+=-fdebug-macro -fmacro-backtrace-limit=0
 
 all : products

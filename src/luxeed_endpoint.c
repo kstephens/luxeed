@@ -2,6 +2,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <arpa/inet.h> /* inet_aton() */
+#include <unistd.h> // close()
 #include <fcntl.h>
 
 

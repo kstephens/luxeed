@@ -4,6 +4,7 @@
 #include "luxeed_endpoint.h"
 #include "luxeed_command.h"
 #include <ctype.h>
+#include <unistd.h> // unlink()
 
 /********************************************************************/
 
@@ -371,18 +372,11 @@ luxeed_device *luxeed_server_device(luxeed_server *srv)
     /* Allocate a device object. */
     if ( ! srv->dev ) {
       srv->dev = luxeed_device_create();
+      srv->dev->u_ctx = srv->u_ctx;
       srv->dev->opts = srv->opts;
     }
 
 #if 0
-    /* Find the luxeed device. */
-    if ( luxeed_device_find(srv->dev, 0, 0) ) {
-      luxeed_error("luxeed keyboard not found");
-      luxeed_error_action = "luxeed_device_find";
-      result = -1;
-      break;
-    }
-
     /* Attempt to open the device now. */
     if ( srv->dev ) {
       if ( (result = luxeed_device_open(srv->dev)) ) {
@@ -407,6 +401,11 @@ int luxeed_server_open(luxeed_server *srv)
   PDEBUG(srv, 1, "(%p)", srv);
 
   do {
+    if ( libusb_init(&srv->u_ctx)) {
+      luxeed_error("libusb_init() failed");
+      result = -1;
+      break;
+    }
     srv->ep.opts = srv->opts;
 
     // strcpy(srv->server_uri, "tcp://127.0.0.1:25324");
@@ -467,13 +466,15 @@ int luxeed_server_close(luxeed_server *srv)
 
     if ( srv->dev ) {
       luxeed_device_destroy(srv->dev);
+      srv->dev = 0;
     }
 
     unlink(srv->server_path);
 
-    /* Close the device. */
-    luxeed_device_destroy(srv->dev);
-    srv->dev = 0;
+    if ( srv->u_ctx ) {
+      libusb_exit(srv->u_ctx);
+      srv->u_ctx = 0;
+    }
   } while ( 0 );
 
   PDEBUG(srv, 1, "(%p) => %d", srv, result);
