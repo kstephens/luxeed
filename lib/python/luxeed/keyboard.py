@@ -84,12 +84,19 @@ class Keyboard:
     if not (force or self.key_data_dirty):
       return
 
+    reset = False
     try:
       self.send_keys()
       self.key_data_dirty = False
+    except usb.core.USBTimeoutError as exc:
+      logging.warning('%s', exc)
     except usb.core.USBError as exc:
+      logging.warning('%s', exc)
+    if reset:
       self.close()
       self.open()
+      time.sleep(0.01)
+
 
   def init(self):
     return
