@@ -37,12 +37,45 @@ class Keyboard:
 
   def close(self):
     assert self.dev is not None
-    self.dev.reset()
-    usb.util.release_interface(self.dev, LUXEED_USB_INTERFACE)
+    try:
+      usb.util.release_interface(self.dev, LUXEED_USB_INTERFACE)
+      self.dev.reset()
+    except usb.core.USBError as exc:
+      logging.warning('%s', exc)
     self.dev = None
 
   def is_open(self):
     return self.dev is not None
+
+  def clear(self, color=(0, 0, 0)):
+    for key in key_iter():
+      self.set_key_color(key, color)
+
+  def set_key_color(self, k, rgb):
+    k = key_for(k)
+    if k is None:
+      return
+    off = 0x37 + k.id * 3
+    keys = self.key_data
+    if keys[off + 0] == rgb[0] and keys[off + 1] == rgb[1] and keys[off + 2] == rgb[2]:
+      return False
+    keys[off + 0] = rgb[0]
+    keys[off + 1] = rgb[1]
+    keys[off + 2] = rgb[2]
+    self.key_data_dirty = True
+    return True
+
+  def get_key_color(self, k):
+    k = key_for(k)
+    if k is None:
+      return
+    off = 0x37 + k.id * 3
+    keys = self.key_data
+    return (
+      keys[off + 0],
+      keys[off + 1],
+      keys[off + 2],
+    )
 
   def update(self, force = False):
     if not self.is_open():
@@ -90,35 +123,12 @@ class Keyboard:
       time.sleep(self.chunk_sleep)
     time.sleep(self.msg_sleep)
 
-  def clear(self, color=(0, 0, 0)):
-    for key in key_iter():
-      self.set_key_color(key, color)
+    # read = self.dev.read(LUXEED_USB_ENDPOINT_DATA, 2, timeout)
+    # ic(read)
+# WARNING:root:[Errno 13] Access denied (insufficient permissions)
+    # read = self.dev.read(LUXEED_USB_ENDPOINT_CONTROL, 2, timeout)
+    # ic(read)
 
-  def set_key_color(self, k, rgb):
-    k = key_for(k)
-    if k is None:
-      return
-    off = 0x37 + k.id * 3
-    keys = self.key_data
-    if keys[off + 0] == rgb[0] and keys[off + 1] == rgb[1] and keys[off + 2] == rgb[2]:
-      return False
-    keys[off + 0] = rgb[0]
-    keys[off + 1] = rgb[1]
-    keys[off + 2] = rgb[2]
-    self.key_data_dirty = True
-    return True
-
-  def get_key_color(self, k):
-    k = key_for(k)
-    if k is None:
-      return
-    off = 0x37 + k.id * 3
-    keys = self.key_data
-    return (
-      keys[off + 0],
-      keys[off + 1],
-      keys[off + 2],
-    )
 
 #######################################
 
