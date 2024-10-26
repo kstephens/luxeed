@@ -558,60 +558,45 @@ int luxeed_device_init(luxeed_device *dev)
 
 const unsigned char *luxeed_device_pixel(luxeed_device *dev, int key)
 {
-  if ( key < 0 || key >= LUXEED_NUM_OF_KEYS ) {
+  if ( key < 0 || key >= LUXEED_NUM_OF_KEYS )
     return 0;
-  }
   return &dev->key_data[key * 3];
 }
 
 
 const unsigned char * luxeed_device_set_key_color(luxeed_device *dev, luxeed_key *key, int r, int g, int b)
 {
-  unsigned char *p;
-
   if ( ! key ) return 0;
-
-  p = (unsigned char *) luxeed_device_pixel(dev, key->id);
+ unsigned char *p = (unsigned char *) luxeed_device_pixel(dev, key->id);
   if ( ! p ) return 0;
-
   if ( ! (p[0] == r && p[1] == g && p[2] == b) ) {
     p[0] = r;
     p[1] = g;
     p[2] = b;
-
     dev->key_data_dirty = 1;
   }
-
   return p;
 }
 
 
 int luxeed_device_set_key_color_all(luxeed_device *dev, int r, int g, int b)
 {
-  int i;
-
-  for ( i = 0; i < LUXEED_NUM_OF_KEYS; ++ i ) {
+  for ( int i = 0; i < LUXEED_NUM_OF_KEYS; ++ i ) {
     luxeed_key *key = luxeed_key_by_id(i);
     luxeed_device_set_key_color(dev, key, r, g, b);
   }
-
   return 0;
 }
 
 
 int luxeed_device_key_color(luxeed_device *dev, luxeed_key *key, int *r, int *g, int *b)
 {
-  const unsigned char *p;
-
   if ( ! key ) return -1;
-
-  p = (const unsigned char *) luxeed_device_pixel(dev, key->id);
+  const unsigned char *p = (const unsigned char *) luxeed_device_pixel(dev, key->id);
   if ( ! p ) return -1;
-
   *r = p[0];
   *g = p[1];
   *b = p[2];
-
   return 0;
 }
 
