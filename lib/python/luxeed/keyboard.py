@@ -23,8 +23,8 @@ class Keyboard:
     self.dev = None
     self.key_data_dirty = True
     self.key_data = msg_00.copy()
-    self.msg_sleep = 0.01
-    self.chunk_sleep = 0.001
+    self.msg_sleep = 0.001
+    self.chunk_sleep = 0  # 0.0001
     self.debug = False
 
   def open(self):
@@ -54,11 +54,13 @@ class Keyboard:
     self.key_data_dirty = False
 
   def init(self):
-    self.send_msg(msg_with_checksum(msg_ff))
-    time.sleep(0.5)
+    return
 
     self.send_msg(msg_with_checksum(msg_00))
-    time.sleep(0.5)
+    time.sleep(0.02)
+
+    self.send_msg(msg_with_checksum(msg_ff))
+    time.sleep(0.02)
 
     self.send_keys()
 
@@ -315,7 +317,7 @@ def main():
 
   def update():
     keyboard.update()
-    time.sleep(0.2)
+    time.sleep(0.05)
 
   while True:
     keyboard.clear()
@@ -327,11 +329,14 @@ def main():
       update()
 
     for key in key_iter():
+      keyboard.clear()
+      update()
+
       color = (randint(0, 255), randint(0, 255), randint(0, 255))
       keyboard.set_key_color(key, color)
       update()
 
-    keyboard.clear((128, 128, 128))
+    keyboard.clear()
     update()
 
     for i in range(100):

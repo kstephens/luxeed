@@ -6,6 +6,49 @@ from icecream import ic
 LUXEED_NUM_OF_KEYS = 76
 
 @dataclass
+class Key:
+  id: int = 0              # /* Index into luxeed_device.key_data[* 3]. */
+  names: list = field(default_factory=list)        # /* The key name. */
+  codes: list = field(default_factory=list)        # /* The ASCII code for this key-press. */
+  pos: tuple = (0, 0)             # /* Position relative to the top-leftmost key (~). */
+  shift: list = field(default_factory=list)         # /* True if ASCII code is composed with SHIFT and key. */
+  mapped: bool = False
+
+key_by_id = [Key(id) for id in range(LUXEED_NUM_OF_KEYS)]
+key_by = {}
+
+def key_by_key_id(id: int) -> Optional[Key]:
+  if 0 <= id and id < len(key_by_id):
+    return key_by_id[id]
+  return None
+
+def key_by_code(code: int) -> Optional[Key]:
+  return key_by.get(code)
+
+def key_by_position(pos: tuple) -> Optional[Key]:
+  return key_by.get(pos)
+
+def key_by_name(name: str) -> Optional[Key]:
+  return key_by.get(name)
+
+def key_by_string(s: str) -> Optional[Key]:
+  return key_by.get(s)
+
+def key_for(x) -> Optional[Key]:
+  if x is None:
+    return x
+  if isinstance(x, Key):
+    return x
+  if isinstance(x, int):
+    return key_by_id[x]
+  return key_by.get(x)
+
+def key_iter():
+  return key_by_id
+
+#######################################################
+
+@dataclass
 class KeyMap:
   offset: int
   row: int
@@ -48,21 +91,6 @@ key_maps = [
 key_maps = [KeyMap(*vals) for vals in key_maps]
 # ic(key_maps)
 
-@dataclass
-class Key:
-  id: int = 0              # /* Index into luxeed_device.key_data[* 3]. */
-  names: list = field(default_factory=list)        # /* The key name. */
-  codes: list = field(default_factory=list)        # /* The ASCII code for this key-press. */
-  pos: tuple = (0, 0)             # /* Position relative to the top-leftmost key (~). */
-  shift: list = field(default_factory=list)         # /* True if ASCII code is composed with SHIFT and key. */
-  mapped: bool = False
-
-key_by_id = [Key(id) for id in range(LUXEED_NUM_OF_KEYS)]
-key_by = {}
-
-def key_iter():
-  return key_by_id
-
 def key_init():
   for key_map in key_maps:
     # ic(key_map)
@@ -94,25 +122,6 @@ def key_init():
       x += 1
       k += 1
   # ic(key_by)
-  ic(key_by_id)
-
-def key_by_key_id(id: int) -> Optional[Key]:
-  return key_by_id[id]
-def key_by_code(code: int) -> Optional[Key]:
-  return key_by.get(code)
-def key_by_position(pos: tuple) -> Optional[Key]:
-  return key_by.get(pos)
-def key_by_name(name: str) -> Optional[Key]:
-  return key_by.get(name)
-def key_by_string(s: str) -> Optional[Key]:
-  return key_by.get(s)
-def key_for(x) -> Optional[Key]:
-  if x is None:
-    return x
-  if isinstance(x, Key):
-    return x
-  if isinstance(x, int):
-    return key_by_id[x]
-  return key_by.get(x)
+  # ic(key_by_id)
 
 key_init()
