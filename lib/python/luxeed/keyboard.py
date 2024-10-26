@@ -37,6 +37,7 @@ class Keyboard:
 
   def close(self):
     assert self.dev is not None
+    self.dev.reset()
     usb.util.release_interface(self.dev, LUXEED_USB_INTERFACE)
     self.dev = None
 
@@ -50,8 +51,12 @@ class Keyboard:
     if not (force or self.key_data_dirty):
       return
 
-    self.send_keys()
-    self.key_data_dirty = False
+    try:
+      self.send_keys()
+      self.key_data_dirty = False
+    except usb.core.USBError as exc:
+      self.close()
+      self.open()
 
   def init(self):
     return
