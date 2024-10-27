@@ -1,5 +1,6 @@
 #!/usr/bin/env python3.11
-from keyboard import Keyboard
+from keyboard import Keyboard, key_iter
+from key import LUXEED_NUM_OF_KEYS
 import time
 from random import randint
 from icecream import ic
@@ -24,8 +25,6 @@ def main():
 
     for key in key_iter():
       keyboard.clear()
-      update()
-
       color = (randint(0, 255), randint(0, 255), randint(0, 255))
       keyboard.set_key_color(key, color)
       update()
