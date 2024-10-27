@@ -24,7 +24,7 @@ class Keyboard:
     self.key_data_dirty = True
     self.key_data = msg_00.copy()
     self.msg_sleep = 0.001
-    self.chunk_sleep = 0  # 0.0001
+    self.chunk_sleep = 0.01  # 0.0001
     self.debug = False
 
   def open(self):
@@ -33,6 +33,7 @@ class Keyboard:
     dev.set_configuration()
     dev.reset()
     usb.util.claim_interface(dev, LUXEED_USB_INTERFACE)
+    dev.clear_halt(LUXEED_USB_ENDPOINT_DATA)
     self.dev = dev
 
   def close(self):
@@ -98,8 +99,7 @@ class Keyboard:
       logging.warning('%s', exc)
     if reset:
       self.close()
-      self.open()
-      time.sleep(0.01)
+      time.sleep(1.0)
 
 
   def init(self):
